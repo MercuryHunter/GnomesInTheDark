@@ -13,7 +13,7 @@ ExportedObj/
 .consulo/
 *.csproj
 *.unityproj
-*.sln
+*.sln*
 *.suo
 *.tmp
 *.user
@@ -22,6 +22,10 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
+
+# Idea Editor Stuff
+*.idea*
+Assets/Plugins/Editor*
 
 # Unity3D generated meta files
 *.pidb.meta

@@ -11,6 +11,7 @@ TagManager:
   - CogStand
   - Pick
   - Spikes
+  - BreakableWall
   layers:
   - Default
   - TransparentFX

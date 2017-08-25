@@ -90,7 +90,7 @@ public class PlayerHealth : MonoBehaviour
 		pcc.Died ();
         //playerShooting.DisableEffects ();
 
-		DieAnimation ();
+		//DieAnimation ();
 
         playerAudio.clip = deathClip;
         playerAudio.Play ();
@@ -102,7 +102,7 @@ public class PlayerHealth : MonoBehaviour
         //playerShooting.enabled = false;
     }
 
-
+/*
 	void DieAnimation(){
 		QuerySDEmotionalController.QueryChanSDEmotionalType face = QuerySDEmotionalController.QueryChanSDEmotionalType.NORMAL_SAD;
 		ChangeFace (face);
@@ -117,6 +117,6 @@ public class PlayerHealth : MonoBehaviour
 	void ChangeAnimation (int animNumber){
 		gameObject.GetComponent<QuerySDMecanimController>().ChangeAnimation((QuerySDMecanimController.QueryChanSDAnimationType)animNumber);
 	}
-
+*/
 
 }

@@ -54,7 +54,7 @@ public class EnemyAttack : MonoBehaviour
 
 		if(playerHealth.currentHealth <= 0)
         {
-			AnimationPlayerDead ();
+			//AnimationPlayerDead ();
 //			GetComponent <UnityEngine.AI.NavMeshAgent> ().enabled = false;
 //			GetComponent <Rigidbody> ().isKinematic = true;
         }
@@ -70,7 +70,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-
+/*
 	void AnimationAttack(){
 		QuerySDEmotionalController.QueryChanSDEmotionalType face = QuerySDEmotionalController.QueryChanSDEmotionalType.NORMAL_GURUGURU;
 		ChangeFace (face);
@@ -90,6 +90,6 @@ public class EnemyAttack : MonoBehaviour
 	void ChangeAnimation (int animNumber){
 		gameObject.GetComponent<QuerySDMecanimController>().ChangeAnimation((QuerySDMecanimController.QueryChanSDAnimationType)animNumber);
 	}
-
+*/
 
 }

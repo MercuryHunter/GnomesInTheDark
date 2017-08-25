@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThirdPersonCamera : MonoBehaviour {
+public class ThirdPersonCameraSebast : MonoBehaviour {
 
 	public float mouseSens = 5.0f;
 	public Transform pivot;

@@ -7,6 +7,6 @@ public class ChangeDistThirdPerson : MonoBehaviour {
 	public GameObject slider;
 
 	public void ChangeDist(float d){
-		slider.GetComponentInParent<ThirdPersonCamera> ().ChangeDistToPlayer (d);
+		slider.GetComponentInParent<ThirdPersonCameraSebast> ().ChangeDistToPlayer (d);
 	}
 }

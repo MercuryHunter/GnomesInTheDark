@@ -43,20 +43,23 @@ public class EnemyController : MonoBehaviour {
 
 
 		bool isMoving = h != 0.0f || v != 0.0f;
-
+		/*
 		if (isMoving) {//Is moving
 			ChangeAnimation (2);
 		} else {
 			ChangeAnimation (1);//Not running idle
 		}
+		*/
 
 		//When dies
 		if (!Alive) {
 			Vector3 dead = new Vector3 (h, 0.0f, v);
 			gameObject.transform.TransformPoint (dead);
+			/*
 			ChangeAnimation (57);
 			QuerySDEmotionalController.QueryChanSDEmotionalType face = QuerySDEmotionalController.QueryChanSDEmotionalType.NORMAL_SAD;
 			ChangeFace (face);
+			*/
 		}
 
 	}
@@ -65,7 +68,7 @@ public class EnemyController : MonoBehaviour {
 		Alive = false;
 	}
 
-
+/*
 	void ChangeFace (QuerySDEmotionalController.QueryChanSDEmotionalType faceNumber) {
 
 		gameObject.GetComponent<QuerySDEmotionalController>().ChangeEmotion(faceNumber);
@@ -77,5 +80,5 @@ public class EnemyController : MonoBehaviour {
 	{
 		gameObject.GetComponent<QuerySDMecanimController>().ChangeAnimation((QuerySDMecanimController.QueryChanSDAnimationType)animNumber);
 	}
-
+*/
 }

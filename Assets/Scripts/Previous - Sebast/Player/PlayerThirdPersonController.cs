@@ -71,16 +71,17 @@ public class PlayerThirdPersonController : MonoBehaviour {
 		bool running = Input.GetKey (KeyCode.LeftShift);
 
 		bool isMoving = h != 0.0f || v != 0.0f;
-
+		/*
 		if (isMoving) {//Is moving
 			if (running) {ChangeAnimation (3);} //Running
 			else {ChangeAnimation (2);}	//Walking
 		} else {
 			ChangeAnimation (1);//Not running idle
 		}
+		*/
 	
 	}
-
+/*
 	void ChangeFace (QuerySDEmotionalController.QueryChanSDEmotionalType faceNumber) {
 
 		player.GetComponent<QuerySDEmotionalController>().ChangeEmotion(faceNumber);
@@ -92,6 +93,6 @@ public class PlayerThirdPersonController : MonoBehaviour {
 	{
 		player.GetComponent<QuerySDMecanimController>().ChangeAnimation((QuerySDMecanimController.QueryChanSDAnimationType)animNumber);
 	}
-
+*/
 
 }

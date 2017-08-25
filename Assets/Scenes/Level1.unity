@@ -217,6 +217,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 65906384929060286, guid: 30301ee4edd2587479eac633c7048ca8,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 30301ee4edd2587479eac633c7048ca8, type: 2}
   m_IsPrefabParent: 0
@@ -534,44 +539,6 @@ Prefab:
     - target: {fileID: 4716912841308268, guid: 5885f28f2df254495a930549009e0348, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 54784403709897046, guid: 5885f28f2df254495a930549009e0348,
-        type: 2}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 4497073384438154, guid: 5885f28f2df254495a930549009e0348, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 4497073384438154, guid: 5885f28f2df254495a930549009e0348, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.197
-      objectReference: {fileID: 0}
-    - target: {fileID: 4497073384438154, guid: 5885f28f2df254495a930549009e0348, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 1756505498752820, guid: 5885f28f2df254495a930549009e0348, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1750268118995452, guid: 5885f28f2df254495a930549009e0348, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1406771371453878, guid: 5885f28f2df254495a930549009e0348, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1279697512354788, guid: 5885f28f2df254495a930549009e0348, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 20359470813248186, guid: 5885f28f2df254495a930549009e0348,
-        type: 2}
-      propertyPath: m_CullingMask.m_Bits
-      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5885f28f2df254495a930549009e0348, type: 2}

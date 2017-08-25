@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour {
 		movement = movement.normalized * currentSpeed * Time.deltaTime;
 		
 		playerRigidbody.MovePosition (transform.position + movement);
-	
 	}
 
 }

@@ -7,7 +7,7 @@ public class PlayerCamera : MonoBehaviour {
     Vector2 mouseLook;
     Vector2 smoothV;
 
-    public float Sensitivity = 5.0f;
+    public float Sensitivity = 2.5f;
     public float smoothing = 2.0f;
 
     public GameObject target;

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 	
-	public float walkspeed = 2.5f;
-	public float runspeed = 6.0f;
-	
+	public float walkspeed = 5.0f;
+	public float runspeed = 9.0f;
+
 	Rigidbody playerRigidbody;
 	
 	void Start () {
@@ -22,11 +22,15 @@ public class PlayerMovement : MonoBehaviour {
 		float moveVertical = Input.GetAxisRaw ("Vertical");
 
 		Move (moveHorizontal, moveVertical);
-		// Rotation is done by the camera
-
+        // Rotation is done by the camera
+        
 		if (Input.GetKeyDown ("escape")) {
-			Cursor.lockState = CursorLockMode.None;
+            Cursor.lockState = CursorLockMode.None;
 		}
+        //Jumping(Space bar)
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Jump();
+        }
 	}
 
 	private void Move(float moveHorizontal, float moveVertical) {
@@ -37,6 +41,13 @@ public class PlayerMovement : MonoBehaviour {
 		movement = movement.normalized * currentSpeed * Time.deltaTime;
 		
 		playerRigidbody.MovePosition (transform.position + movement);
-	}
+        
+    }
 
+    private void Jump() {
+
+        //animation change here
+
+        playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
+    }
 }

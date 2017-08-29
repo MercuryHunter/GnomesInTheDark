@@ -12,6 +12,7 @@ TagManager:
   - Pick
   - Spikes
   - BreakableWall
+  - Teleporter
   layers:
   - Default
   - TransparentFX

@@ -36,8 +36,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4765985180615448}
-  - component: {fileID: 114081221710707400}
-  - component: {fileID: 114325193036986032}
   - component: {fileID: 33618719002235156}
   - component: {fileID: 23119347486064398}
   m_Layer: 0
@@ -234,31 +232,3 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114081221710707400
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1478636403256508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cb505dfbe205eb4e86759d347f73a8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 70
-  height: 40
-  seed: 30
-  useRandomSeed: 1
-  randomFillPercent: 24
---- !u!114 &114325193036986032
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1478636403256508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17617b958d6315a4c877294a721bfc90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walls: {fileID: 33160992105644094}

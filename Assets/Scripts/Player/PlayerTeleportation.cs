@@ -21,7 +21,7 @@ public class PlayerTeleportation : MonoBehaviour {
 					.transform;
 
 			this.transform.position = newTransform.position;
-			this.transform.rotation = newTransform.rotation;
+			this.transform.eulerAngles = new Vector3(0, newTransform.rotation.y, 0);
 		}
 	}
 

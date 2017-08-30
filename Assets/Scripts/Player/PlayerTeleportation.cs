@@ -7,13 +7,22 @@ public class PlayerTeleportation : MonoBehaviour {
 	float teleportContactTimeRequired = 0.5f;
 	float teleportContactTimeCurrent = 0;
 
+	private PlayerCamera camera;
+
+	void Awake() {
+		camera = GetComponentInChildren<PlayerCamera>();
+	}
+
+	void Update() {
+		teleportContactTimeCurrent -= Time.deltaTime;
+	}
+
 	void OnTriggerStay(Collider other) {
 		// TODO: UI Text for player about this
-		teleportContactTimeCurrent -= Time.deltaTime;
-		
 		if (Input.GetKeyDown(KeyCode.E) && teleportContactTimeCurrent <= 0 && other.tag.Equals("Teleporter")) {
+			// Teleported, reset time
 			teleportContactTimeCurrent = teleportContactTimeRequired;
-			
+		
 			Transform newTransform =
 				other.gameObject
 					.GetComponentInParent<TeleporterManager>()
@@ -21,7 +30,8 @@ public class PlayerTeleportation : MonoBehaviour {
 					.transform;
 
 			this.transform.position = newTransform.position;
-			this.transform.eulerAngles = new Vector3(0, newTransform.rotation.y, 0);
+			this.transform.eulerAngles = newTransform.eulerAngles;
+			camera.setBodyPointVector(newTransform);
 		}
 	}
 

@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
 
 public class Inventory : MonoBehaviour {
 
@@ -13,6 +15,17 @@ public class Inventory : MonoBehaviour {
     public Sprite EmptyTexture;
     public EventSystem EventSystem;
     private bool isInInventory = false;
+    private int numButtons = 3;
+    private bool[] buttonShowing = new bool[3];
+    int buttonOn = 0;
+
+    public void Start()
+    {
+        for (int i = 0; i < numButtons; i++)
+        {
+            buttonShowing[i] = false;
+        }
+    }
 
     public void Update()
     {
@@ -30,12 +43,30 @@ public class Inventory : MonoBehaviour {
             
         }
 
-        
+       
     }
 
-    public void onClick(Button button)
+    public void onItemClick(Button button)
     {
-        print("it clicked");
         button.image.sprite = cogTexture;
+        for (int i = 0; i < numButtons; i++)
+        {
+          //  buttonShowing[i] = false;
+            GameObject.Find("Drop" + Convert.ToString(i + 1)).GetComponent<Image>().enabled = false;
+        }
+        buttonOn = Convert.ToInt32(button.name.Substring(button.name.Length-1, 1 ))-1;
+        //buttonShowing[buttonOn] = true;
+        GameObject.Find("Drop" + Convert.ToString(buttonOn+1)).GetComponent<Image>().enabled = true;
+    }
+
+    public void onDropClick(Button button)
+    {
+        button.image.sprite = EmptyTexture;
+        GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
+    }
+
+    public void dropItem(GameObject item)
+    {
+
     }
 }

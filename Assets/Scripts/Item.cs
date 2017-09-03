@@ -7,8 +7,10 @@ public class Item : MonoBehaviour {
     private Transform originalPosition;
     private Transform currentLocation;
     public bool inInventory;
+    private bool isHolding;
     public enum ItemType { COG, UTILITY};
     public ItemType itemType;
+    public GameObject holdingPosition;
 
     private void Start()
     {
@@ -16,7 +18,7 @@ public class Item : MonoBehaviour {
         currentLocation = transform;
        // print(originalPosition);
         inInventory = false;
-        itemType = ItemType.UTILITY;
+        //itemType = ItemType.UTILITY;
     }
 
     public GameObject getItem()
@@ -24,16 +26,29 @@ public class Item : MonoBehaviour {
         return this.gameObject;
     }
 
-    public void setTransform(Transform newLocation)
+    public void setTransform(Transform newLocation, bool drop)
     {
-        if (itemType == ItemType.UTILITY)
+        if (itemType == ItemType.UTILITY && !drop)
         {
-
+            Vector3 tempPos = holdingPosition.transform.position;
+            // = currentLocation.position;
+            tempPos.y += 0.5f;
+            tempPos.x += 0.3f;
+            currentLocation.position = tempPos;
+            transform.position = holdingPosition.transform.position;
+            isHolding = true;
         }
         else
         {
-            currentLocation = newLocation;
-            currentLocation.position = newLocation.position;
+           // currentLocation = newLocation;
+            Vector3 tempPos = holdingPosition.transform.position;
+            tempPos.y = 0.2f;
+            tempPos.x += 0.5f;
+            currentLocation.position = tempPos;
+            transform.position = currentLocation.position;
+            print("went in here");
+            isHolding = false;
+            
         }
         
         //gameObject.GetComponent<Renderer>().enabled = false;
@@ -46,5 +61,16 @@ public class Item : MonoBehaviour {
     {
         gameObject.SetActive(false);
         inInventory = true;
+        
+    }
+
+    public bool checkHolding()
+    {
+        return isHolding;
+    }
+
+    public void setHolding(bool set)
+    {
+        isHolding = set;
     }
 }

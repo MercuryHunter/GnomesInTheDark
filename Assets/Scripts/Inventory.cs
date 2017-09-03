@@ -19,14 +19,15 @@ public class Inventory : MonoBehaviour {
     private bool[] buttonShowing = new bool[3];
     int buttonOn = 0;
     private GameObject[] holdingItems = new GameObject[3];
-    public GameObject item;
+    public static GameObject item;
     private bool isFull = false;
     private int itemsInBag = 0;
     public GameObject player;
+    public static bool inItemTrigger;
 
     public void Start()
     {
-        
+        inItemTrigger = false;
         for (int i = 0; i < numButtons; i++)
         {
             buttonShowing[i] = false;
@@ -43,17 +44,28 @@ public class Inventory : MonoBehaviour {
             {
                 isInInventory = false;
                 GetComponent<Canvas>().enabled = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                PlayerCamera.rotationLock = false;
             }
             else{
                 isInInventory = true;
                 GetComponent<Canvas>().enabled = true;
+                Cursor.lockState = CursorLockMode.None;
+                PlayerCamera.rotationLock = true;
             }
             
         }
         if (Input.GetKeyDown("e"))
         {
-            if (!isFull) 
-                pickUpItem(item);
+            print("e pressed");
+            if (inItemTrigger)
+            {
+                print("Trigger enter");
+                if (!isFull)
+                {
+                    pickUpItem(item);
+                }
+            }
         }
 
        
@@ -63,20 +75,24 @@ public class Inventory : MonoBehaviour {
     {
         if (itemsInBag != 0)
         {
-            for (int i = 0; i < numButtons; i++)
+            int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
+            if (holdingItems[buttonClicked] != null)
             {
-                  buttonShowing[i] = false;
-                  GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
-                GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
+                for (int i = 0; i < numButtons; i++)
+                {
+                    buttonShowing[i] = false;
+                    GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
+                    GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
 
+                }
+                buttonOn = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
+                buttonShowing[buttonOn] = true;
+                if (holdingItems[buttonOn].GetComponent<Item>().itemType == Item.ItemType.UTILITY)
+                {
+                    GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = true;
+                }
+                GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = true;
             }
-            buttonOn = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
-            buttonShowing[buttonOn] = true;
-            if (holdingItems[buttonOn].GetComponent<Item>().itemType == Item.ItemType.UTILITY)
-            {
-                GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = true;
-            }
-            GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = true;
         }
     }
 
@@ -88,12 +104,13 @@ public class Inventory : MonoBehaviour {
             print(buttonShowing[buttonOn]);
             itemsInBag--;
             button.image.sprite = EmptyTexture;
+            holdingItems[buttonOn].transform.parent = null;
             GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
             GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
             print(holdingItems[buttonOn]);
             print(buttonOn);
             dropItem(holdingItems[buttonOn].GetComponent<Item>());
-            holdingItems[buttonOn].transform.parent = null;
+            
             holdingItems[buttonOn] = null;
             print(holdingItems[buttonOn]);
             buttonShowing[clickedButton] = false;
@@ -103,7 +120,8 @@ public class Inventory : MonoBehaviour {
 
     public void dropItem(Item item)
     {
-        item.setTransform(player.transform);
+
+        item.setTransform(player.transform, true);
     }
 
     public void pickUpItem(GameObject gItem)
@@ -138,13 +156,27 @@ public class Inventory : MonoBehaviour {
 
     public void onEquipClick(Button button)
     {
+        
         int clickedButton = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
+        print(clickedButton);
         if (buttonShowing[clickedButton])
         {
+            print("This got in here but didnt equip");
             Item item = holdingItems[buttonOn].GetComponent<Item>();
-            item.setTransform(player.transform);
-            item.getItem().transform.parent = player.transform;
+            if (!item.checkHolding())
+            {
+                item.setTransform(player.transform, false);
+                item.getItem().transform.parent = player.transform;
+            }
+            else
+            {
+                item.getItem().transform.parent = null;
+                item.gameObject.SetActive(false);
+                item.setHolding(false);
+            }
 
         }
     }
+
+    
 }

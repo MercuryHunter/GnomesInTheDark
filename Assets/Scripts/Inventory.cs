@@ -161,12 +161,13 @@ public class Inventory : MonoBehaviour {
         print(clickedButton);
         if (buttonShowing[clickedButton])
         {
-            print("This got in here but didnt equip");
             Item item = holdingItems[buttonOn].GetComponent<Item>();
             if (!item.checkHolding())
             {
                 item.setTransform(player.transform, false);
                 item.getItem().transform.parent = player.transform;
+              //  GameObject.Find("Equip" + Convert.ToString(clickedButton + 1)).GetComponent<Image>().enabled = false;
+
             }
             else
             {

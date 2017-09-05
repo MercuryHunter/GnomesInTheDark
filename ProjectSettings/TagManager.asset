@@ -12,6 +12,7 @@ TagManager:
   - Pick
   - Spikes
   - BreakableWall
+  - Item
   layers:
   - Default
   - TransparentFX

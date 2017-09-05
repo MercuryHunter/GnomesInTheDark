@@ -34,4 +34,11 @@ public class PlayerCamera : MonoBehaviour {
             target.transform.rotation = Quaternion.AngleAxis(mouseLook.x, target.transform.up);
         }
     }
+
+    public void setBodyPointVector(Transform other) {
+        smoothV.x = 0;
+        smoothV.y = 0;
+        mouseLook.x = other.rotation.eulerAngles.y;
+        mouseLook.y = 0;
+    }
 }

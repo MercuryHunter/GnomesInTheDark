@@ -36,8 +36,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4732232363747130}
-  - component: {fileID: 114515514373153804}
-  - component: {fileID: 114385646906523410}
   - component: {fileID: 33545471156146332}
   - component: {fileID: 23667367663072098}
   m_Layer: 0
@@ -234,31 +232,3 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114385646906523410
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1337733835830886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17617b958d6315a4c877294a721bfc90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walls: {fileID: 33946304717479964}
---- !u!114 &114515514373153804
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1337733835830886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cb505dfbe205eb4e86759d347f73a8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 70
-  height: 40
-  seed: 30
-  useRandomSeed: 1
-  randomFillPercent: 24

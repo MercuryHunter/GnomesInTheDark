@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 	public float walkspeed = 5.0f;
 	public float runspeed = 9.0f;
+    
 
 	Rigidbody playerRigidbody;
 	
@@ -49,5 +50,24 @@ public class PlayerMovement : MonoBehaviour {
         //animation change here
 
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print("Trigger");
+        if (other.gameObject.tag == "Item")
+        {
+            Inventory.inItemTrigger = true;
+            Inventory.item = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Item")
+        {
+            Inventory.inItemTrigger = false;
+            Inventory.item = null;
+        }
     }
 }

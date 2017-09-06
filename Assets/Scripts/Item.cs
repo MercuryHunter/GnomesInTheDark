@@ -42,7 +42,7 @@ public class Item : MonoBehaviour {
         {
            // currentLocation = newLocation;
             Vector3 tempPos = holdingPosition.transform.position;
-            tempPos.y = 0.2f;
+            tempPos.y = 1.3f;
             tempPos.x += 0.5f;
             currentLocation.position = tempPos;
             transform.position = currentLocation.position;
@@ -53,6 +53,7 @@ public class Item : MonoBehaviour {
         
         //gameObject.GetComponent<Renderer>().enabled = false;
         gameObject.SetActive(true);
+        gameObject.GetComponent<SphereCollider>().enabled = true;
         inInventory = false;
 
     }
@@ -60,6 +61,7 @@ public class Item : MonoBehaviour {
     public void pickUp()
     {
         gameObject.SetActive(false);
+        gameObject.GetComponent<SphereCollider>().enabled = false;
         inInventory = true;
         
     }

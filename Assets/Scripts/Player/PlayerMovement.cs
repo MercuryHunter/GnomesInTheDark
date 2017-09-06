@@ -57,6 +57,7 @@ public class PlayerMovement : MonoBehaviour {
         print("Trigger");
         if (other.gameObject.tag == "Item")
         {
+
             Inventory.inItemTrigger = true;
             Inventory.item = other.gameObject;
         }

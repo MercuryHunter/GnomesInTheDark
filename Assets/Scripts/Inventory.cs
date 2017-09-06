@@ -58,7 +58,7 @@ public class Inventory : MonoBehaviour {
         if (Input.GetKeyDown("e"))
         {
             print("e pressed");
-            if (inItemTrigger)
+            if (inItemTrigger && !item.GetComponent<Item>().inInventory)
             {
                 print("Trigger enter");
                 if (!isFull)

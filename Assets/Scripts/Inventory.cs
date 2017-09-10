@@ -56,8 +56,7 @@ public class Inventory : MonoBehaviour {
             
         }
         if (Input.GetKeyDown("e"))
-        {
-            print("e pressed");
+        { 
             if (inItemTrigger && !item.GetComponent<Item>().inInventory)
             {
                 print("Trigger enter");
@@ -114,6 +113,7 @@ public class Inventory : MonoBehaviour {
             holdingItems[buttonOn] = null;
             print(holdingItems[buttonOn]);
             buttonShowing[clickedButton] = false;
+            
 
         }
     }
@@ -122,11 +122,16 @@ public class Inventory : MonoBehaviour {
     {
 
         item.setTransform(player.transform, true);
+        isFull = false;
     }
 
     public void pickUpItem(GameObject gItem)
     {
         itemsInBag++;
+        if (itemsInBag == 3)
+        {
+            isFull = true;
+        }
         gItem.GetComponent<Item>().pickUp();
         for (int i = 0; i < numButtons; i++)
         {
@@ -179,5 +184,40 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    public GameObject getNextItem()
+    {
+        for (int i = 0; i < numButtons; i++)
+        {
+            if (holdingItems[i] != null && holdingItems[i].GetComponent<Item>().itemType != Item.ItemType.UTILITY)
+            {
+                GameObject temp = holdingItems[i];
+                holdingItems[i] = null;
+                temp.SetActive(true);
+                itemsInBag--;
+                buttonShowing[i] = false;
+                switchToEmpty(i);
+                print("got next button");
+                isFull = false;
+                return temp;
+            }
+        }
+        return null;
+    }
+
+    public void switchToEmpty(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                cog1.image.sprite = EmptyTexture;
+                break;
+            case 1:
+                cog2.image.sprite = EmptyTexture;
+                break;
+            case 2:
+                pick1.image.sprite = EmptyTexture;
+                break;
+        }
+    }
     
 }

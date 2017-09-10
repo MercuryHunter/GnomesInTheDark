@@ -52,23 +52,5 @@ public class PlayerMovement : MonoBehaviour {
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        print("Trigger");
-        if (other.gameObject.tag == "Item")
-        {
-
-            Inventory.inItemTrigger = true;
-            Inventory.item = other.gameObject;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Item")
-        {
-            Inventory.inItemTrigger = false;
-            Inventory.item = null;
-        }
-    }
+    
 }

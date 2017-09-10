@@ -10,18 +10,28 @@ public class temparino : MonoBehaviour {
 		Vector3[] vertices = mesh.vertices;
 		Vector2[] uvs = new Vector2[vertices.Length];
 
+		int count = 0, slowCount = 0;
+		int slowCountTick = 3;
 		for (int i = 0; i < vertices.Length; i++)
 		{
 			Debug.Log("Vertices[" + i + "]: " + vertices[i]);
-
-			if (i > 0 && vertices[i].z - vertices[i - 1].z != 0 && vertices[i].x - vertices[i - 1].x == 0) {
-				if(vertices[i].y - vertices[i - 1].y == 0) 
-					uvs[i] = new Vector2(vertices[i].z, vertices[i].y * 10);
-				else
-					uvs[i] = new Vector2(vertices[i].y * 10, vertices[i].z);
+			switch (count) {
+				case 0:
+					uvs[i] = new Vector2(0, (1f / slowCountTick) * slowCount);
+					break;
+				case 1:
+					uvs[i] = new Vector2(0, (1f / slowCountTick) * (slowCount + 1));
+					break;
+				case 2:
+					uvs[i] = new Vector2(3, (1f / slowCountTick) * slowCount);
+					break;
+				case 3:
+					uvs[i] = new Vector2(3, (1f / slowCountTick) * (slowCount + 1));
+					break;
 			}
-			else
-				uvs[i] = new Vector2(vertices[i].x, vertices[i].y);
+			if(i % slowCountTick == slowCountTick - 1)
+				slowCount = (slowCount + 1) % slowCountTick;
+			count = (count + 1) % 4;
 		}
 		
 		mesh.uv = uvs;

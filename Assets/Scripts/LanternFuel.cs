@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.Examples;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class LanternFuel : MonoBehaviour {
 	private Light light;
 
 	public GameObject attachedParticleEmitter;
-	public float fuel = 10; // seconds of fuel
+	public float maxFuel = 100;
+	public float currentFuel = 10; // seconds of fuel
+
+	public Slider fuelSlider;
 
 	public float intensity = 3.0f;
 	public float minRange = 8.0f;
@@ -22,22 +22,26 @@ public class LanternFuel : MonoBehaviour {
 		light = GetComponent<Light>();
 		light.intensity = intensity;
 		on = true;
+
+		fuelSlider.maxValue = maxFuel;
+		fuelSlider.value = currentFuel;
 	}
 	
 	void Update () {
 		// TODO: Super flare
 		// TODO: Decrease in area last few seconds, extra flicker
 		if (on) {
-			fuel -= Time.deltaTime;
+			currentFuel -= Time.deltaTime;
+			fuelSlider.value = currentFuel;
 			
 			// Some flickering
 			// Tinker with variables at top to affect this.
 			float newRange = Random.Range(light.range - maxFlickerDifference, light.range + maxFlickerDifference);
 			light.range = Mathf.Clamp(newRange, minRange, maxRange);
 			
-			if (fuel <= 0) {
+			if (currentFuel <= 0) {
 				// Disable if out of fuel
-				fuel = 0;
+				currentFuel = 0;
 				turnOff();
 			}
 
@@ -55,7 +59,7 @@ public class LanternFuel : MonoBehaviour {
 	}
 
 	private void turnOn() {
-		if (fuel > 0) {
+		if (currentFuel > 0) {
 			on = true;
 			light.enabled = true;
 			attachedParticleEmitter.SetActive(true);
@@ -66,12 +70,12 @@ public class LanternFuel : MonoBehaviour {
 		// Enable since we have fuel if we didn't before
 		// This is a design choice, players who had 0 fuel had their light on before,
 		// so it makes sense to re-enable after getting more fuel 
-		if (fuel <= 0) {
-			fuel += amount;
+		if (currentFuel <= 0) {
+			currentFuel += amount;
 			turnOn();
 		}
 		else {
-			fuel += amount;
+			currentFuel += amount;
 		}
 	}
 }

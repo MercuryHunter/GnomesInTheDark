@@ -6,7 +6,9 @@ public class PlayerMovement : MonoBehaviour {
 	
 	public float walkspeed = 5.0f;
 	public float runspeed = 9.0f;
-    
+
+	public float timeBetweenJumps = 1.3f;
+	private float timeToNextJump;
 
 	Rigidbody playerRigidbody;
 	
@@ -15,6 +17,8 @@ public class PlayerMovement : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 		
 		playerRigidbody = GetComponent<Rigidbody> ();
+		// TODO: Think about jump timing - check if on floor instead of timing?
+		timeToNextJump = 0;
 	}
 	
 	// Update is called once per frame
@@ -28,8 +32,10 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetKeyDown ("escape")) {
             Cursor.lockState = CursorLockMode.None;
 		}
+		
         //Jumping(Space bar)
-        if (Input.GetKeyDown(KeyCode.Space)) {
+		timeToNextJump -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Space) && timeToNextJump <= 0) {
             Jump();
         }
 	}
@@ -46,9 +52,8 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Jump() {
-
-        //animation change here
-
+        // TODO: animation change here
+	    timeToNextJump = timeBetweenJumps;
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
     }
 

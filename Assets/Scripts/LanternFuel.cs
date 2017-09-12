@@ -10,6 +10,7 @@ public class LanternFuel : MonoBehaviour {
 	public float currentFuel = 10; // seconds of fuel
 	public float fuelUsageRatePerSecond = 1f;
 	public float fuelUsageModifier = 0.2f;
+	// TODO: Fix usage rate infinity
 
 	public Slider fuelSlider;
 
@@ -17,6 +18,7 @@ public class LanternFuel : MonoBehaviour {
 	public float minRange = 8.0f;
 	public float maxRange = 12.0f;
 	public float rangeModifier = 1.0f;
+	// TODO: Max max range
 	public float maxFlickerDifference = 0.1f;
 
 	private bool on;

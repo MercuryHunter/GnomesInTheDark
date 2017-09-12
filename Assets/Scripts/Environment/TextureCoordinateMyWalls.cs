@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TextureCoordinateMyWalls : MonoBehaviour {
 
+	public int slowCountTick = 1;
+	public float yRepetitions = 1;
+	
 	// Use this for initialization
 	void Start () {
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
@@ -11,7 +14,6 @@ public class TextureCoordinateMyWalls : MonoBehaviour {
 		Vector2[] uvs = new Vector2[vertices.Length];
 
 		int count = 0, slowCount = 0;
-		int slowCountTick = 3;
 		for (int i = 0; i < vertices.Length; i++)
 		{
 			Debug.Log("Vertices[" + i + "]: " + vertices[i]);
@@ -23,10 +25,10 @@ public class TextureCoordinateMyWalls : MonoBehaviour {
 					uvs[i] = new Vector2(0, (1f / slowCountTick) * (slowCount + 1));
 					break;
 				case 2:
-					uvs[i] = new Vector2(3, (1f / slowCountTick) * slowCount);
+					uvs[i] = new Vector2(yRepetitions, (1f / slowCountTick) * slowCount);
 					break;
 				case 3:
-					uvs[i] = new Vector2(3, (1f / slowCountTick) * (slowCount + 1));
+					uvs[i] = new Vector2(yRepetitions, (1f / slowCountTick) * (slowCount + 1));
 					break;
 			}
 			if(i % slowCountTick == slowCountTick - 1)

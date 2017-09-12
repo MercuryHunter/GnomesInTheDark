@@ -708,6 +708,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attachedParticleEmitter: {fileID: 1722094898850122}
   fuel: 10
+  intensity: 3
+  minRange: 8
+  maxRange: 12
+  maxFlickerDifference: 0.2
 --- !u!114 &114636282516475502
 MonoBehaviour:
   m_ObjectHideFlags: 1

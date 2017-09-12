@@ -11,14 +11,16 @@ public class LanternFuel : MonoBehaviour {
 	public GameObject attachedParticleEmitter;
 	public float fuel = 10; // seconds of fuel
 
-	public float minRange = 8;
-	public float maxRange = 12;
+	public float intensity = 3.0f;
+	public float minRange = 8.0f;
+	public float maxRange = 12.0f;
 	public float maxFlickerDifference = 0.1f;
 
 	private bool on;
 	
 	void Start () {
 		light = GetComponent<Light>();
+		light.intensity = intensity;
 		on = true;
 	}
 	

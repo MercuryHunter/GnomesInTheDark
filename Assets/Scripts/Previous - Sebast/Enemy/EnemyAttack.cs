@@ -11,7 +11,7 @@ public class EnemyAttack : MonoBehaviour
 
 
     GameObject player;
-    PlayerHealth playerHealth;
+    PlayerHealthOLD _playerHealthOld;
     EnemyHealth enemyHealth;
     bool playerInRange;
     float timer;
@@ -20,7 +20,7 @@ public class EnemyAttack : MonoBehaviour
     void Awake ()
     {
         player = GameObject.FindGameObjectWithTag ("Player");
-        playerHealth = player.GetComponent <PlayerHealth> ();
+        _playerHealthOld = player.GetComponent <PlayerHealthOLD> ();
         enemyHealth = GetComponent<EnemyHealth>();
     }
 
@@ -52,7 +52,7 @@ public class EnemyAttack : MonoBehaviour
             HitPlayer ();
         }
 
-		if(playerHealth.currentHealth <= 0)
+		if(_playerHealthOld.currentHealth <= 0)
         {
 			//AnimationPlayerDead ();
 //			GetComponent <UnityEngine.AI.NavMeshAgent> ().enabled = false;
@@ -64,9 +64,9 @@ public class EnemyAttack : MonoBehaviour
     {
         timer = 0f;
 
-        if(playerHealth.currentHealth > 0)
+        if(_playerHealthOld.currentHealth > 0)
         {
-            playerHealth.TakeDamage (attackDamage);
+            _playerHealthOld.TakeDamage (attackDamage);
         }
     }
 

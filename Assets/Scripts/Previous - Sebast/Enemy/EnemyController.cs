@@ -27,7 +27,7 @@ public class EnemyController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Alive && (player.GetComponent<PlayerHealth>().currentHealth) > 0) {
+		if (Alive && (player.GetComponent<PlayerHealthOLD>().currentHealth) > 0) {
 			nav.SetDestination (target.position);
 		}
 

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 //Script taken and modified from Unity Survival Shooter Tutorial Project
 
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealthOLD : MonoBehaviour
 {
     public int startingHealth = 100;
     public int currentHealth;

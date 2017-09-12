@@ -8,12 +8,15 @@ public class LanternFuel : MonoBehaviour {
 	public GameObject attachedParticleEmitter;
 	public float maxFuel = 100;
 	public float currentFuel = 10; // seconds of fuel
+	public float fuelUsageRatePerSecond = 1f;
+	public float fuelUsageModifier = 0.2f;
 
 	public Slider fuelSlider;
 
 	public float intensity = 3.0f;
 	public float minRange = 8.0f;
 	public float maxRange = 12.0f;
+	public float rangeModifier = 1.0f;
 	public float maxFlickerDifference = 0.1f;
 
 	private bool on;
@@ -31,7 +34,7 @@ public class LanternFuel : MonoBehaviour {
 		// TODO: Super flare
 		// TODO: Decrease in area last few seconds, extra flicker
 		if (on) {
-			currentFuel -= Time.deltaTime;
+			currentFuel -= Time.deltaTime * fuelUsageRatePerSecond;
 			fuelSlider.value = currentFuel;
 			
 			// Some flickering
@@ -45,11 +48,22 @@ public class LanternFuel : MonoBehaviour {
 				turnOff();
 			}
 
+			if (Input.GetKeyDown(KeyCode.Equals)) changeRange(rangeModifier);
+			if (Input.GetKeyDown(KeyCode.Minus)) changeRange(-rangeModifier);
 			if (Input.GetKeyDown(KeyCode.F)) turnOff();
 		}
 		else {
 			if (Input.GetKeyDown(KeyCode.F)) turnOn();
 		}
+	}
+
+	private void changeRange(float amount) {
+		minRange += amount;
+		maxRange += amount;
+		
+		light.range = (minRange + maxRange) / 2;
+
+		fuelUsageRatePerSecond += Mathf.Sign(amount) * fuelUsageModifier;
 	}
 
 	private void turnOff() {

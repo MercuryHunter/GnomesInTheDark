@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour {
 	public float timeBetweenJumps = 1.3f;
 	private float timeToNextJump;
 
+    private Animator animator;
+    public Animation anim;
+    
+
 	Rigidbody playerRigidbody;
 	
 	void Start () {
@@ -17,6 +21,8 @@ public class PlayerMovement : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 		
 		playerRigidbody = GetComponent<Rigidbody> ();
+        animator = GetComponent<Animator>();
+        
 		// TODO: Think about jump timing - check if on floor instead of timing?
 		timeToNextJump = 0;
 	}
@@ -28,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		Move (moveHorizontal, moveVertical);
         // Rotation is done by the camera
+        Animating(moveHorizontal, moveVertical);
         
 		if (Input.GetKeyDown ("escape")) {
             Cursor.lockState = CursorLockMode.None;
@@ -75,5 +82,14 @@ public class PlayerMovement : MonoBehaviour {
             Inventory.inItemTrigger = false;
             Inventory.item = null;
         }
+    }
+
+
+    private void Animating(float mh, float mv)
+    {
+        bool walking = mh != 0f || mv != 0f;
+        animator.SetBool("IsWalking", walking);
+        if (walking) anim.Play("Wizard_Run"); else { anim.Play("Wizard_Idle"); };//Garbage!!!!
+        
     }
 }

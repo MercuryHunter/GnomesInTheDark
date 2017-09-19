@@ -15,7 +15,6 @@ public class TextureCoordinateMyWalls : MonoBehaviour {
 		Vector2[] uvs = new Vector2[vertices.Length];
 
 		int count = 0, slowCount = 0;
-		Debug.Log(mesh.normals.Length);
 		for (int i = 0; i < vertices.Length; i++)
 		{
 			switch (count) {

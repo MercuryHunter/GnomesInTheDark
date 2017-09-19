@@ -3,9 +3,10 @@ using Random = UnityEngine.Random;
 using UnityEngine.UI;
 
 public class LanternFuel : MonoBehaviour {
-	private Light light;
+	private Light lanternLight;
+	private GameObject attachedParticleEmitter;
 
-	public GameObject attachedParticleEmitter;
+	//public GameObject attachedParticleEmitter;
 	public float maxFuel = 100;
 	public float currentFuel = 10; // seconds of fuel
 	public float fuelUsageRatePerSecond = 1f;
@@ -18,14 +19,29 @@ public class LanternFuel : MonoBehaviour {
 	public float minRange = 8.0f;
 	public float maxRange = 12.0f;
 	public float rangeModifier = 1.0f;
-	// TODO: Max max range
+	public float minMinRange = 5.0f;
+	public float maxMaxRange = 15.0f;
 	public float maxFlickerDifference = 0.1f;
 
 	private bool on;
 	
 	void Start () {
-		light = GetComponent<Light>();
-		light.intensity = intensity;
+		// Get child flameobject of lantern
+		GameObject myFlameObject = null;
+		GameObject[] flameObjects = GameObject.FindGameObjectsWithTag("LanternFlame");
+		foreach(GameObject flameObject in flameObjects)
+			if (flameObject.transform.IsChildOf(this.transform))
+				myFlameObject = flameObject;
+
+		if (myFlameObject == null) {
+			Debug.Log("Where is my flame?\nAHHHHHHHHHH!");
+		}
+		
+		lanternLight = myFlameObject.GetComponent<Light>();
+		attachedParticleEmitter = myFlameObject.transform.GetChild(0).gameObject;
+		// It is assumed the particle emitter is the first child of the flame.
+		
+		lanternLight.intensity = intensity;
 		on = true;
 
 		fuelSlider.maxValue = maxFuel;
@@ -41,8 +57,11 @@ public class LanternFuel : MonoBehaviour {
 			
 			// Some flickering
 			// Tinker with variables at top to affect this.
-			float newRange = Random.Range(light.range - maxFlickerDifference, light.range + maxFlickerDifference);
-			light.range = Mathf.Clamp(newRange, minRange, maxRange);
+			float newRange = Random.Range(
+				lanternLight.range - maxFlickerDifference,
+				lanternLight.range + maxFlickerDifference
+			);
+			lanternLight.range = Mathf.Clamp(newRange, minRange, maxRange);
 			
 			if (currentFuel <= 0) {
 				// Disable if out of fuel
@@ -60,24 +79,27 @@ public class LanternFuel : MonoBehaviour {
 	}
 
 	private void changeRange(float amount) {
+		if (minRange + amount < minMinRange) return;
+		if (maxRange + amount > maxMaxRange) return;
+		
 		minRange += amount;
 		maxRange += amount;
 		
-		light.range = (minRange + maxRange) / 2;
+		lanternLight.range = (minRange + maxRange) / 2;
 
 		fuelUsageRatePerSecond += Mathf.Sign(amount) * fuelUsageModifier;
 	}
 
 	private void turnOff() {
 		on = false;
-		light.enabled = false;
+		lanternLight.enabled = false;
 		attachedParticleEmitter.SetActive(false);
 	}
 
 	private void turnOn() {
 		if (currentFuel > 0) {
 			on = true;
-			light.enabled = true;
+			lanternLight.enabled = true;
 			attachedParticleEmitter.SetActive(true);
 		}
 	}

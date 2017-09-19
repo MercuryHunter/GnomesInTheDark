@@ -240,6 +240,7 @@ public class Inventory : MonoBehaviour {
         holdingItems[position] = null;
         switchToEmpty(position);
         buttonShowing[position] = false;
+        itemsInBag--;
     }
 
     public GameObject checkHasPick()

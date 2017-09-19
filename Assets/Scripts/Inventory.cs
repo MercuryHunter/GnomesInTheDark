@@ -19,15 +19,18 @@ public class Inventory : MonoBehaviour {
     private bool[] buttonShowing = new bool[3];
     int buttonOn = 0;
     private GameObject[] holdingItems = new GameObject[3];
-    public static GameObject item;
+    public GameObject item;
+    
     private bool isFull = false;
     private int itemsInBag = 0;
     public GameObject player;
-    public static bool inItemTrigger;
+    public bool inItemTrigger;
+    
 
     public void Start()
     {
         inItemTrigger = false;
+        
         for (int i = 0; i < numButtons; i++)
         {
             buttonShowing[i] = false;
@@ -56,9 +59,8 @@ public class Inventory : MonoBehaviour {
             
         }
         if (Input.GetKeyDown("e"))
-        {
-            print("e pressed");
-            if (inItemTrigger && !item.GetComponent<Item>().inInventory)
+        { 
+            if (inItemTrigger && !item.GetComponent<Item>().inInventory && (item.GetComponent<PickController>() == null || !item.GetComponent<PickController>().checkHolding()))
             {
                 print("Trigger enter");
                 if (!isFull)
@@ -67,8 +69,9 @@ public class Inventory : MonoBehaviour {
                 }
             }
         }
+        
 
-       
+
     }
 
     public void onItemClick(Button button)
@@ -110,10 +113,11 @@ public class Inventory : MonoBehaviour {
             print(holdingItems[buttonOn]);
             print(buttonOn);
             dropItem(holdingItems[buttonOn].GetComponent<Item>());
-            
+            holdingItems[buttonOn].GetComponent<SphereCollider>().enabled = true;
             holdingItems[buttonOn] = null;
             print(holdingItems[buttonOn]);
             buttonShowing[clickedButton] = false;
+            
 
         }
     }
@@ -122,19 +126,31 @@ public class Inventory : MonoBehaviour {
     {
 
         item.setTransform(player.transform, true);
+        isFull = false;
     }
 
     public void pickUpItem(GameObject gItem)
     {
         itemsInBag++;
+        if (itemsInBag == 3)
+        {
+            isFull = true;
+        }
         gItem.GetComponent<Item>().pickUp();
         for (int i = 0; i < numButtons; i++)
         {
             print("went throught" + i);
             if (holdingItems[i] == null)
             {
-                
+                gItem.GetComponent<SphereCollider>().enabled = false;
                 holdingItems[i] = gItem;
+                if (gItem.GetComponent<Item>().itemType == Item.ItemType.UTILITY)
+                {
+                    print("Hellow worlds");
+                    
+                    gItem.GetComponent<PickController>().setHoldingPosition(i);
+                }
+
                 switch (i){
                     case 0:
                         cog1.image.sprite = cogTexture;
@@ -162,22 +178,81 @@ public class Inventory : MonoBehaviour {
         if (buttonShowing[clickedButton])
         {
             Item item = holdingItems[buttonOn].GetComponent<Item>();
-            if (!item.checkHolding())
+            PickController holdingPick = holdingItems[buttonOn].GetComponent<PickController>();
+            if (!holdingPick.checkHolding())
             {
                 item.setTransform(player.transform, false);
                 item.getItem().transform.parent = player.transform;
-              //  GameObject.Find("Equip" + Convert.ToString(clickedButton + 1)).GetComponent<Image>().enabled = false;
+                item.GetComponent<PickController>().addPlayer(item.transform.parent.gameObject);
+                item.GetComponent<SphereCollider>().enabled = false;
+                //  GameObject.Find("Equip" + Convert.ToString(clickedButton + 1)).GetComponent<Image>().enabled = false;
 
             }
             else
             {
                 item.getItem().transform.parent = null;
                 item.gameObject.SetActive(false);
-                item.setHolding(false);
+                holdingPick.setHolding(false);
             }
 
         }
     }
 
-    
+    public GameObject getNextItem()
+    {
+        for (int i = 0; i < numButtons; i++)
+        {
+            if (holdingItems[i] != null && holdingItems[i].GetComponent<Item>().itemType != Item.ItemType.UTILITY)
+            {
+                GameObject temp = holdingItems[i];
+                holdingItems[i] = null;
+                temp.SetActive(true);
+                itemsInBag--;
+                buttonShowing[i] = false;
+                switchToEmpty(i);
+                print("got next button");
+                isFull = false;
+                return temp;
+            }
+        }
+        return null;
+    }
+
+    public void switchToEmpty(int i)
+    {
+        switch (i)
+        {
+            case 0:
+                cog1.image.sprite = EmptyTexture;
+                break;
+            case 1:
+                cog2.image.sprite = EmptyTexture;
+                break;
+            case 2:
+                pick1.image.sprite = EmptyTexture;
+                break;
+        }
+    }
+
+    public void destroyItem(int position)
+    {
+        Destroy(holdingItems[position]);
+        holdingItems[position] = null;
+        switchToEmpty(position);
+        buttonShowing[position] = false;
+    }
+
+    public GameObject checkHasPick()
+    {
+        for (int i =0; i < numButtons; i++)
+        {
+            if (holdingItems[i] != null && holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.UTILITY && holdingItems[i].GetComponent<PickController>().checkHolding())
+            {
+                return holdingItems[i];
+            }
+        }
+        return null;
+    }
+
+
 }

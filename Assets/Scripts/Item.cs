@@ -11,6 +11,7 @@ public class Item : MonoBehaviour {
     public enum ItemType { COG, UTILITY};
     public ItemType itemType;
     public GameObject holdingPosition;
+    
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class Item : MonoBehaviour {
         currentLocation = transform;
        // print(originalPosition);
         inInventory = false;
+        
         //itemType = ItemType.UTILITY;
     }
 
@@ -36,7 +38,7 @@ public class Item : MonoBehaviour {
             tempPos.x += 0.3f;
             currentLocation.position = tempPos;
             transform.position = holdingPosition.transform.position;
-            isHolding = true;
+            GetComponent<PickController>().setHolding(true);
         }
         else
         {
@@ -47,8 +49,8 @@ public class Item : MonoBehaviour {
             currentLocation.position = tempPos;
             transform.position = currentLocation.position;
             print("went in here");
-            isHolding = false;
-            
+            GetComponent<PickController>().setHolding(false);
+
         }
         
         //gameObject.GetComponent<Renderer>().enabled = false;
@@ -66,13 +68,7 @@ public class Item : MonoBehaviour {
         
     }
 
-    public bool checkHolding()
-    {
-        return isHolding;
-    }
+   
 
-    public void setHolding(bool set)
-    {
-        isHolding = set;
-    }
+    
 }

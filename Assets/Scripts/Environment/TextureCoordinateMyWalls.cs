@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TextureCoordinateMyWalls : MonoBehaviour {
@@ -14,19 +15,24 @@ public class TextureCoordinateMyWalls : MonoBehaviour {
 		Vector2[] uvs = new Vector2[vertices.Length];
 
 		int count = 0, slowCount = 0;
+		Debug.Log(mesh.normals.Length);
 		for (int i = 0; i < vertices.Length; i++)
 		{
 			switch (count) {
 				case 0:
+					// Top Left
 					uvs[i] = new Vector2(0, (1f / slowCountTick) * slowCount);
 					break;
 				case 1:
+					// Top Right
 					uvs[i] = new Vector2(0, (1f / slowCountTick) * (slowCount + 1));
 					break;
 				case 2:
+					// Bottom Left
 					uvs[i] = new Vector2(yRepetitions, (1f / slowCountTick) * slowCount);
 					break;
 				case 3:
+					// Bottom Right
 					uvs[i] = new Vector2(yRepetitions, (1f / slowCountTick) * (slowCount + 1));
 					break;
 			}
@@ -36,6 +42,7 @@ public class TextureCoordinateMyWalls : MonoBehaviour {
 		}
 		
 		mesh.uv = uvs;
+		mesh.RecalculateNormals();
 	}
 	
 	// Update is called once per frame

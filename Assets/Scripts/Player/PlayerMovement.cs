@@ -89,7 +89,8 @@ public class PlayerMovement : MonoBehaviour {
     {
         bool walking = mh != 0f || mv != 0f;
         animator.SetBool("IsWalking", walking);
-        if (walking) anim.Play("Wizard_Run"); else { anim.Play("Wizard_Idle"); };//Garbage!!!!
+		if (walking) anim.CrossFade("Wizard_Run"); 
+		else { anim.CrossFade("Wizard_Idle"); };
         
     }
 }

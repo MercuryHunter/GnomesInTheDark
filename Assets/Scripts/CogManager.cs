@@ -17,16 +17,18 @@ public class CogManager : MonoBehaviour {
     public void addMainCog(GameObject newCog, bool mainMachine)
     {
         cogCount++;
+        GameObject temp = GameObject.Find("CogMainSlot" + cogCount.ToString());
         if (!mainMachine)
         {
-            GameObject temp = GameObject.Find("CogMainSlot" + cogCount.ToString());
-            GameObject cloneCog = Instantiate(cogPrefab, temp.transform.position, temp.transform.rotation);
+            
+            GameObject cloneCog = Instantiate(newCog, temp.transform.position, temp.transform.rotation);
             //newCog.transform.position = temp.transform.position;
-            Destroy(temp);
+            
         }
         else
         {
-
+            newCog.transform.position = temp.transform.position;
         }
+        Destroy(temp);
     }
 }

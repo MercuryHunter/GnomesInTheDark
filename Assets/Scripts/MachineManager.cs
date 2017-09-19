@@ -22,6 +22,7 @@ public class MachineManager : MonoBehaviour {
         {
             if (inCogMachineTrigger )
             {
+                print("There it is again");
                 int cogNum;
                 if (cogPosition.name.Length == 13)
                 {
@@ -29,6 +30,7 @@ public class MachineManager : MonoBehaviour {
                 }
                 else
                 {
+                    print("There it is again short");
                     cogNum = Convert.ToInt32(cogPosition.name.Substring(cogPosition.name.Length - 1, 1)) - 1;
                 }
                 
@@ -41,24 +43,30 @@ public class MachineManager : MonoBehaviour {
 
     public void addCog(int position)
     {
-        GameObject replacement = GameObject.Find("Backpack").GetComponent<Inventory>().getNextItem();
-        if (replacement != null)
+        GameObject replacement = GameObject.Find("Player").GetComponentInChildren<Inventory>().getNextItem();
+        print(replacement);
+        if (replacement != null && replacement.GetComponent<Item>().itemType != Item.ItemType.UTILITY)
         {
-            Vector3 cogPosition = cogs[position].transform.position;
-            Destroy(cogs[position]);
-            replacement.transform.position = cogPosition;
-            replacement.GetComponent<BoxCollider>().enabled = true;
-            cogs[position] = replacement;
+            print("found next item its not null");
+            
+            
             if (cogs[position].name.Contains("CogMainSlot"))
             {
                 print("dont get in there");
-
+                //Vector3 cogPosition = cogs[position].transform.position;
+                //replacement.transform.position = cogPosition;
+                //replacement.GetComponent<BoxCollider>().enabled = true;
                 GameObject.Find("MainMachine").GetComponent<CogManager>().addMainCog(replacement, true);
                 //Destroy(replacement);
             }else{
                 print("get in there");
-                
-                
+                Vector3 cogPosition = cogs[position].transform.position;
+                Destroy(cogs[position]);
+                replacement.transform.position = cogPosition;
+                replacement.GetComponent<BoxCollider>().enabled = true;
+                cogs[position] = replacement;
+                print(cogs[position]);
+
                 GameObject.Find("MainMachine").GetComponent<CogManager>().addMainCog(replacement, false);
             }
 

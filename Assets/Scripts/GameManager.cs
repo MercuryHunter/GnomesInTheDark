@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
 
 	// X, Y, W, H
 	
-	private Rect[,] cameraDetails = new Rect[4, 4] {
+	private Rect[,] cameraDetailsVertical = new Rect[4, 4] {
 		// 1 Player
 		{
 			new Rect (0, 0, 1, 1),
@@ -41,6 +41,38 @@ public class GameManager : MonoBehaviour {
 			new Rect (0.5f, 0.5f, 0.5f, 0.5f)
 		}
 	};
+	
+	private Rect[,] cameraDetailsHorizontal = new Rect[4, 4] {
+		// 1 Player
+		{
+			new Rect (0, 0, 1, 1),
+			new Rect (-1, -1, -1, -1),
+			new Rect (-1, -1, -1, -1),
+			new Rect (-1, -1, -1, -1)
+		},
+		// 2 Player
+		{
+			new Rect (0, 0, 1, 0.5f),
+			new Rect (0, 0.5f, 1, 0.5f),
+			new Rect (-1, -1, -1, -1),
+			new Rect (-1, -1, -1, -1)
+		},
+		// 3 Player
+		{
+			new Rect (0, 0, 1, 0.5f),
+			new Rect (0, 0.5f, 0.5f, 0.5f),
+			new Rect (0.5f, 0.5f, 0.5f, 0.5f),
+			new Rect (-1, -1, -1, -1)
+		},
+		// 4 Player
+		{
+			new Rect (0, 0, 0.5f, 0.5f),
+			new Rect (0, 0.5f, 0.5f, 0.5f),
+			new Rect (0.5f, 0, 0.5f, 0.5f),
+			new Rect (0.5f, 0.5f, 0.5f, 0.5f)
+		}
+	};
+	
 
 	public void Start() {
 		initialisePlayers(3, null);
@@ -69,7 +101,7 @@ public class GameManager : MonoBehaviour {
 			
 			// Setup player camera.
 			Camera playerCam = currentPlayer.GetComponentInChildren<Camera>();
-			playerCam.rect = cameraDetails[numberOfPlayers - 1, i];
+			playerCam.rect = cameraDetailsHorizontal[numberOfPlayers - 1, i];
 			
 			// Set layer of player model to cull
 			int layer = LayerMask.NameToLayer("Player" + (i + 1));

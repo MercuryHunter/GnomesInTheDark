@@ -152,7 +152,7 @@ MonoBehaviour:
   - {fileID: 1226705950}
   - {fileID: 1402683406}
   playerPrefabs:
-  - {fileID: 1005808185458840, guid: 5885f28f2df254495a930549009e0348, type: 2}
+  - {fileID: 1389574940453132, guid: 5885f28f2df254495a930549009e0348, type: 2}
 --- !u!4 &99214674
 Transform:
   m_ObjectHideFlags: 0

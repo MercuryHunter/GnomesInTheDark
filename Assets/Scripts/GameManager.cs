@@ -11,30 +11,30 @@ public class GameManager : MonoBehaviour {
 
 	// X, Y, W, H
 	
-	private Rect[][] cameraDetails = {
+	private Rect[,] cameraDetails = new Rect[4, 4] {
 		// 1 Player
-		new Rect[] {
+		{
 			new Rect (0, 0, 1, 1),
 			new Rect (-1, -1, -1, -1),
 			new Rect (-1, -1, -1, -1),
 			new Rect (-1, -1, -1, -1)
 		},
 		// 2 Player
-		new Rect[] {
+		{
 			new Rect (0, 0, 0.5f, 1),
 			new Rect (0.5f, 0, 0.5f, 1),
 			new Rect (-1, -1, -1, -1),
 			new Rect (-1, -1, -1, -1)
 		},
 		// 3 Player
-		new Rect[] {
+		{
 			new Rect (0, 0, 0.5f, 1),
 			new Rect (0.5f, 0, 0.5f, 0.5f),
 			new Rect (0.5f, 0.5f, 0.5f, 0.5f),
 			new Rect (-1, -1, -1, -1)
 		},
 		// 4 Player
-		new Rect[] {
+		{
 			new Rect (0, 0, 0.5f, 0.5f),
 			new Rect (0, 0.5f, 0.5f, 0.5f),
 			new Rect (0.5f, 0, 0.5f, 0.5f),
@@ -69,13 +69,15 @@ public class GameManager : MonoBehaviour {
 			
 			// Setup player camera.
 			Camera playerCam = currentPlayer.GetComponentInChildren<Camera>();
-			playerCam.rect = cameraDetails[numberOfPlayers - 1][i];
+			playerCam.rect = cameraDetails[numberOfPlayers - 1, i];
 			
-			// Set layer of player
-			MoveToLayer(currentPlayer.transform, LayerMask.NameToLayer("Player" + (i + 1)));
+			// Set layer of player model to cull
+			int layer = LayerMask.NameToLayer("Player" + (i + 1));
+			currentPlayer.layer = layer;
+			Transform model = currentPlayer.transform.FindChild("Model");
+			MoveToLayer(model, layer);
 			
-			// Set player UI up like camera
-			MoveToLayer(currentPlayer.transform.FindChild("UI").transform, 0);
+			// TODO: Modify lantern and object positions
 
 			// TODO: Figure out audio
 		}

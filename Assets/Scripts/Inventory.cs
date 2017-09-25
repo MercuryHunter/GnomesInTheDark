@@ -113,6 +113,7 @@ public class Inventory : MonoBehaviour {
             print(holdingItems[buttonOn]);
             print(buttonOn);
             dropItem(holdingItems[buttonOn].GetComponent<Item>());
+            holdingItems[buttonOn].SetActive(true);
             holdingItems[buttonOn].GetComponent<SphereCollider>().enabled = true;
             holdingItems[buttonOn] = null;
             print(holdingItems[buttonOn]);

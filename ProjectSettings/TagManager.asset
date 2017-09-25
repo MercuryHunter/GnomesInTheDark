@@ -17,6 +17,8 @@ TagManager:
   - Lantern
   - LanternFlame
   - CogMachine
+  - TrapButton
+  - Letters
   layers:
   - Default
   - TransparentFX

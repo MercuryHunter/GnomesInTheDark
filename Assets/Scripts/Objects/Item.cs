@@ -49,7 +49,10 @@ public class Item : MonoBehaviour {
             currentLocation.position = tempPos;
             transform.position = currentLocation.position;
             print("went in here");
-            GetComponent<PickController>().setHolding(false);
+            if (itemType == ItemType.UTILITY)
+            {
+                GetComponent<PickController>().setHolding(false);
+            }
 
         }
         

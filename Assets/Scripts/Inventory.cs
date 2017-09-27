@@ -25,12 +25,14 @@ public class Inventory : MonoBehaviour {
     private int itemsInBag = 0;
     public GameObject player;
     public bool inItemTrigger;
+    int playerNumber;
     
 
     public void Start()
     {
         inItemTrigger = false;
-        
+        print(transform.parent.transform.parent.gameObject.name);
+        playerNumber = Convert.ToInt32(transform.parent.transform.parent.gameObject.name.Substring(6, 1));
         for (int i = 0; i < numButtons; i++)
         {
             buttonShowing[i] = false;
@@ -66,6 +68,7 @@ public class Inventory : MonoBehaviour {
                 if (!isFull)
                 {
                     pickUpItem(item);
+
                 }
             }
         }
@@ -147,9 +150,17 @@ public class Inventory : MonoBehaviour {
                 holdingItems[i] = gItem;
                 if (gItem.GetComponent<Item>().itemType == Item.ItemType.UTILITY)
                 {
-                    print("Hellow worlds");
+                    
                     
                     gItem.GetComponent<PickController>().setHoldingPosition(i);
+                }
+                else
+                {
+                    int level = GameObject.Find("GameManager").GetComponent<GameManager>().getPlayerLevel(playerNumber);
+                    print("Player is on level " + level);
+                    GameObject.Find("Level" + level.ToString()).GetComponent<levelHolder>().addCog();
+                    //int playerNum = Convert.ToInt32(player.name.Substring(6, 1));
+                    GameObject.Find("GameManager").GetComponent<GameManager>().updateAllPlayers(playerNumber);
                 }
 
                 switch (i){

@@ -19,6 +19,7 @@ public class PlayerInventory : MonoBehaviour {
             print(other.gameObject);
             other.gameObject.GetComponentInParent<MachineManager>().inCogMachineTrigger = true;
             other.gameObject.GetComponentInParent<MachineManager>().cogPosition = other.gameObject;
+            other.gameObject.GetComponentInParent<MachineManager>().player = gameObject;
         }
         if (other.gameObject.tag== "BreakableWall")
         {

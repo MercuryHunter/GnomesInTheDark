@@ -6,14 +6,17 @@ using UnityEngine;
 public class MachineManager : MonoBehaviour {
     public bool inCogMachineTrigger;
     public int numCogs;
+    private int collectedCogs;
     private GameObject[] cogs;
     public bool inInventory;
     public GameObject cogPosition;
+    public GameObject player;
 
     public void Start()
     {
         cogs = new GameObject[numCogs];
         inCogMachineTrigger = false;
+        collectedCogs = 0;
     }
 
     public void Update()
@@ -43,12 +46,13 @@ public class MachineManager : MonoBehaviour {
 
     public void addCog(int position)
     {
-        GameObject replacement = GameObject.Find("Player").GetComponentInChildren<Inventory>().getNextItem();
+       // collectedCogs++;
+        GameObject replacement = player.GetComponentInChildren<Inventory>().getNextItem();
         print(replacement);
         if (replacement != null && replacement.GetComponent<Item>().itemType != Item.ItemType.UTILITY)
         {
             print("found next item its not null");
-            
+
             
             if (cogs[position].name.Contains("CogMainSlot"))
             {
@@ -69,10 +73,16 @@ public class MachineManager : MonoBehaviour {
 
                 GameObject.Find("MainMachine").GetComponent<CogManager>().addMainCog(replacement, false);
             }
+           
+            
 
         }
     }
 
+    public int getTotalCollectedCogs()
+    {
+        return collectedCogs;
+    }
 
 	
 }

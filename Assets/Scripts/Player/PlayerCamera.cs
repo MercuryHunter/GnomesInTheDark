@@ -12,16 +12,19 @@ public class PlayerCamera : MonoBehaviour {
     public static bool rotationLock = false;
     public GameObject target;
 
+    private BaseController controller;
+
     void Start() {
         // View everything but target - thou shalt not see thyself
         // Note: Set appropriate layer for attached parent
         this.GetComponent<Camera>().cullingMask = (int) (0xffffffff ^ (1 << target.layer));
+        controller = GetComponentInParent<BaseController>();
     }
 
     void Update() {
-        if (!rotationLock)
-        {
-            var camTurn = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        if (!rotationLock) {
+            //Vector2 camTurn = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+            Vector2 camTurn = new Vector2(controller.getXLook(), controller.getYLook());
 
             camTurn = Vector2.Scale(camTurn, new Vector2(Sensitivity * smoothing, Sensitivity * smoothing));
             smoothV.x = Mathf.Lerp(smoothV.x, camTurn.x, 1f / smoothing);

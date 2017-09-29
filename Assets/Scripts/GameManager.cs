@@ -75,10 +75,10 @@ public class GameManager : MonoBehaviour {
 	
 
 	public void Start() {
-		initialisePlayers(3, null);
+		initialisePlayers(2);
 	}
 
-	public void initialisePlayers(int numberOfPlayers, MonoBehaviour[] controllerInput) {
+	public void initialisePlayers(int numberOfPlayers) {
 		this.numberOfPlayers = numberOfPlayers;
 
 		if (numberOfPlayers > spawnPoints.Length) {
@@ -93,12 +93,31 @@ public class GameManager : MonoBehaviour {
 		}
 		
 		// Spawn
+		int controllerNumber = 1;
+		bool keyboard = Input.GetJoystickNames().Length < numberOfPlayers;
 		for (int i = 0; i < numberOfPlayers; i++) {
 			// Create a player
 			GameObject currentPlayer = Instantiate(playerPrefabs[i % playerPrefabs.Length], spawnPoints[i % spawnPoints.Length].position, spawnPoints[i % spawnPoints.Length].rotation);
+			currentPlayer.SetActive(false);
 			
-			// TODO: Set control scheme - idea being: add script to player that is polled by other player scripts for input
-			
+			// Set up controller
+			if (keyboard) {
+				// We need a keyboard if there aren't enough controllers
+				KeyboardController controller = currentPlayer.AddComponent<KeyboardController>();
+				keyboard = false;
+			}
+			else if (Application.platform == RuntimePlatform.OSXPlayer ||
+			         Application.platform == RuntimePlatform.OSXDashboardPlayer ||
+			         Application.platform == RuntimePlatform.OSXEditor) {
+				MacController controller = currentPlayer.AddComponent<MacController>();
+				controller.setJoyStickNumber(controllerNumber++);
+			}
+			else if (Application.platform == RuntimePlatform.WindowsPlayer ||
+			         Application.platform == RuntimePlatform.WindowsEditor) {
+				WindowsController controller = currentPlayer.AddComponent<WindowsController>();
+				controller.setJoyStickNumber(controllerNumber++);
+			}
+
 			// Setup player camera.
 			Camera playerCam = currentPlayer.GetComponentInChildren<Camera>();
 			playerCam.rect = cameraDetailsHorizontal[numberOfPlayers - 1, i];
@@ -108,10 +127,9 @@ public class GameManager : MonoBehaviour {
 			currentPlayer.layer = layer;
 			Transform model = currentPlayer.transform.FindChild("Model");
 			MoveToLayer(model, layer);
-			
-			// TODO: Modify lantern and object positions
 
 			// TODO: Figure out audio
+			currentPlayer.SetActive(true);
 		}
 		
 	}

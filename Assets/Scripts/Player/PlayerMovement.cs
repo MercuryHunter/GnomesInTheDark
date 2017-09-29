@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour {
 	private float timeToNextJump;
 
 	Rigidbody playerRigidbody;
+	private BaseController controller;
 	
 	void Start () {
 		// TODO: Put cursor stuff in mouse controller script?
@@ -19,12 +20,14 @@ public class PlayerMovement : MonoBehaviour {
 		playerRigidbody = GetComponent<Rigidbody> ();
 		// TODO: Think about jump timing - check if on floor instead of timing?
 		timeToNextJump = 0;
+		
+		controller = GetComponent<BaseController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float moveHorizontal = Input.GetAxisRaw ("Horizontal");
-		float moveVertical = Input.GetAxisRaw ("Vertical");
+		float moveHorizontal = controller.getXMovement();
+		float moveVertical = controller.getYMovement();
 
 		Move (moveHorizontal, moveVertical);
         // Rotation is done by the camera
@@ -35,7 +38,7 @@ public class PlayerMovement : MonoBehaviour {
 		
         //Jumping(Space bar)
 		timeToNextJump -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space) && timeToNextJump <= 0) {
+        if (controller.isJumpingPressed() && timeToNextJump <= 0) {
             Jump();
         }
 	}

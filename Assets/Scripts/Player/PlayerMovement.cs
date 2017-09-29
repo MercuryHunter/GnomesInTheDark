@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	Rigidbody playerRigidbody;
 	private BaseController controller;
+	private Animation anim;
 	
 	void Start () {
 		// TODO: Put cursor stuff in mouse controller script?
@@ -22,6 +24,7 @@ public class PlayerMovement : MonoBehaviour {
 		timeToNextJump = 0;
 		
 		controller = GetComponent<BaseController>();
+		anim = GetComponentInChildren<Animation>();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 
 		Move (moveHorizontal, moveVertical);
         // Rotation is done by the camera
+		Animate(moveHorizontal, moveVertical);
         
 		if (Input.GetKeyDown ("escape")) {
             Cursor.lockState = CursorLockMode.None;
@@ -60,5 +64,10 @@ public class PlayerMovement : MonoBehaviour {
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
     }
 
-    
+	private void Animate(float h, float v) {
+		bool walking = h != 0f || v != 0f;
+
+		if (walking) { anim.CrossFade("Wizard_Run");}
+		else { anim.CrossFade("Wizard_Idle"); }
+	}
 }

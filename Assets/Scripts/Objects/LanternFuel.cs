@@ -25,6 +25,8 @@ public class LanternFuel : MonoBehaviour {
 
 	private bool on;
 	
+	private BaseController controller;
+	
 	void Start () {
 		// Get child flameobject of lantern
 		GameObject myFlameObject = null;
@@ -46,6 +48,8 @@ public class LanternFuel : MonoBehaviour {
 
 		fuelSlider.maxValue = maxFuel;
 		fuelSlider.value = currentFuel;
+		
+		controller = GetComponentInParent<BaseController>();
 	}
 	
 	void Update () {
@@ -68,13 +72,18 @@ public class LanternFuel : MonoBehaviour {
 				currentFuel = 0;
 				turnOff();
 			}
-
+			
+			if (controller.increaseLight()) changeRange(rangeModifier);
+			if (controller.decreaseLight()) changeRange(-rangeModifier);
+			if (controller.toggleLight()) turnOff();
+			/*
 			if (Input.GetKeyDown(KeyCode.Equals)) changeRange(rangeModifier);
 			if (Input.GetKeyDown(KeyCode.Minus)) changeRange(-rangeModifier);
 			if (Input.GetKeyDown(KeyCode.F)) turnOff();
+			*/
 		}
 		else {
-			if (Input.GetKeyDown(KeyCode.F)) turnOn();
+			if (controller.toggleLight()) turnOn();
 		}
 	}
 

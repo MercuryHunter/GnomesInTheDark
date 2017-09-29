@@ -9,19 +9,19 @@ public class KeyboardController : MonoBehaviour, BaseController {
 	}
 	
 	public float getXMovement() {
-		return Input.GetAxis("Horizontal");
+		return Input.GetAxisRaw("Horizontal");
 	}
 
 	public float getYMovement() {
-		return Input.GetAxis("Vertical");
+		return Input.GetAxisRaw("Vertical");
 	}
 	
 	public float getXLook() {
-		return Input.GetAxis("Mouse X");
+		return Input.GetAxisRaw("Mouse X");
 	}
 
 	public float getYLook() {
-		return Input.GetAxis("Mouse Y");
+		return Input.GetAxisRaw("Mouse Y");
 	}
 	
 	public bool toggleLight() {

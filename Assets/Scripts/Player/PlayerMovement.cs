@@ -48,14 +48,13 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	private void Move(float moveHorizontal, float moveVertical) {
-		bool running = Input.GetKey (KeyCode.LeftShift);
-		float currentSpeed = ((running) ? runspeed : walkspeed);
+		bool running = controller.sprint();
+		float currentSpeed = running ? runspeed : walkspeed;
 		
 		Vector3 movement = transform.right * moveHorizontal + transform.forward * moveVertical;
 		movement = movement.normalized * currentSpeed * Time.deltaTime;
 		
 		playerRigidbody.MovePosition (transform.position + movement);
-        
     }
 
     private void Jump() {

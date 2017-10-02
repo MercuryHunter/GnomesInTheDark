@@ -8,6 +8,7 @@ public interface BaseController {
 
 	float getXMovement();
 	float getYMovement();
+	bool sprint();
 	
 	float getXLook();
 	float getYLook();

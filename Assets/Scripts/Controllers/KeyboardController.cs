@@ -15,7 +15,11 @@ public class KeyboardController : MonoBehaviour, BaseController {
 	public float getYMovement() {
 		return Input.GetAxisRaw("Vertical");
 	}
-	
+
+	public bool sprint() {
+		return Input.GetKey(KeyCode.LeftShift);
+	}
+
 	public float getXLook() {
 		return Input.GetAxisRaw("Mouse X");
 	}

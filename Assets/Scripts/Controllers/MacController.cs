@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,6 +46,8 @@ public class MacController : MonoBehaviour, BaseController {
 	}
 	
 	private int joystickNumber;
+	private bool sprinting;
+	private Vector2 movement;
 
 	public MacController(int joystickNumber) {
 		this.joystickNumber = joystickNumber;
@@ -61,14 +64,26 @@ public class MacController : MonoBehaviour, BaseController {
 	
 	// Left Stick
 	public float getXMovement() {
-		return Input.GetAxis(getJoystickAxisString(joystickNumber, 1));
+		movement.x = Input.GetAxis(getJoystickAxisString(joystickNumber, 1));
+		return movement.x;
 	}
 
 	// Left Stick
 	public float getYMovement() {
-		return - Input.GetAxis(getJoystickAxisString(joystickNumber, 2));
+		movement.y = -Input.GetAxis(getJoystickAxisString(joystickNumber, 2));
+		return movement.y;
 	}
-	
+
+	public bool sprint() {
+		bool input = Input.GetKeyDown(getJoystickButtonString(joystickNumber, 11));
+		if (input) sprinting = true;
+		else if (sprinting) {
+			// If movement is sufficiently small, we're no longer sprinting
+			if (movement.magnitude < 0.1) sprinting = false;
+		}
+		return sprinting;
+	}
+
 	// Right Stick
 	public float getXLook() {
 		return Input.GetAxis(getJoystickAxisString(joystickNumber, 3));

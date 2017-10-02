@@ -11,7 +11,6 @@ public class LanternFuel : MonoBehaviour {
 	public float currentFuel = 10; // seconds of fuel
 	public float fuelUsageRatePerSecond = 1f;
 	public float fuelUsageModifier = 0.2f;
-	// TODO: Fix usage rate infinity
 
 	public Slider fuelSlider;
 
@@ -26,6 +25,7 @@ public class LanternFuel : MonoBehaviour {
 	private bool on;
 	
 	private BaseController controller;
+	private SphereCollider lightCollider;
 	
 	void Start () {
 		// Get child flameobject of lantern
@@ -50,6 +50,7 @@ public class LanternFuel : MonoBehaviour {
 		fuelSlider.value = currentFuel;
 		
 		controller = GetComponentInParent<BaseController>();
+		lightCollider = GetComponent<SphereCollider>();
 	}
 	
 	void Update () {
@@ -66,6 +67,7 @@ public class LanternFuel : MonoBehaviour {
 				lanternLight.range + maxFlickerDifference
 			);
 			lanternLight.range = Mathf.Clamp(newRange, minRange, maxRange);
+			lightCollider.radius = lanternLight.range;
 			
 			if (currentFuel <= 0) {
 				// Disable if out of fuel

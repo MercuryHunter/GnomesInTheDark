@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
 
     public enum LEVELS { LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, LEVEL7, LEVEL8 };
     public LEVELS[] currentLevel;
+    // the number of cogs of on eavh level
     private int[] numCogsPerLevel = { 3, 3, 3, 4, 3, 4, 4 };
+    // array of the number of players, stores the level number that a each player was on
     private int[] playerLevels;
 
 	private int numberOfPlayers;
@@ -155,15 +157,18 @@ public class GameManager : MonoBehaviour
 
 	public int getPlayerLevel(int playerNum)
 	{
+        // gets the level of a player from the playerLevels
 		return playerLevels[playerNum - 1];
 	}
 
 	public void changeLevel(int newLevel, int playerNum)
 	{
-		print("level number is" + newLevel + " plus player number" + playerNum);
+		// used when a player changes level to reasign the number of cogs on the level and number of cogs collected
+        //gets the number of cogs that have been collected on a level
 		int collectedCogs = GameObject.Find("Level" + newLevel.ToString()).GetComponent<levelHolder>().getTotalCollected();
+        // gets all the text components to find the level text component to change
 		Text[] UITexts = GameObject.Find("player" + playerNum.ToString()).GetComponentsInChildren<Text>();
-		//Text[] UITexts = playerPrefabs[playerNum].GetComponentsInChildren<Text>();
+		// sets the players new level
 		playerLevels[playerNum - 1] = newLevel;
 		for (int i = 0; i < UITexts.Length; i++)
 		{
@@ -177,6 +182,7 @@ public class GameManager : MonoBehaviour
 
 	public void updateAllPlayers(int playerOnLevel)
 	{
+        //used when a player picks up a cogs to change the number of cogs collected for all players on that level.
 		for (int i = 0; i < numberOfPlayers; i++)
 		{
 			if ( playerLevels[i] ==playerLevels[ playerOnLevel-1])

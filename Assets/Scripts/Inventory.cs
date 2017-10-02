@@ -140,7 +140,7 @@ public class Inventory : MonoBehaviour {
         {
             isFull = true;
         }
-        gItem.GetComponent<Item>().pickUp();
+        gItem.GetComponent<Item>().pickUp(transform.parent.gameObject);
         for (int i = 0; i < numButtons; i++)
         {
             print("went throught" + i);

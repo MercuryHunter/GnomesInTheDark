@@ -10,7 +10,7 @@ public class Item : MonoBehaviour {
     private bool isHolding;
     public enum ItemType { COG, UTILITY};
     public ItemType itemType;
-    public GameObject holdingPosition;
+    private GameObject holdingPosition;
     
 
     private void Start()
@@ -19,6 +19,7 @@ public class Item : MonoBehaviour {
         currentLocation = transform;
        // print(originalPosition);
         inInventory = false;
+      //  holdingPosition = transform.parent.FindChild("ObjectPosition").gameObject;
         
         //itemType = ItemType.UTILITY;
     }
@@ -63,12 +64,16 @@ public class Item : MonoBehaviour {
 
     }
 
-    public void pickUp()
+    public void pickUp(GameObject newParent)
     {
         gameObject.SetActive(false);
         gameObject.GetComponent<SphereCollider>().enabled = false;
         inInventory = true;
-        
+        transform.parent = newParent.transform;
+        print(newParent.name);
+      //  GameObject tempGame = GetComponentInParent<GameObject>("UI")
+      // one goes up to UI, next takes you up to player, Because I need the onject position for the pick or cog
+        holdingPosition = transform.parent.transform.parent.FindChild("ObjectPosition").gameObject;
     }
 
    

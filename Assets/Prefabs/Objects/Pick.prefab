@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 135505908380587354}
   m_Layer: 0
   m_Name: pickaxe
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4339194173463488}
   m_Layer: 0
   m_Name: Pick
-  m_TagString: Untagged
+  m_TagString: Pick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -240,7 +240,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inInventory: 0
   itemType: 1
-  holdingPosition: {fileID: 0}
 --- !u!114 &114810217030150032
 MonoBehaviour:
   m_ObjectHideFlags: 1

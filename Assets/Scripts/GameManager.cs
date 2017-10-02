@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 			// Create a player
 			GameObject currentPlayer = Instantiate(playerPrefabs[i % playerPrefabs.Length], spawnPoints[i % spawnPoints.Length].position, spawnPoints[i % spawnPoints.Length].rotation);
 			currentPlayer.SetActive(false);
-			
+            currentPlayer.name = "player" + (i+1).ToString();
 			// Set up controller
 			if (keyboard) {
 				// We need a keyboard if there aren't enough controllers

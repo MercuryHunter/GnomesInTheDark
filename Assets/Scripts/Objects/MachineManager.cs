@@ -25,7 +25,7 @@ public class MachineManager : MonoBehaviour {
         {
             if (inCogMachineTrigger )
             {
-                print("There it is again");
+                
                 int cogNum;
                 if (cogPosition.name.Length == 13)
                 {
@@ -33,10 +33,10 @@ public class MachineManager : MonoBehaviour {
                 }
                 else
                 {
-                    print("There it is again short");
+                    
                     cogNum = Convert.ToInt32(cogPosition.name.Substring(cogPosition.name.Length - 1, 1)) - 1;
                 }
-                
+                print(cogNum);
                 cogs[cogNum] = cogPosition;
                 addCog(cogNum);
                 inCogMachineTrigger = false;
@@ -50,20 +50,14 @@ public class MachineManager : MonoBehaviour {
         GameObject replacement = player.GetComponentInChildren<Inventory>().getNextItem();
         print(replacement);
         if (replacement != null && replacement.GetComponent<Item>().itemType != Item.ItemType.UTILITY)
-        {
-            print("found next item its not null");
-
-            
+        {            
             if (cogs[position].name.Contains("CogMainSlot"))
             {
-                print("dont get in there");
-                //Vector3 cogPosition = cogs[position].transform.position;
-                //replacement.transform.position = cogPosition;
-                //replacement.GetComponent<BoxCollider>().enabled = true;
+                
                 GameObject.Find("MainMachine").GetComponent<CogManager>().addMainCog(replacement, true);
                 //Destroy(replacement);
             }else{
-                print("get in there");
+            
                 Vector3 cogPosition = cogs[position].transform.position;
                 Destroy(cogs[position]);
                 replacement.transform.position = cogPosition;
@@ -73,8 +67,8 @@ public class MachineManager : MonoBehaviour {
 
                 GameObject.Find("MainMachine").GetComponent<CogManager>().addMainCog(replacement, false);
             }
-           
-            
+
+            replacement.transform.parent = null;
 
         }
     }

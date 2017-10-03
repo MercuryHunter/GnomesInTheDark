@@ -58,12 +58,14 @@ public class Item : MonoBehaviour {
             {
                 GetComponent<PickController>().setHolding(false);
             }
+            transform.parent = null;
 
         }
         //activates all the gameobjects components again
         gameObject.SetActive(true);
         gameObject.GetComponent<SphereCollider>().enabled = true;
         inInventory = false;
+
 
     }
 

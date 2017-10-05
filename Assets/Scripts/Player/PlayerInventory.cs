@@ -35,6 +35,11 @@ public class PlayerInventory : MonoBehaviour {
                 tempPick.GetComponent<PickController>().wall = other.gameObject;
             }
         }
+        if (other.gameObject.tag == "OilRig")
+        {
+            print("enetered oil rig" + other.name);
+            GetComponentInChildren<LanternFuel>().setInOilRig(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -61,6 +66,10 @@ public class PlayerInventory : MonoBehaviour {
                     tempPick.GetComponent<PickController>().wall = null;
                 }
             }
+        }
+        if (other.gameObject.tag == "OilRig")
+        {
+            GetComponentInChildren<LanternFuel>().setInOilRig(false);
         }
     }
 }

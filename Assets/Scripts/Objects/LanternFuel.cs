@@ -23,8 +23,9 @@ public class LanternFuel : MonoBehaviour {
 	public float maxFlickerDifference = 0.1f;
 
 	private bool on;
-	
-	private BaseController controller;
+    private bool inOilRig;
+
+    private BaseController controller;
 	private SphereCollider lightCollider;
 	
 	void Start () {
@@ -45,8 +46,10 @@ public class LanternFuel : MonoBehaviour {
 		
 		lanternLight.intensity = intensity;
 		on = true;
+        inOilRig = false;
 
-		fuelSlider.maxValue = maxFuel;
+
+        fuelSlider.maxValue = maxFuel;
 		fuelSlider.value = currentFuel;
 		
 		controller = GetComponentInParent<BaseController>();
@@ -87,6 +90,13 @@ public class LanternFuel : MonoBehaviour {
 		else {
 			if (controller.toggleLight()) turnOn();
 		}
+        if (inOilRig)
+        {
+            if (Input.GetKeyDown("e"))
+            {
+                refillFuel();
+            }
+        }
 	}
 
 	private void changeRange(float amount) {
@@ -127,4 +137,15 @@ public class LanternFuel : MonoBehaviour {
 			currentFuel += amount;
 		}
 	}
+
+    public void refillFuel()
+    {
+        currentFuel = maxFuel;
+        turnOn();
+    }
+
+    public void setInOilRig(bool s)
+    {
+        inOilRig = s;
+    }
 }

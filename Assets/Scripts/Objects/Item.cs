@@ -8,7 +8,7 @@ public class Item : MonoBehaviour {
     private Transform currentLocation;
     public bool inInventory;
     private bool isHolding;
-    public enum ItemType { COG, UTILITY};
+    public enum ItemType { COG, UTILITY, LEVER};
     public ItemType itemType;
     private GameObject holdingPosition;
     

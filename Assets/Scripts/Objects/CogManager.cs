@@ -31,4 +31,10 @@ public class CogManager : MonoBehaviour {
         }
         Destroy(temp);
     }
+
+    public bool allCollected()
+    {
+
+        return (cogCount == 0);
+    }
 }

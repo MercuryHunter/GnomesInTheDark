@@ -26,20 +26,24 @@ public class letterController : MonoBehaviour
             {
                 if (inLetterTrigger)
                 {
-                    Image[] images = player.GetComponentsInChildren<Image>();
-                    for (int i = 0; i < images.Length; i++)
-                    {
-                        if (images[i].gameObject.name == "Letterspace")
-                        {
+                    print("E pressed");
+                    print(player.gameObject.name);
+                    Image images =   player.transform.FindChild("Letterspace").gameObject.GetComponent<Image>();
+                    //Image[] images = player.GetComponentsInChildren<Image>();
+                   // for (int i = 0; i < images.Length; i++)
+                   // {
+                       // if (images[i].gameObject.name == "Letterspace")
+                       // {
+                            print("Found letter space");
                             isHolding = true;
-                            images[i].gameObject.GetComponent<Image>().enabled = true;
-                            onImage = images[i];
+                            images.gameObject.GetComponent<Image>().enabled = true;
+                            onImage = images;
                             onImage.sprite = replacedImage;
                             gameObject.GetComponent<MeshRenderer>().enabled = false;
                             gameObject.GetComponent<SphereCollider>().enabled = false;
                             inLetterTrigger = false;
-                        }
-                    }
+                        //}
+                   // }
                 }
             }
             else
@@ -56,9 +60,12 @@ public class letterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
+        print("In letter controller");
+        print(other.gameObject.tag);
+        print(other.gameObject.name);
         if (other.gameObject.tag == "Player")
         {
+            print("Trigger active");
             inLetterTrigger = true;
             player = other.gameObject;
         }

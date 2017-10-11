@@ -230,7 +230,7 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public GameObject getNextItem()
+    public GameObject getNextItem(bool isLeverCheck)
     {
         // gets the next cog that can be added to the cog machine
         for (int i = 0; i < numButtons; i++)
@@ -239,9 +239,14 @@ public class Inventory : MonoBehaviour {
             if (holdingItems[i] != null && holdingItems[i].GetComponent<Item>().itemType != Item.ItemType.UTILITY)
             {
                 // get the item to add to the machine
+                if (!isLeverCheck && holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.LEVER)
+                {
+                    continue;
+                }
                 GameObject temp = holdingItems[i];
                 holdingItems[i] = null;
                 temp.SetActive(true);
+                temp.transform.parent = null;
                 itemsInBag--;
                 buttonShowing[i] = false;
                 switchToEmpty(i);

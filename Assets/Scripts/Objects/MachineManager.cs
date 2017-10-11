@@ -29,17 +29,36 @@ public class MachineManager : MonoBehaviour {
                 int cogNum;
                 if (cogPosition.name.Length == 13)
                 {
-                    cogNum = Convert.ToInt32(cogPosition.name.Substring(cogPosition.name.Length - 1, 1)) - 2;
+                 print("got in here and now it doesnt work");
+                    cogNum = Convert.ToInt32(cogPosition.name.Substring(cogPosition.name.Length - 2, 2)) - 1;
+                    print("cog num is " + cogNum + cogPosition);
                 }
                 else
                 {
-                    
+                    print("got in  and now it doesnt work");
                     cogNum = Convert.ToInt32(cogPosition.name.Substring(cogPosition.name.Length - 1, 1)) - 1;
                 }
+                print(cogPosition);
                 print(cogNum);
-                cogs[cogNum] = cogPosition;
-                addCog(cogNum);
-                inCogMachineTrigger = false;
+                if (cogNum >= 25)
+                {
+                    if (GetComponent<CogManager>().allCollected())
+                    {
+                        addLever(cogPosition);
+                    }
+                        
+                }
+                else
+                {
+
+                    print(cogNum);
+                    cogs[cogNum] = cogPosition;
+                    addCog(cogNum);
+
+                    inCogMachineTrigger = false;
+                }
+
+                
             }
         }
     }
@@ -47,8 +66,8 @@ public class MachineManager : MonoBehaviour {
     public void addCog(int position)
     {
        // collectedCogs++;
-        GameObject replacement = player.GetComponentInChildren<Inventory>().getNextItem();
-        print(replacement);
+        GameObject replacement = player.GetComponentInChildren<Inventory>().getNextItem(false);
+       // print(replacement);
         if (replacement != null && replacement.GetComponent<Item>().itemType != Item.ItemType.UTILITY)
         {            
             if (cogs[position].name.Contains("CogMainSlot"))
@@ -76,6 +95,16 @@ public class MachineManager : MonoBehaviour {
     public int getTotalCollectedCogs()
     {
         return collectedCogs;
+    }
+
+    public void addLever(GameObject lever)
+    {
+        GameObject replacement = player.GetComponentInChildren<Inventory>().getNextItem(true);
+        Vector3 cogPosition = lever.transform.position;
+        Destroy(lever);
+        replacement.transform.position = cogPosition;
+        replacement.GetComponent<BoxCollider>().enabled = true;
+        GameObject.Find("EscapeDoor").transform.GetChild(0).gameObject.GetComponent<exitDoor>().activateDoor();
     }
 
 	

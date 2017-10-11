@@ -19,6 +19,7 @@ TagManager:
   - CogMachine
   - TrapButton
   - Letters
+  - ExitDoor
   layers:
   - Default
   - TransparentFX

@@ -19,4 +19,5 @@ public interface BaseController {
 
 	bool interact();
 	bool inventory();
+    bool attack();
 }

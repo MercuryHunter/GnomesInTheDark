@@ -8,13 +8,14 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
     // used to store the different items that are collected by each player
+    private BaseController controller;
     // all the buttons and images that the images takes are set here
     public Button cog1;
     public Button cog2;
     public Button pick1;
     public Sprite cogTexture;
     public Sprite EmptyTexture;
-    public EventSystem EventSystem;
+  //  public EventSystem EventSystem;
     private bool isInInventory = false;
     // number of buttons on each inventory system, so it can be change
     private int numButtons = 3;
@@ -33,6 +34,7 @@ public class Inventory : MonoBehaviour {
 
     public void Start()
     {
+        controller = GetComponentInParent<BaseController>();
         inItemTrigger = false;
         // saves the player number so each player can interact with things differently
         playerNumber = Convert.ToInt32(transform.parent.transform.parent.gameObject.name.Substring(6, 1));
@@ -47,7 +49,7 @@ public class Inventory : MonoBehaviour {
 
     public void Update()
     {
-        if (Input.GetKeyDown("i"))
+        if (controller.inventory())
         {
             if (isInInventory)
             {
@@ -66,7 +68,7 @@ public class Inventory : MonoBehaviour {
             }
             
         }
-        if (Input.GetKeyDown("e"))
+        if (controller.interact())
         { 
             // if it close to an item and the item isnt already in the inventory and it is either not or pick or it is not holding that pick it will proceed
             // I did this because the pick would be picked up 2 times when it was held

@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 	
 
 	public void Start() {
-		initialisePlayers(3);
+		initialisePlayers(2);
 		playerLevels = new int[numberOfPlayers];
 		for (int i = 0; i < numberOfPlayers; i++)
 		{

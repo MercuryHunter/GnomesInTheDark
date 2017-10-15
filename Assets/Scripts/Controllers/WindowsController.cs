@@ -117,4 +117,11 @@ public class WindowsController : MonoBehaviour, BaseController {
 	public bool inventory() {
 		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 3));
 	}
+
+    //break wall - attack
+
+    public bool attack()
+    {
+        return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 1));
+    }
 }

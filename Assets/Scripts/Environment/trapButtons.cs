@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class trapButtons : MonoBehaviour {
+public class trapButtons : MonoBehaviour, objectInteration {
 
     public GameObject trap;
     private bool inButtonTrigger;
@@ -18,19 +18,9 @@ public class trapButtons : MonoBehaviour {
 
     private void Update()
     {
-        if (inButtonTrigger)
-        {
-            //print("trigger went off");
-            if (Input.GetKeyDown("e"))
-            {
-                print("opened button");
-                buttonPressed = true;
-                trap.gameObject.SetActive(false);
-            }
-        }
         if (buttonPressed)
         {
-            print("button pressed");
+           // print("button pressed");
             timeDown += Time.deltaTime;
             if (timeDown > 3)
             {
@@ -41,20 +31,17 @@ public class trapButtons : MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+
+
+    public void interact( GameObject player)
     {
-        print(other.gameObject.tag);
-        if (other.gameObject.tag == "Player")
-        {
-            inButtonTrigger = true;
-        }
+
+        //print("trigger went off");
+
+           // print("opened button");
+            buttonPressed = true;
+            trap.gameObject.SetActive(false);
+   
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            inButtonTrigger = false;
-        }
-    }
 }

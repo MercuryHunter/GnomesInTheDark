@@ -47,4 +47,9 @@ public class KeyboardController : MonoBehaviour, BaseController {
 	public bool inventory() {
 		return Input.GetKeyDown(KeyCode.I);
 	}
+
+    public bool attack()
+    {
+        return Input.GetKeyDown(KeyCode.Q);
+    }
 }

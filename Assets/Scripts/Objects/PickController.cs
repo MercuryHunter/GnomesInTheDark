@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickController : MonoBehaviour {
+public class PickController : MonoBehaviour, objectInteration {
     public GameObject wall;
     public bool inWallTrigger;
-    private int numberHits;
+   // private int numberHits;
     public bool isHolding;
     private int holdingPosition;
     private GameObject player;
@@ -18,16 +18,7 @@ public class PickController : MonoBehaviour {
 
     public void Update()
     {
-        if (Input.GetKeyDown("q"))
-        {
-            if (inWallTrigger && isHolding)
-            {
-                Destroy(wall);
-                inWallTrigger = false;
-                wall = null;
-                player.GetComponentInChildren<Inventory>().destroyItem(holdingPosition);
-            }
-        }
+
     }
 
     public bool hitWall()
@@ -54,5 +45,16 @@ public class PickController : MonoBehaviour {
     public void addPlayer(GameObject playerNew)
     {
         player = playerNew;
+    }
+
+    public void interact(GameObject player)
+    {
+        if (inWallTrigger && isHolding)
+        {
+            Destroy(wall);
+            inWallTrigger = false;
+            wall = null;
+            player.GetComponentInChildren<Inventory>().destroyItem(holdingPosition);
+        }
     }
 }

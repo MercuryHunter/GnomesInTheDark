@@ -37,7 +37,7 @@ public class PlayerInventory : MonoBehaviour {
         }
         if (other.gameObject.tag == "OilRig")
         {
-            print("enetered oil rig" + other.name);
+           // print("enetered oil rig" + other.name);
             GetComponentInChildren<LanternFuel>().setInOilRig(true);
         }
     }

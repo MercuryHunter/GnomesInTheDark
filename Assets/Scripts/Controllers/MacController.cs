@@ -118,4 +118,11 @@ public class MacController : MonoBehaviour, BaseController {
 	public bool inventory() {
 		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 19));
 	}
+
+    //break wall - attack
+
+    public bool attack()
+    {
+        return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 17));
+    }
 }

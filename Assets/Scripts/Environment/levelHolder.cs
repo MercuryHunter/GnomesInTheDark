@@ -7,13 +7,13 @@ public class levelHolder : MonoBehaviour {
 
     public void addCog()
     {
-        print("Cog was added");
+      //  print("Cog was added");
         totalCollectedCogs++;
     }
 
     public int getTotalCollected()
     {
-        print("the nimber of cogs is" + totalCollectedCogs);
+      //  print("the nimber of cogs is" + totalCollectedCogs);
         return totalCollectedCogs;
     }
 }

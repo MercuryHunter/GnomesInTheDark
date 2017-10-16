@@ -8,6 +8,11 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
+	// This is for debugging using the editor
+	// Turn autoInstatiate off if this script must be called by another, like Main Menu
+	public bool autoInstantiate = false;
+	public int numPlayersToInstatiate = 3;
+	
     public enum LEVELS { LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, LEVEL7, LEVEL8 };
     public LEVELS[] currentLevel;
     // the number of cogs of on eavh level
@@ -85,11 +90,13 @@ public class GameManager : MonoBehaviour
 	
 
 	public void Start() {
-		initialisePlayers(3);
-		playerLevels = new int[numberOfPlayers];
-		for (int i = 0; i < numberOfPlayers; i++)
-		{
-			playerLevels[i] = 1;
+		if (autoInstantiate) {
+			initialisePlayers(numPlayersToInstatiate);
+			playerLevels = new int[numberOfPlayers];
+			for (int i = 0; i < numberOfPlayers; i++)
+			{
+				playerLevels[i] = 1;
+			}
 		}
 	}
 

@@ -8,8 +8,12 @@ public class PlayerMovement : MonoBehaviour {
 	public float walkspeed = 5.0f;
 	public float runspeed = 9.0f;
 
+	/*
 	public float timeBetweenJumps = 1.3f;
 	private float timeToNextJump;
+	*/
+	private bool allowMovement;
+	private bool canJump;
 
 	Rigidbody playerRigidbody;
 	private BaseController controller;
@@ -21,28 +25,34 @@ public class PlayerMovement : MonoBehaviour {
 		
 		playerRigidbody = GetComponent<Rigidbody> ();
 		// TODO: Think about jump timing - check if on floor instead of timing?
-		timeToNextJump = 0;
+		//timeToNextJump = 0;
 		
 		controller = GetComponent<BaseController>();
 		anim = GetComponentInChildren<Animation>();
+
+		allowMovement = true;
+		canJump = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		// Cursor Stuff
+		if (Input.GetKeyDown ("escape")) {
+			Cursor.lockState = CursorLockMode.None;
+		}
+		
 		float moveHorizontal = controller.getXMovement();
 		float moveVertical = controller.getYMovement();
 
-		Move (moveHorizontal, moveVertical);
-        // Rotation is done by the camera
-		Animate(moveHorizontal, moveVertical);
-        
-		if (Input.GetKeyDown ("escape")) {
-            Cursor.lockState = CursorLockMode.None;
+		if (allowMovement) {
+			Move(moveHorizontal, moveVertical);
+			// Rotation is done by the camera
+			Animate(moveHorizontal, moveVertical);
 		}
 		
         //Jumping(Space bar)
-		timeToNextJump -= Time.deltaTime;
-        if (controller.isJumpingPressed() && timeToNextJump <= 0) {
+		//timeToNextJump -= Time.deltaTime;
+        if (canJump && controller.isJumpingPressed()) { //timeToNextJump <= 0) {
             Jump();
         }
 	}
@@ -59,7 +69,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Jump() {
         // TODO: animation change here
-	    timeToNextJump = timeBetweenJumps;
+	    //timeToNextJump = timeBetweenJumps;
+	    canJump = false;
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
     }
 
@@ -68,5 +79,19 @@ public class PlayerMovement : MonoBehaviour {
 
 		if (walking) { anim.CrossFade("Wizard_Run");}
 		else { anim.CrossFade("Wizard_Idle"); }
+	}
+
+	public void attached() {
+		allowMovement = false;
+		canJump = true;
+		Animate(0, 0);
+	}
+
+	public void detach() {
+		allowMovement = true;
+	}
+
+	public void allowJump() {
+		canJump = true;
 	}
 }

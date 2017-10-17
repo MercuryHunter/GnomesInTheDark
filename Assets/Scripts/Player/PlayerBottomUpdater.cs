@@ -7,7 +7,7 @@ public class PlayerBottomUpdater : MonoBehaviour {
 	private PlayerMovement playerMovement;
 
 	private float attachedTimeToWaitCurrent = 0f;
-	private float attachedTimeToWait = 0.3f;
+	private float attachedTimeToWait = 0.1f;
 
 	public void Start() {
 		playerMovement = GetComponentInParent<PlayerMovement>();
@@ -36,9 +36,9 @@ public class PlayerBottomUpdater : MonoBehaviour {
 
 	private void OnTriggerExit(Collider other) {
 		if (other.transform.tag.Contains("PlayerHead")) {
-			//if (attachedTimeToWaitCurrent <= 0.0f) {
+			if (attachedTimeToWaitCurrent <= 0.0f) {
 				other.transform.GetComponent<TwoPlayerCoordination>().detach(transform.parent.gameObject);
-			//}
+			}
 		}
 	}
 }

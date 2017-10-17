@@ -146,6 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0425c81c8ed068a4aa5266dcdc38ce44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoInstantiate: 1
+  numPlayersToInstatiate: 2
   currentLevel: 
   spawnPoints:
   - {fileID: 209405947}
@@ -153,7 +155,7 @@ MonoBehaviour:
   - {fileID: 1226705950}
   - {fileID: 1402683406}
   playerPrefabs:
-  - {fileID: 1956612207881026, guid: 5885f28f2df254495a930549009e0348, type: 2}
+  - {fileID: 1956612207881026, guid: faa544f299d1721468fd45cfecc6344f, type: 2}
 --- !u!4 &99214674
 Transform:
   m_ObjectHideFlags: 0
@@ -340,7 +342,7 @@ GameObject:
   - component: {fileID: 583231176}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -9,7 +9,7 @@ public class PlayerBottomUpdater : MonoBehaviour {
 	private float attachedTimeToWaitCurrent = 0f;
 	private float attachedTimeToWait = 0.1f;
 
-	public void Start() {
+	public void Awake() {
 		playerMovement = GetComponentInParent<PlayerMovement>();
 	}
 

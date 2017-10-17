@@ -22,10 +22,11 @@ public class TwoPlayerCoordination : MonoBehaviour {
 
 	public void detach(GameObject player) {
 		if (attached && player == attachedPlayer) {
+			attached = false;
+			
 			attachedPlayer.GetComponent<PlayerMovement>().detach();
 			attachedPlayer.GetComponent<Rigidbody>().detectCollisions = true;
 			attachedPlayer.GetComponent<Rigidbody>().useGravity = true;
-			attached = false;
 			attachedPlayer = null;
 		}
 	}
@@ -33,10 +34,14 @@ public class TwoPlayerCoordination : MonoBehaviour {
 	public bool attachOtherPlayer(GameObject player) {
 		if (!attached) {
 			attached = true;
+			
 			attachedPlayer = player;
 			attachedPlayer.GetComponent<PlayerMovement>().attached();
 			attachedPlayer.GetComponent<Rigidbody>().detectCollisions = false;
 			attachedPlayer.GetComponent<Rigidbody>().useGravity = false;
+
+			// TODO: Consider a lerp here or in player cam
+			attachedPlayer.GetComponentInChildren<PlayerCamera>().setBodyPointVector(transform);
 			return true;
 		}
 		return false;

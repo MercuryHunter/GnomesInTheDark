@@ -71,6 +71,7 @@ public class PlayerMovement : MonoBehaviour {
         // TODO: animation change here
 	    //timeToNextJump = timeBetweenJumps;
 	    canJump = false;
+	    GetComponent<Rigidbody>().detectCollisions = true;
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
     }
 

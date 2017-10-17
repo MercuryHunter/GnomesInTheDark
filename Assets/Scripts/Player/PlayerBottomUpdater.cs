@@ -6,8 +6,15 @@ public class PlayerBottomUpdater : MonoBehaviour {
 
 	private PlayerMovement playerMovement;
 
+	private float attachedTimeToWaitCurrent = 0f;
+	private float attachedTimeToWait = 0.3f;
+
 	public void Start() {
 		playerMovement = GetComponentInParent<PlayerMovement>();
+	}
+
+	public void Update() {
+		attachedTimeToWaitCurrent -= Time.deltaTime;
 	}
 	
 	private void OnTriggerEnter(Collider other) {
@@ -16,15 +23,22 @@ public class PlayerBottomUpdater : MonoBehaviour {
 		}
 		// TODO: This should have some sort of timing element.
 		if (other.transform.tag.Contains("PlayerHead")) {
-			Debug.Log("Trying to attach");
-			other.transform.GetComponent<TwoPlayerCoordination>().attachOtherPlayer(transform.parent.gameObject);
+			bool attached = other.transform.GetComponent<TwoPlayerCoordination>().attachOtherPlayer(transform.parent.gameObject);
+			if (attached) attachedTimeToWaitCurrent = attachedTimeToWait;
+		}
+	}
+
+	private void OnTriggerStay(Collider other) {
+		if (other.transform.tag.Contains("Floor")) {
+			playerMovement.allowJump();
 		}
 	}
 
 	private void OnTriggerExit(Collider other) {
 		if (other.transform.tag.Contains("PlayerHead")) {
-			Debug.Log("Detaching");
-			other.transform.GetComponent<TwoPlayerCoordination>().detach(transform.parent.gameObject);
+			//if (attachedTimeToWaitCurrent <= 0.0f) {
+				other.transform.GetComponent<TwoPlayerCoordination>().detach(transform.parent.gameObject);
+			//}
 		}
 	}
 }

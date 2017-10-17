@@ -15,7 +15,6 @@ public class TwoPlayerCoordination : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (attached) {
-			Debug.Log("Setting player position to:" + transform.position);
 			attachedPlayer.transform.position = transform.position;
 			attachedPlayer.transform.rotation = transform.rotation;
 		}

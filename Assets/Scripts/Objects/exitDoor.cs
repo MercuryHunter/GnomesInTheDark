@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class exitDoor : MonoBehaviour {
+public class exitDoor : MonoBehaviour, objectInteration {
 
 	public void activateDoor()
     {
         transform.FindChild("warpDoor").gameObject.SetActive(true);
     }
 
-    private void OnTriggerEnter(Collider other)
+
+
+    public void interact(GameObject player)
     {
-        print(other.gameObject.name);
-        if (other.gameObject.tag == "Player")
-        {
-            Destroy(other.gameObject);
-        }
+        print("it interacted here");
+        Destroy(player);
     }
 }

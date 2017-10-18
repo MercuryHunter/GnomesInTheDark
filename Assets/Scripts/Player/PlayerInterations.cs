@@ -30,9 +30,11 @@ public class PlayerInterations : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        print(other.gameObject.name);
         tempObject = other.gameObject.GetComponent<objectInteration>();
         if (tempObject != null)
         {
+            print(other.gameObject.name);
             inTrigger = true;
         }
     }

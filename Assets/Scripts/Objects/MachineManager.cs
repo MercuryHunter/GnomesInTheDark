@@ -55,10 +55,10 @@ public class MachineManager : MonoBehaviour {
                     cogs[cogNum] = cogPosition;
                     addCog(cogNum);
 
-                    inCogMachineTrigger = false;
+                    
                 }
+                inCogMachineTrigger = false;
 
-                
             }
         }
     }

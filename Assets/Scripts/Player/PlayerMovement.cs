@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 	Rigidbody playerRigidbody;
 	private BaseController controller;
 	private Animation anim;
+    private bool movementLock;
 	
 	void Start () {
 		// TODO: Put cursor stuff in mouse controller script?
@@ -25,25 +26,32 @@ public class PlayerMovement : MonoBehaviour {
 		
 		controller = GetComponent<BaseController>();
 		anim = GetComponentInChildren<Animation>();
+
+        movementLock = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float moveHorizontal = controller.getXMovement();
-		float moveVertical = controller.getYMovement();
+        if (!movementLock)
+        {
+            float moveHorizontal = controller.getXMovement();
+            float moveVertical = controller.getYMovement();
 
-		Move (moveHorizontal, moveVertical);
-        // Rotation is done by the camera
-		Animate(moveHorizontal, moveVertical);
-        
-		if (Input.GetKeyDown ("escape")) {
-            Cursor.lockState = CursorLockMode.None;
-		}
-		
-        //Jumping(Space bar)
-		timeToNextJump -= Time.deltaTime;
-        if (controller.isJumpingPressed() && timeToNextJump <= 0) {
-            Jump();
+            Move(moveHorizontal, moveVertical);
+            // Rotation is done by the camera
+            Animate(moveHorizontal, moveVertical);
+
+            if (Input.GetKeyDown("escape"))
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+
+            //Jumping(Space bar)
+            timeToNextJump -= Time.deltaTime;
+            if (controller.isJumpingPressed() && timeToNextJump <= 0)
+            {
+                Jump();
+            }
         }
 	}
 
@@ -69,4 +77,9 @@ public class PlayerMovement : MonoBehaviour {
 		if (walking) { anim.CrossFade("Wizard_Run");}
 		else { anim.CrossFade("Wizard_Idle"); }
 	}
+
+    public void lockPlayerMovement()
+    {
+        movementLock = !movementLock;
+    }
 }

@@ -90,13 +90,7 @@ public class LanternFuel : MonoBehaviour {
 		else {
 			if (controller.toggleLight()) turnOn();
 		}
-        if (inOilRig)
-        {
-            if (Input.GetKeyDown("e"))
-            {
-                refillFuel();
-            }
-        }
+        
 	}
 
 	private void changeRange(float amount) {
@@ -148,4 +142,6 @@ public class LanternFuel : MonoBehaviour {
     {
         inOilRig = s;
     }
+
+   
 }

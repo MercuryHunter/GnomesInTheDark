@@ -9,7 +9,7 @@ public class PlayerCamera : MonoBehaviour {
 
     public float Sensitivity = 2.5f;
     public float smoothing = 2.0f;
-    public static bool rotationLock = false;
+    public bool rotationLock ;
     public GameObject target;
 
     private BaseController controller;
@@ -19,6 +19,7 @@ public class PlayerCamera : MonoBehaviour {
         // Note: Set appropriate layer for attached parent
         this.GetComponent<Camera>().cullingMask = (int) (0xffffffff ^ (1 << target.layer));
         controller = GetComponentInParent<BaseController>();
+        rotationLock = false;
     }
 
     void Update() {
@@ -43,5 +44,10 @@ public class PlayerCamera : MonoBehaviour {
         smoothV.y = 0;
         mouseLook.x = other.rotation.eulerAngles.y;
         mouseLook.y = 0;
+    }
+
+    public void setRotation()
+    {
+        rotationLock = !rotationLock;
     }
 }

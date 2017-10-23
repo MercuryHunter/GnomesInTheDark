@@ -6,6 +6,30 @@ public class PlayerInventory : MonoBehaviour {
     /* Class is used for the player to interact with the items to add to the inventory or use 
      * to break walls or add to a cog machines */
 
+    private BaseController controller;
+    private objectInteration tempObject;
+    private bool inTrigger;
+
+    private void Start()
+    {
+        controller = GetComponentInParent<BaseController>();
+    }
+
+    private void Update()
+    {
+        if (inTrigger)
+        {
+            if (controller.interact())
+            {
+                tempObject.interact(this.gameObject);
+            }
+            if (controller.attack())
+            {
+               // tempObject.interact(this.gameObject);
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // On the item trigger with the player  
@@ -35,10 +59,13 @@ public class PlayerInventory : MonoBehaviour {
                 tempPick.GetComponent<PickController>().wall = other.gameObject;
             }
         }
-        if (other.gameObject.tag == "OilRig")
+        tempObject = other.gameObject.GetComponent<objectInteration>();
+       
+       
+        if (tempObject != null)
         {
-           // print("enetered oil rig" + other.name);
-            GetComponentInChildren<LanternFuel>().setInOilRig(true);
+            print(other.gameObject.name);
+            inTrigger = true;
         }
     }
 
@@ -67,9 +94,12 @@ public class PlayerInventory : MonoBehaviour {
                 }
             }
         }
-        if (other.gameObject.tag == "OilRig")
+        tempObject = other.gameObject.GetComponent<objectInteration>();
+      
+       
+        if (tempObject != null)
         {
-            GetComponentInChildren<LanternFuel>().setInOilRig(false);
+            inTrigger = false;
         }
     }
 }

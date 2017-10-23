@@ -8,6 +8,7 @@ public class PlayerTeleportation : MonoBehaviour {
 	float teleportContactTimeRequired = 0.5f;
 	float teleportContactTimeCurrent = 0;
     int playerNum;
+    BaseController controller;
 
 	private PlayerCamera camera;
 
@@ -18,7 +19,8 @@ public class PlayerTeleportation : MonoBehaviour {
     private void Start()
     {
         playerNum = Convert.ToInt32(gameObject.name.Substring(6, 1));
-        print(playerNum + gameObject.name);
+        //print(playerNum + gameObject.name);
+        controller = GetComponent<BaseController>();
     }
 
     void Update() {
@@ -27,7 +29,7 @@ public class PlayerTeleportation : MonoBehaviour {
 
 	void OnTriggerStay(Collider other) {
 		// TODO: UI Text for player about this
-		if (Input.GetKeyDown(KeyCode.E) && teleportContactTimeCurrent <= 0 && other.tag.Equals("Teleporter")) {
+		if (controller.interact() && teleportContactTimeCurrent <= 0 && other.tag.Equals("Teleporter")) {
             int levelNumber = Convert.ToInt32(other.transform.parent.name.Substring(10,1));
             if (other.gameObject.name == "Location1")
             {

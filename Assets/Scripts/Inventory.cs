@@ -57,14 +57,16 @@ public class Inventory : MonoBehaviour {
                 isInInventory = false;
                 GetComponent<Canvas>().enabled = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                PlayerCamera.rotationLock = false;
+                // PlayerCamera.rotationLock = false;
+                transform.parent.transform.parent.GetComponentInChildren<PlayerCamera>().setRotation();
             }
             else{
                 // if it is not showing, then it is shown and the players rotation is set to false
                 isInInventory = true;
                 GetComponent<Canvas>().enabled = true;
                 Cursor.lockState = CursorLockMode.None;
-                PlayerCamera.rotationLock = true;
+                // PlayerCamera.rotationLock = true;
+                transform.parent.transform.parent.GetComponentInChildren<PlayerCamera>().setRotation();
             }
             
         }

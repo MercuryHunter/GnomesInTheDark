@@ -75,6 +75,12 @@ public class PlayerMovement : MonoBehaviour {
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);
     }
 
+	public void Throw() {
+		canJump = false;
+		GetComponent<Rigidbody>().detectCollisions = true;
+		playerRigidbody.AddForce((Vector3.up + Vector3.forward) * 14, ForceMode.Impulse);
+	}
+
 	private void Animate(float h, float v) {
 		bool walking = h != 0f || v != 0f;
 

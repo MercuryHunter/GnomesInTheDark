@@ -6,10 +6,12 @@ public class TwoPlayerCoordination : MonoBehaviour {
 
 	private bool attached;
 	private GameObject attachedPlayer;
+	private BaseController controller;
 
 	// Use this for initialization
 	void Start () {
 		attached = false;
+		controller = GetComponentInParent<BaseController>();
 	}
 	
 	// Update is called once per frame
@@ -17,6 +19,12 @@ public class TwoPlayerCoordination : MonoBehaviour {
 		if (attached) {
 			attachedPlayer.transform.position = transform.position;
 			attachedPlayer.transform.rotation = transform.rotation;
+			
+			if (controller.throwing()) {
+				PlayerMovement playerMovement = attachedPlayer.GetComponent<PlayerMovement>();
+				playerMovement.Throw();
+				//detach(attachedPlayer);
+			}
 		}
 	}
 

@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour {
 	public void Throw() {
 		canJump = false;
 		GetComponent<Rigidbody>().detectCollisions = true;
-		playerRigidbody.AddForce((Vector3.up + Vector3.forward) * 14, ForceMode.Impulse);
+		playerRigidbody.AddForce((Vector3.up + transform.forward) * 25, ForceMode.Impulse);
 	}
 
 	private void Animate(float h, float v) {

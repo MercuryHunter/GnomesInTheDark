@@ -74,7 +74,7 @@ public class WindowsController : MonoBehaviour, BaseController {
 	}
 
 	public bool sprint() {
-		bool input = Input.GetKeyDown(getJoystickButtonString(joystickNumber, 11));
+		bool input = Input.GetKeyDown(getJoystickButtonString(joystickNumber, 8));
 		if (input) sprinting = true;
 		else if (sprinting) {
 			// If movement is sufficiently small, we're no longer sprinting
@@ -116,5 +116,10 @@ public class WindowsController : MonoBehaviour, BaseController {
 	// Y
 	public bool inventory() {
 		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 3));
+	}
+	
+	// B
+	public bool throwing() {
+		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 1));
 	}
 }

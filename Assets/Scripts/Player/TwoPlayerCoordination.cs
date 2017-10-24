@@ -33,8 +33,15 @@ public class TwoPlayerCoordination : MonoBehaviour {
 			attached = false;
 			
 			attachedPlayer.GetComponent<PlayerMovement>().detach();
-			attachedPlayer.GetComponent<Rigidbody>().detectCollisions = true;
-			attachedPlayer.GetComponent<Rigidbody>().useGravity = true;
+			
+			Rigidbody rb = attachedPlayer.GetComponent<Rigidbody>();
+			rb.detectCollisions = true;
+			rb.useGravity = true;
+			
+			PlayerCamera playerCamera = attachedPlayer.GetComponentInChildren<PlayerCamera>();
+			playerCamera.rotationLock = false;
+			playerCamera.setBodyPointVector(transform);
+			
 			attachedPlayer = null;
 		}
 	}
@@ -42,14 +49,19 @@ public class TwoPlayerCoordination : MonoBehaviour {
 	public bool attachOtherPlayer(GameObject player) {
 		if (!attached) {
 			attached = true;
-			
 			attachedPlayer = player;
+			
 			attachedPlayer.GetComponent<PlayerMovement>().attached();
-			attachedPlayer.GetComponent<Rigidbody>().detectCollisions = false;
-			attachedPlayer.GetComponent<Rigidbody>().useGravity = false;
+			
+			Rigidbody rb = attachedPlayer.GetComponent<Rigidbody>();
+			rb.detectCollisions = false;
+			rb.useGravity = false;
 
 			// TODO: Consider a lerp here or in player cam
-			attachedPlayer.GetComponentInChildren<PlayerCamera>().setBodyPointVector(transform);
+			PlayerCamera playerCamera = attachedPlayer.GetComponentInChildren<PlayerCamera>();
+			playerCamera.setBodyPointVector(transform);
+			playerCamera.rotationLock = true;
+			
 			return true;
 		}
 		return false;

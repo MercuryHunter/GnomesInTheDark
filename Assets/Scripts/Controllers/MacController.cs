@@ -86,12 +86,12 @@ public class MacController : MonoBehaviour, BaseController {
 
 	// Right Stick
 	public float getXLook() {
-		return Input.GetAxis(getJoystickAxisString(joystickNumber, 3));
+		return Input.GetAxisRaw(getJoystickAxisString(joystickNumber, 3));
 	}
 
 	// Right Stick
 	public float getYLook() {
-		return - Input.GetAxis(getJoystickAxisString(joystickNumber, 4));
+		return - Input.GetAxisRaw(getJoystickAxisString(joystickNumber, 4));
 	}
 	
 	// Right Bumper
@@ -117,5 +117,10 @@ public class MacController : MonoBehaviour, BaseController {
 	// Y
 	public bool inventory() {
 		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 19));
+	}
+	
+	// B
+	public bool throwing() {
+		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 17));
 	}
 }

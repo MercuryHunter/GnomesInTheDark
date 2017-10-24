@@ -1,0 +1,22 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Colour_2
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.276860 0.276860 0.276860
+Ni 1.000000
+d 0.876471
+illum 2
+map_Kd C:\Users\Grega\Desktop\slimeblock.png
+
+newmtl Colour_2.001
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.276860 0.276860 0.276860
+Ni 1.000000
+d 0.248372
+illum 2
+map_Kd C:\Users\Grega\Desktop\slimeblock.png

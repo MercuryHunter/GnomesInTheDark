@@ -20,6 +20,7 @@ TagManager:
   - TrapButton
   - Letters
   - ExitDoor
+  - Slime
   layers:
   - Default
   - TransparentFX

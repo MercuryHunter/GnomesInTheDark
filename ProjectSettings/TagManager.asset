@@ -22,6 +22,7 @@ TagManager:
   - ExitDoor
   - PlayerHead
   - Floor
+  - CogSlot
   layers:
   - Default
   - TransparentFX

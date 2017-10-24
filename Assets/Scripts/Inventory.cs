@@ -17,18 +17,24 @@ public class Inventory : MonoBehaviour {
     public EventSystem EventSystem;
     private bool isInInventory = false;
     // number of buttons on each inventory system, so it can be change
+    // TODO: Switch this to index system
     private int numButtons = 3;
     private bool[] buttonShowing = new bool[3];
     int buttonOn = 0;
+    
     private GameObject[] holdingItems = new GameObject[3];
     public GameObject item;
     
     private bool isFull = false;
     private int itemsInBag = 0;
+    
+    // TODO: Shouldn't be necessary
     // used to get player position and transform
     public GameObject player;
     public bool inItemTrigger;
     int playerNumber;
+
+    private PlayerCamera camera;
     
 
     public void Start()
@@ -43,6 +49,7 @@ public class Inventory : MonoBehaviour {
             holdingItems[i] = null;
         }
         //holdingItems[0] = item;
+        camera = GetComponentInParent<PlayerCamera>();
     }
 
     public void Update()
@@ -55,14 +62,15 @@ public class Inventory : MonoBehaviour {
                 isInInventory = false;
                 GetComponent<Canvas>().enabled = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                PlayerCamera.rotationLock = false;
+                
+                camera.rotationLock = false;
             }
             else{
                 // if it is not showing, then it is shown and the players rotation is set to false
                 isInInventory = true;
                 GetComponent<Canvas>().enabled = true;
                 Cursor.lockState = CursorLockMode.None;
-                PlayerCamera.rotationLock = true;
+                camera.rotationLock = true;
             }
             
         }
@@ -297,6 +305,47 @@ public class Inventory : MonoBehaviour {
         }
         return null;
     }
+    
+    // And Jonathan begins refactoring
+    
+    // TODO: Disable a button
+    
+    // TODO: Enable a button
+    
+    // TODO: Add item to inventory
+    
+    // TODO: Remove item from inventory
+    public GameObject TakeOutOfInventory(int position) {
+        GameObject item = holdingItems[position];
+        
+        holdingItems[position] = null;
+        item.SetActive(true);
+        item.transform.parent = null;
+        itemsInBag--; // TODO: Shouldn't be necessary
+        buttonShowing[position] = false; // TODO: Call disable button method
+        switchToEmpty(position);
+             
+        isFull = false; // TODO: Shouldn't be necessary
+        return item;
+    }
 
+    public bool HasCog() {
+        foreach (GameObject currentItem in holdingItems) {
+            if (currentItem == null) continue;
+            if (currentItem.GetComponent<Item>().itemType == Item.ItemType.COG) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public GameObject GetCogIfAvailable() {
+        for (int i = 0; i < holdingItems.Length; i++) {
+            if (holdingItems[i] == null) continue;
+            if (holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.COG) {
+                return TakeOutOfInventory(i);
+            }
+        }
+        return null;
+    }
 }

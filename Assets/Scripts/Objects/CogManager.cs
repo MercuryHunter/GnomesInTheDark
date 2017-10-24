@@ -3,38 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CogManager : MonoBehaviour {
-    private int cogCount;
+    private int collectedCogs;
     private const int TOTALCOGS = 25;
 
-    public GameObject cogPrefab;
-
-    public void Start()
-    {
-        {
-            cogCount = 0;
-        }
-    }
-    public void addMainCog(GameObject newCog, bool mainMachine)
-    {
-        cogCount++;
-        GameObject temp = GameObject.Find("CogMainSlot" + cogCount.ToString());
-        if (!mainMachine)
-        {
-            
-            GameObject cloneCog = Instantiate(newCog, temp.transform.position, temp.transform.rotation);
-            //newCog.transform.position = temp.transform.position;
-            
-        }
-        else
-        {
-            newCog.transform.position = temp.transform.position;
-        }
-        Destroy(temp);
+    public void Start() {
+        collectedCogs = 0;
     }
 
-    public bool allCollected()
-    {
+    public void addMainCog(GameObject newCog) {
+        // Machine manager already replaces the slot. This is only if it's not to this machine.
 
-        return (cogCount == 0);
+        GameObject slot = GameObject.Find("CogMainSlot" + collectedCogs.ToString("00"));// collectedCogs.ToString());
+        Instantiate(newCog, slot.transform.position, slot.transform.rotation);
+        Destroy(slot);
+    }
+    
+    public void incrementNumberOfCogs() {
+        collectedCogs++;
+    }
+
+    public bool allCollected() {
+        return collectedCogs == TOTALCOGS;
     }
 }

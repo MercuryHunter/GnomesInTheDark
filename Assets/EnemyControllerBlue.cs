@@ -1,0 +1,269 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+
+public class EnemyControllerBlue : MonoBehaviour {
+
+    enum State { GAURD, Chase, Return, Dead, RUN }
+    enum ChaseState { SCARED, BRAVER, IMMUNE }
+    //variables
+    public float MoveSpeed = 4.0f;
+    int stateDistance;
+    public GameObject slimeBase;
+    public GameObject[] guardPoint;
+    int gaurdLocation;
+    State state;
+    ChaseState chaseState;
+    Animation animation;
+    private UnityEngine.AI.NavMeshAgent agent;
+    public GameObject[] Players;
+    int InitCount = 1;
+    float baseDistance;
+    float[] PlayerDistances = { 0.0f, 0.0f, 0.0f, 0.0f };
+    bool[] playerChase = { true, true, true, true };
+    int currentTarget = 0;//Player1=0, Player2=1, Player3=2, Player4=3
+    private bool hasPlayer;
+    private GameObject capturedPlayer;
+    public float hurtTimer;
+    private float runTimer;
+    private float runAwayTime;
+
+
+    void Start()
+    {
+        state = State.GAURD;
+        animation = GetComponent<Animation>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        //Player = GameObject.FindGameObjectWithTag("Player");//Too slow to find object
+        hasPlayer = false;
+        capturedPlayer = null;
+        hurtTimer = 3f;
+        baseDistance = Vector3.Distance(slimeBase.transform.position, transform.position);
+        stateDistance = 4;
+        runTimer = 0;
+        runAwayTime = 10;
+        gaurdLocation = 1;
+        agent.SetDestination(guardPoint[gaurdLocation].transform.position);
+    }
+
+
+    void GetAgents()
+    {
+        Players = GameObject.FindGameObjectsWithTag("Player");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        if (InitCount > 0) { GetAgents(); InitCount--; }
+
+
+        //Loop thorugh players lenght to see which is closest
+        if (state != State.RUN)
+        {
+            float MinDistToPlayer = 100.0f;
+            float distToLantern;
+            for (int a = 0; a < Players.Length; a++)
+            {
+                if (playerChase[a])
+                {
+                    PlayerDistances[a] = Vector3.Distance(Players[a].transform.position, transform.position);//Distance to player
+                    if (PlayerDistances[a] < MinDistToPlayer)
+                    {
+                        MinDistToPlayer = PlayerDistances[a];//Assign new closest distance
+                        currentTarget = a;//Set Current Player Target
+                        float lanternToPlayer = Players[a].GetComponentInChildren<Light>().range;
+                        // print("Lantern "+lanternToPlayer);
+                        // print("player" +MinDistToPlayer);
+                        if (MinDistToPlayer < (lanternToPlayer - stateDistance) && Players[a].GetComponentInChildren<LanternFuel>().isOn())
+                        {
+                            // print("should run");
+                            state = State.RUN;
+                        }
+                    }
+                }
+            }
+
+            baseDistance = Vector3.Distance(slimeBase.transform.position, transform.position);
+
+            if (state != State.Return && state != State.RUN)
+            {
+                //Change to chase state if player gets within certain distance of enemy
+                if (MinDistToPlayer < 10.0f)
+                {
+                    state = State.Chase;
+                }
+                else {
+                    agent.SetDestination(guardPoint[gaurdLocation].transform.position);
+                    state = State.GAURD;
+                }
+            }
+
+
+            switch (state)
+            {
+                case State.GAURD:
+                    {
+                        float distToGaurdPoint = Vector3.Distance(guardPoint[gaurdLocation].transform.position, transform.position);
+                        //print(gaurdLocation);
+                        if(distToGaurdPoint < 3)
+                        {
+                            
+                            gaurdLocation++;
+                            if (gaurdLocation == guardPoint.Length)
+                            {
+                                gaurdLocation = 0;
+                            }
+                           // agent.SetDestination(guardPoint[gaurdLocation].transform.position);
+                        }
+                        
+                        break;
+                    }
+                case State.Chase:
+                    {
+
+                        agent.SetDestination(Players[currentTarget].transform.position);//Chases current target
+                        break;
+                    }
+                case State.Return:
+                    {
+                        agent.SetDestination(slimeBase.transform.position);
+
+                        if (baseDistance <= 6)
+                        {
+                            releasePlayer();
+                        }
+                        break;
+                    }
+                case State.RUN:
+                    {
+                        switch (chaseState)
+                        {
+                            case ChaseState.SCARED:
+                                {
+                                    print("got into scared");
+                                    agent.SetDestination(new Vector3(transform.position.x + 100, transform.position.y, transform.position.z - 3));
+                                    chaseState = ChaseState.BRAVER;
+                                    runAwayTime = 10;
+                                    break;
+                                }
+                            case ChaseState.BRAVER:
+                                {
+                                    print("got into Brave");
+                                    //agent.SetDestination(new Vector3((Players[currentTarget].transform.position.x - 3), Players[currentTarget].transform.position.y, Players[currentTarget].transform.position.z - 3));
+                                    agent.SetDestination(new Vector3(transform.position.x + 100, transform.position.y, transform.position.z - 3));
+                                    stateDistance = 6;
+                                    chaseState = ChaseState.IMMUNE;
+                                    runAwayTime = 5;
+                                    break;
+                                }
+                            case ChaseState.IMMUNE:
+                                {
+                                    print("got into immune");
+                                    agent.SetDestination(Players[currentTarget].transform.position);//Chases current target
+                                    break;
+                                }
+
+                        }
+                        animation.CrossFade("Walk");
+                        break;
+                    }
+            }//End switch
+        }
+        if (hasPlayer && capturedPlayer != null)
+        {
+            hurtTimer -= Time.deltaTime;
+            if (hurtTimer < 0)
+            {
+                capturedPlayer.GetComponent<PlayerHealth>().Damage(10);
+                hurtTimer = 3f;
+            }
+            // transform.position = new Vector3(transform.position.x - 0.01f, transform.position.y, transform.position.z);
+        }
+
+        if (state == State.RUN)
+        {
+            runTimer += Time.deltaTime;
+
+            if (runTimer > runAwayTime)
+            {
+                runTimer = 0;
+                state = State.GAURD;
+                //agent.SetDestination(guardPoint[gaurdLocation].transform.position);
+            }
+        }
+
+        //Animate
+        Animate(state);
+    }
+
+
+
+    void Animate(State s)
+    {
+        switch (s)
+        {
+            case State.GAURD:
+                {
+                    animation.CrossFade("Wait");
+                    break;
+                }
+            case State.Chase:
+                {
+                    animation.CrossFade("Walk");
+                    break;
+                }
+            case State.Return:
+                {
+                    animation.CrossFade("Walk");
+                    break;
+                }
+        }//End switch
+    }
+
+    private void releasePlayer()
+    {
+        capturedPlayer.transform.position = slimeBase.transform.position;
+        state = State.GAURD;
+        capturedPlayer.GetComponent<PlayerMovement>().lockPlayerMovement();
+        capturedPlayer.transform.parent = null;
+        PlayerDistances[currentTarget] = 100f;
+        hasPlayer = false;
+        // agent.SetDestination(transform.position);
+        // capturedPlayer = null; 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        print(other.gameObject.name);
+        if (other.gameObject.tag == "Player")
+        {
+            if (!hasPlayer)
+            {
+                playerChase[currentTarget] = false;
+                state = State.Return;
+                capturedPlayer = other.gameObject;
+                other.transform.parent = this.transform;
+                hasPlayer = true;
+                capturedPlayer.GetComponent<PlayerMovement>().lockPlayerMovement();
+                capturedPlayer.transform.FindChild("Lantern").gameObject.SetActive(false);
+                capturedPlayer.transform.position = transform.position;
+                //capturedPlayers.GetComponentInChildren<BoxCollider>().enabled = false;
+                //other.transform.FindChild("slimeCover").gameObject.GetComponent<Image>().enabled = true;
+                Image[] images = capturedPlayer.GetComponentsInChildren<Image>();
+                // print(images.Length);
+                for (int i = 0; i < images.Length; i++)
+                {
+                    if (images[i].gameObject.name == "SlimeCover")
+                    {
+                        images[i].gameObject.GetComponent<Image>().enabled = true;
+
+                    }
+                }
+            }
+        }
+    }
+}

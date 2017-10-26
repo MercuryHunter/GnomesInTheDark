@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
 			// Set up controller
 			if (keyboard) {
 				// We need a keyboard if there aren't enough controllers
-				KeyboardController controller = currentPlayer.AddComponent<KeyboardController>();
+				currentPlayer.AddComponent<KeyboardController>();
 				keyboard = false;
 			}
 			else if (Application.platform == RuntimePlatform.OSXPlayer ||

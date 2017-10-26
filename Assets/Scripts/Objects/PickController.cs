@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PickController : MonoBehaviour {
-    public GameObject wall;
-    public bool inWallTrigger;
     private int numberHits;
     public bool isHolding;
     private int holdingPosition;
@@ -12,30 +10,9 @@ public class PickController : MonoBehaviour {
 
     public void Start()
     {
-        inWallTrigger = false;
         isHolding = false;
     }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown("q"))
-        {
-            if (inWallTrigger && isHolding)
-            {
-                Destroy(wall);
-                inWallTrigger = false;
-                wall = null;
-                player.GetComponentInChildren<Inventory>().destroyItem(holdingPosition);
-            }
-        }
-    }
-
-    public bool hitWall()
-    {
-        
-        return false;
-    }
-
+    
     public bool checkHolding()
     {
         return isHolding;

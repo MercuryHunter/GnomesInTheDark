@@ -19,7 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4315988261017124}
-  m_Layer: 0
+  - component: {fileID: 65049853701520386}
+  m_Layer: 12
   m_Name: BreakableWall
   m_TagString: BreakableWall
   m_Icon: {fileID: 0}
@@ -35,7 +36,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4879493282850520}
   - component: {fileID: 33460056790534606}
-  - component: {fileID: 65328432391401204}
   - component: {fileID: 23213299986104942}
   m_Layer: 0
   m_Name: Model
@@ -51,7 +51,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1283238968418626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0532744, y: 1.1999998, z: 0.5100443}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4879493282850520}
@@ -64,13 +64,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1497038171764038}
-  m_LocalRotation: {x: -0, y: -0.060351618, z: -0, w: 0.9981772}
-  m_LocalPosition: {x: 25.274855, y: 2.6000001, z: 12.901175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10.049999, y: 5.1, z: 2.3}
   m_Children: []
   m_Father: {fileID: 4315988261017124}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -6.92, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23213299986104942
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -109,15 +109,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1497038171764038}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65328432391401204
+--- !u!65 &65049853701520386
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1497038171764038}
+  m_GameObject: {fileID: 1283238968418626}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 10.05, y: 5.1, z: 2.3}
   m_Center: {x: 0, y: 0, z: 0}

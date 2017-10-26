@@ -66,7 +66,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4074571109487440}
   - component: {fileID: 111867389416783224}
-  - component: {fileID: 114988351848769380}
   - component: {fileID: 195059188608038062}
   - component: {fileID: 54254287889508244}
   - component: {fileID: 135943149789478030}
@@ -243,22 +242,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  Players: []
-  hurtTimer: 0
---- !u!114 &114988351848769380
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1622006954907800}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb79689067cf304db59269bf1173519, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveSpeed: 4
-  slimeBase: {fileID: 0}
-  guardPoint: {fileID: 0}
   Players: []
   hurtTimer: 0
 --- !u!135 &135943149789478030

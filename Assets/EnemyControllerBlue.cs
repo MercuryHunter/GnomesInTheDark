@@ -24,11 +24,13 @@ public class EnemyControllerBlue : MonoBehaviour {
     float[] PlayerDistances = { 0.0f, 0.0f, 0.0f, 0.0f };
     bool[] playerChase = { true, true, true, true };
     int currentTarget = 0;//Player1=0, Player2=1, Player3=2, Player4=3
+    int capturedPlayerNum;
     private bool hasPlayer;
     private GameObject capturedPlayer;
     public float hurtTimer;
     private float runTimer;
     private float runAwayTime;
+    bool inSafeZone = false;
 
 
     void Start()
@@ -46,6 +48,7 @@ public class EnemyControllerBlue : MonoBehaviour {
         runAwayTime = 10;
         gaurdLocation = 1;
         agent.SetDestination(guardPoint[gaurdLocation].transform.position);
+        chaseState = ChaseState.IMMUNE;
     }
 
 
@@ -78,10 +81,16 @@ public class EnemyControllerBlue : MonoBehaviour {
                         float lanternToPlayer = Players[a].GetComponentInChildren<Light>().range;
                         // print("Lantern "+lanternToPlayer);
                         // print("player" +MinDistToPlayer);
-                        if (MinDistToPlayer < (lanternToPlayer - stateDistance) && Players[a].GetComponentInChildren<LanternFuel>().isOn())
+                        if ((MinDistToPlayer < (lanternToPlayer - stateDistance) && Players[a].GetComponentInChildren<LanternFuel>().isOn()) || inSafeZone)
                         {
                             // print("should run");
                             state = State.RUN;
+                            inSafeZone = false;
+                            if (hasPlayer)
+                            {
+                                freePlayer();
+                                print("Player is released");
+                            }
                         }
                     }
                 }
@@ -236,6 +245,29 @@ public class EnemyControllerBlue : MonoBehaviour {
         // capturedPlayer = null; 
     }
 
+    private void freePlayer()
+    {
+        capturedPlayer.GetComponent<PlayerMovement>().lockPlayerMovement();
+        capturedPlayer.transform.FindChild("Lantern").gameObject.SetActive(true);
+        capturedPlayer.transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z - 3);
+        capturedPlayer.transform.parent = null;
+        Image[] images = capturedPlayer.GetComponentsInChildren<Image>();
+        // print(images.Length);
+        for (int i = 0; i < images.Length; i++)
+        {
+            if (images[i].gameObject.name == "SlimeCover")
+            {
+                images[i].gameObject.GetComponent<Image>().enabled = true;
+
+            }
+        }
+        capturedPlayer = null;
+        playerChase[capturedPlayerNum] = true;
+        hasPlayer = false;
+        chaseState = ChaseState.BRAVER;
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         print(other.gameObject.name);
@@ -244,6 +276,7 @@ public class EnemyControllerBlue : MonoBehaviour {
             if (!hasPlayer)
             {
                 playerChase[currentTarget] = false;
+                capturedPlayerNum = currentTarget;
                 state = State.Return;
                 capturedPlayer = other.gameObject;
                 other.transform.parent = this.transform;
@@ -264,6 +297,22 @@ public class EnemyControllerBlue : MonoBehaviour {
                     }
                 }
             }
+        }
+        if (other.gameObject.tag == "SafeZone")
+        {
+            //print("Went into run");
+            inSafeZone = true;
+            //state = State.RUN;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "SafeZone")
+        {
+            //print("Went into run");
+            inSafeZone = false;
+            //state = State.RUN;
         }
     }
 }

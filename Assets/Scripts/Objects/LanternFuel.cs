@@ -143,5 +143,8 @@ public class LanternFuel : MonoBehaviour {
         inOilRig = s;
     }
 
-   
+   public bool isOn()
+    {
+        return on;
+    }
 }

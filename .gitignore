@@ -40,3 +40,6 @@ sysinfo.txt
 # Specific Stuff to ignore:
 Assets/Tools/TextMesh Pro/Examples*
 Plugins.meta
+Assets/Lavabrick/slimeblock/Materials/Colour_2.mat.meta
+Assets/Lavabrick/slimeblock/Materials/Colour_2.001.mat.meta
+Assets/Lavabrick/slimeblock/Materials/Colour_2.001.mat

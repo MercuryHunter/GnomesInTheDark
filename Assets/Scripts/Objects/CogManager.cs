@@ -10,10 +10,10 @@ public class CogManager : MonoBehaviour {
         collectedCogs = 0;
     }
 
-    public void addMainCog(GameObject newCog) {
+    public void addMainCog(GameObject newCog, int slotNumber) {
         // Machine manager already replaces the slot. This is only if it's not to this machine.
 
-        GameObject slot = GameObject.Find("CogMainSlot" + collectedCogs.ToString("00"));// collectedCogs.ToString());
+        GameObject slot = GameObject.Find("CogMainSlot" + slotNumber.ToString("00"));// collectedCogs.ToString());
         Instantiate(newCog, slot.transform.position, slot.transform.rotation);
         Destroy(slot);
     }

@@ -15,18 +15,14 @@ public class PlayerInventory : MonoBehaviour {
     private Inventory inventory;
     private BaseController controller;
 
-    private Collider otherObject;
-    private MachineManager interactingMachineManager;
-
     private LanternFuel lanternFuel;
 
     public void Start() {
         inventory = gameObject.GetComponentInChildren<Inventory>();
         controller = GetComponent<BaseController>();
-        
-        interactingMachineManager = null;
+
         interactibleMask = LayerMask.GetMask("Interactible");
-        
+
         cam = GetComponentInChildren<Camera>();
         lanternFuel = GetComponentInChildren<LanternFuel>();
     }
@@ -44,45 +40,20 @@ public class PlayerInventory : MonoBehaviour {
             }
 
             if (interactingObject == null) return;
-            
+
             if (interactingObject.tag == "Item") {
                 if (!inventory.IsFull()) inventory.AddItem(interactingObject);
-            } else if (interactingObject.tag == "CogSlot") {
-                // TODO: Fill in CogSlot
-            } else if (interactingObject.tag == "BreakableWall") {
+            }
+            else if (interactingObject.tag == "CogSlot") {
+                MachineManager machineManager = interactingObject.GetComponentInParent<MachineManager>();
+                machineManager.AddCogIntoSlot(inventory.GetCogIfAvailable(), interactingObject);
+            }
+            else if (interactingObject.tag == "BreakableWall") {
                 inventory.UseEquippedPick(interactingObject);
-            } else if (interactingObject.tag == "OilRig") {
+            }
+            else if (interactingObject.tag == "OilRig") {
                 lanternFuel.refillFuel();
             }
-            
-            // TODO: Refactor as above
-            if (interactingMachineManager != null) {
-                // Hey inventory, do we have cogs, if so, add them
-                if (inventory.HasCog()) {
-                    interactingMachineManager.AddCogIntoSlot(inventory.GetCogIfAvailable(), otherObject.gameObject);
-                    
-                }
-            }
         }
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        otherObject = other;
-
-        // On the item trigger with the player  
-
-        if (other.gameObject.tag == "CogSlot") {
-            // TODO: Change this from slot to machine, machine controlling which slot to fill in 
-            
-            interactingMachineManager = other.gameObject.GetComponentInParent<MachineManager>();
-        }
-    }
-
-    private void OnTriggerExit(Collider other) {
-        if (other.gameObject.tag == "CogMachine") {
-            other.gameObject.GetComponentInParent<MachineManager>().inCogMachineTrigger = false;
-            other.gameObject.GetComponentInParent<MachineManager>().cogPosition = null;
-        }
-
     }
 }

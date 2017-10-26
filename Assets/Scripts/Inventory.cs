@@ -15,17 +15,16 @@ public class Inventory : MonoBehaviour {
     public Sprite cogTexture;
     public Sprite EmptyTexture;
     public EventSystem EventSystem;
-    private bool isInInventory = false;
+   
     // number of buttons on each inventory system, so it can be change
     // TODO: Switch this to index system
     private int numButtons = 3;
     private bool[] buttonShowing = new bool[3];
     int buttonOn = 0;
     
-    private GameObject[] holdingItems = new GameObject[3];
+    
     public GameObject item;
     
-    private bool isFull = false;
     private int itemsInBag = 0;
     
     // TODO: Shouldn't be necessary
@@ -33,9 +32,17 @@ public class Inventory : MonoBehaviour {
     public GameObject player;
     public bool inItemTrigger;
     int playerNumber;
-
+    
     private PlayerCamera camera;
     
+    // TODO: NECESSARY
+    private bool showingInventory;
+    private Canvas canvas;
+    
+    private int selectedIndex;
+    private GameObject[] holdingItems;
+
+    private BaseController controller;
 
     public void Start()
     {
@@ -50,46 +57,51 @@ public class Inventory : MonoBehaviour {
         }
         //holdingItems[0] = item;
         camera = GetComponentInParent<PlayerCamera>();
+        
+        // TODO: NECESSARY STUFF
+        showingInventory = false;
+        canvas = GetComponent<Canvas>();
+        
+        selectedIndex = -1;
+        holdingItems =  new GameObject[3];
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown("i"))
+        if (controller.inventory())
         {
-            if (isInInventory)
-            {
-                // if the inventory is showing then it is taken away and the player can rotate again
-                isInInventory = false;
-                GetComponent<Canvas>().enabled = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                
-                camera.rotationLock = false;
-            }
-            else{
-                // if it is not showing, then it is shown and the players rotation is set to false
-                isInInventory = true;
-                GetComponent<Canvas>().enabled = true;
-                Cursor.lockState = CursorLockMode.None;
-                camera.rotationLock = true;
-            }
-            
+            // Invert Inventory State
+            if (showingInventory) hideInventory();
+            else showInventory();
         }
+        // TODO: Refactor into PlayerInventory
         if (Input.GetKeyDown("e"))
         { 
             // if it close to an item and the item isnt already in the inventory and it is either not or pick or it is not holding that pick it will proceed
             // I did this because the pick would be picked up 2 times when it was held
             if (inItemTrigger && !item.GetComponent<Item>().inInventory && (item.GetComponent<PickController>() == null || !item.GetComponent<PickController>().checkHolding()))
             {
-                if (!isFull)
+                if (!isFull())
                 {
                     pickUpItem(item);
 
                 }
             }
         }
-        
+    }
 
+    private void showInventory() {
+        showingInventory = true;
+        GetComponent<Canvas>().enabled = true;
+        Cursor.lockState = CursorLockMode.None;
+        camera.rotationLock = true;
+    }
 
+    private void hideInventory() {
+        showingInventory = false;
+        canvas.enabled = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        camera.rotationLock = false;
     }
 
     public void onItemClick(Button button)
@@ -151,7 +163,6 @@ public class Inventory : MonoBehaviour {
     {
         // resets its transform, with the drop set to true
         item.setTransform(player.transform, true);
-        isFull = false;
     }
 
     public void pickUpItem(GameObject gItem)
@@ -160,7 +171,7 @@ public class Inventory : MonoBehaviour {
         itemsInBag++;
         if (itemsInBag == 3)
         {
-            isFull = true;
+            //isFull = true;
         }
         //sets the transform in the item class
         gItem.GetComponent<Item>().pickUp(transform.parent.gameObject);
@@ -259,7 +270,6 @@ public class Inventory : MonoBehaviour {
                 buttonShowing[i] = false;
                 switchToEmpty(i);
              
-                isFull = false;
                 return temp;
             }
         }
@@ -307,6 +317,18 @@ public class Inventory : MonoBehaviour {
     }
     
     // And Jonathan begins refactoring
+
+    private bool isFull() {
+        foreach (GameObject gameObject in holdingItems) {
+            if (gameObject == null) return false;
+        }
+        return true;
+    }
+    
+    // TODO: Reset Buttons
+    private void resetButtons() {
+        
+    }
     
     // TODO: Disable a button
     
@@ -325,7 +347,6 @@ public class Inventory : MonoBehaviour {
         buttonShowing[position] = false; // TODO: Call disable button method
         switchToEmpty(position);
              
-        isFull = false; // TODO: Shouldn't be necessary
         return item;
     }
 

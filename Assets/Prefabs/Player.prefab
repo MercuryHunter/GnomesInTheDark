@@ -3611,6 +3611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sensitivity: 5
   smoothing: 2
+  rotationLock: 0
   target: {fileID: 1956612207881026}
 --- !u!114 &114506139045147870
 MonoBehaviour:
@@ -3768,6 +3769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a0594d17df42c40bdbc258b8482a1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactionDistance: 1
 --- !u!114 &114538534318120294
 MonoBehaviour:
   m_ObjectHideFlags: 1

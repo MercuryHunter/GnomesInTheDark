@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
+    public static int playerCount;
     public enum LEVELS { LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, LEVEL7, LEVEL8 };
     public LEVELS[] currentLevel;
     // the number of cogs of on eavh level
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 	
 
 	public void Start() {
-		initialisePlayers(2);
+		initialisePlayers(playerCount);
 		playerLevels = new int[numberOfPlayers];
 		for (int i = 0; i < numberOfPlayers; i++)
 		{

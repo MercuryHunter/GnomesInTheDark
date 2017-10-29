@@ -28,6 +28,8 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     public void Update() {
+        if (inventory.showingInventory) return; // Don't do any interactions if in inventory please
+        
         if (controller.interact()) {
             GameObject interactingObject = null;
 

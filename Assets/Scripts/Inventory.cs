@@ -32,6 +32,10 @@ public class Inventory : MonoBehaviour {
     private GameObject[] holdingItems;
 
     private BaseController controller;
+    
+    // Controller selection stuff:
+    private bool left;
+    private bool drop;
 
     public void Start() {
         // saves the player number so each player can interact with things differently
@@ -47,6 +51,8 @@ public class Inventory : MonoBehaviour {
         holdingItems = new GameObject[3];
 
         controller = GetComponentInParent<BaseController>();
+        left = true;
+        drop = true;
     }
 
     public void Update() {
@@ -54,6 +60,58 @@ public class Inventory : MonoBehaviour {
             // Invert Inventory State
             if (showingInventory) HideInventory();
             else ShowInventory();
+        }
+        
+        // This is kinda bad, but it'll have to do - not a general system, but fine for this specialised one.
+        // TODO: Highlighting of selection
+        if (showingInventory) {
+            if (controller.up()) {
+                if (left) {
+                    selectedIndex = GetPreviousNonEmptySlot();
+                    ResetButtons();
+                    EnableButton(selectedIndex);
+                }
+                else {
+                    drop = true;
+                }
+            }
+            if (controller.down()) {
+                if (left) {
+                    selectedIndex = GetNextNonEmptySlot();
+                    ResetButtons();
+                    EnableButton(selectedIndex);
+                }
+                else {
+                    if (holdingItems[selectedIndex].GetComponent<Item>().itemType == Item.ItemType.UTILITY)
+                        drop = false;
+                }
+            }
+            if (controller.left()) {
+                if (!left) {
+                    left = true;
+                    drop = true;
+                }
+            }
+            if (controller.right()) {
+                if (left) {
+                    left = false;
+                    drop = true;
+                }
+            }
+            if (controller.interact()) {
+                if (!left) {
+                    if (drop) {
+                        Drop(selectedIndex);
+                    }
+                    else {
+                        Equip(selectedIndex);
+                    }
+                }
+            }
+        }
+        else {
+            left = true;
+            drop = true;
         }
     }
 
@@ -69,30 +127,35 @@ public class Inventory : MonoBehaviour {
         canvas.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         camera.rotationLock = false;
-        resetButtons();
+        ResetButtons();
     }
 
     public void onItemClick(Button button) {
         int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
         if (holdingItems[buttonClicked] == null) return;
         
-        resetButtons();
+        ResetButtons();
         selectedIndex = buttonClicked;
-        enableButton(selectedIndex);
+        EnableButton(selectedIndex);
     }
 
     public void onDropClick(Button button) {
         // when the drop button is clicked it finds which button it belongs to
         int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
-        disableButton(buttonClicked);
-        ChangeImageToEmpty(buttonClicked);
+        
+        Drop(buttonClicked);
+    }
 
-        Item item = holdingItems[buttonClicked].GetComponent<Item>();
-        if (buttonClicked == equippedIndex) {
+    private void Drop(int index) {
+        DisableButton(index);
+        ChangeImageToEmpty(index);
+
+        Item item = holdingItems[index].GetComponent<Item>();
+        if (index == equippedIndex) {
             item.Dequip();
         }
         item.Drop();
-        holdingItems[buttonClicked] = null;
+        holdingItems[index] = null;
 
         selectedIndex = -1;
     }
@@ -100,7 +163,12 @@ public class Inventory : MonoBehaviour {
     public void onEquipClick(Button button) {
         // When an item is selected to equip
         int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
-        Item item = holdingItems[buttonClicked].GetComponent<Item>();
+        
+        Equip(buttonClicked);
+    }
+
+    private void Equip(int index) {
+        Item item = holdingItems[index].GetComponent<Item>();
 
         if (item.isHolding) {
             // Unequip
@@ -109,7 +177,7 @@ public class Inventory : MonoBehaviour {
         }
         else {
             // Equip
-            equippedIndex = buttonClicked;
+            equippedIndex = index;
             item.Equip(player);
         }
         
@@ -165,19 +233,19 @@ public class Inventory : MonoBehaviour {
         }
     } 
 
-    private void resetButtons() {
+    private void ResetButtons() {
         for (int i = 0; i < numButtons; i++) {
-            disableButton(i);
+            DisableButton(i);
         }
     }
 
-    private void disableButton(int position) {
+    private void DisableButton(int position) {
         // reset all equip and drop buttons to false
         GameObject.Find("Drop" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = false;
         GameObject.Find("Equip" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = false;
     }
 
-    private void enableButton(int position) {
+    private void EnableButton(int position) {
         if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
             GameObject.Find("Equip" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = true;
         }
@@ -206,6 +274,20 @@ public class Inventory : MonoBehaviour {
         ChangeImageToFull(index);
     }
 
+    private int GetPreviousNonEmptySlot() {
+        for (int i = selectedIndex - 1; i >= 0; i--) {
+            if (holdingItems[i] != null) return i;
+        }
+        return selectedIndex;
+    }
+
+    private int GetNextNonEmptySlot() {
+        for (int i = selectedIndex + 1; i < numButtons; i++) {
+            if (holdingItems[i] != null) return i;
+        }
+        return selectedIndex;
+    }
+
     private int FirstEmptySlotIndex() {
         for (int i = 0; i < holdingItems.Length; i++) {
             if (holdingItems[i] == null) return i;
@@ -219,7 +301,7 @@ public class Inventory : MonoBehaviour {
         holdingItems[position] = null;
         item.SetActive(true);
         item.transform.parent = null;
-        disableButton(position);
+        DisableButton(position);
         ChangeImageToEmpty(position);
 
         return item;
@@ -238,7 +320,7 @@ public class Inventory : MonoBehaviour {
 
         Destroy(wall);
         DestroyItem(equippedIndex);
-        disableButton(equippedIndex);
+        DisableButton(equippedIndex);
         equippedIndex = -1;
     }
 

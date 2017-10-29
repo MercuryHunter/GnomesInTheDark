@@ -71,7 +71,6 @@ GameObject:
   - component: {fileID: 4339194173463488}
   - component: {fileID: 135192292436320700}
   - component: {fileID: 114392612420127018}
-  - component: {fileID: 114861058571772728}
   m_Layer: 12
   m_Name: Pick
   m_TagString: Pick
@@ -238,22 +237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba7ccc76873f26842b0eaa6d12552ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inInventory: 0
-  itemType: 1
---- !u!114 &114861058571772728
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1622334458748062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122c81e62d47bb6498778f0fbd0e4774, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wall: {fileID: 0}
-  inWallTrigger: 0
   isHolding: 0
+  itemType: 1
 --- !u!135 &135192292436320700
 SphereCollider:
   m_ObjectHideFlags: 1

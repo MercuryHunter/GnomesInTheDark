@@ -17,21 +17,12 @@ public class Inventory : MonoBehaviour {
     public EventSystem EventSystem;
 
     // number of buttons on each inventory system, so it can be change
-    // TODO: Switch this to index system
     private int numButtons = 3;
 
-    private bool[] buttonShowing = new bool[3];
-    int buttonOn = 0;
-
-    // TODO: Shouldn't be necessary
     // used to get player position and transform
-    public GameObject player;
-
+    private GameObject player;
     int playerNumber;
 
-    
-
-    // TODO: NECESSARY
     private bool showingInventory;
     private PlayerCamera camera;
     private Canvas canvas;
@@ -45,13 +36,8 @@ public class Inventory : MonoBehaviour {
     public void Start() {
         // saves the player number so each player can interact with things differently
         playerNumber = Convert.ToInt32(transform.parent.transform.parent.gameObject.name.Substring(6, 1));
+        player = transform.parent.transform.parent.gameObject;
         
-        // initialise everything to false
-        for (int i = 0; i < numButtons; i++) {
-            buttonShowing[i] = false;
-        }
-
-        // TODO: NECESSARY STUFF
         showingInventory = false;
         camera = transform.parent.parent.GetComponentInChildren<PlayerCamera>(); // Messy
         canvas = GetComponent<Canvas>();
@@ -66,200 +52,76 @@ public class Inventory : MonoBehaviour {
     public void Update() {
         if (controller.inventory()) {
             // Invert Inventory State
-            if (showingInventory) hideInventory();
-            else showInventory();
+            if (showingInventory) HideInventory();
+            else ShowInventory();
         }
-        /*
-            if (inItemTrigger && !item.GetComponent<Item>().inInventory &&
-                (item.GetComponent<PickController>() == null || !item.GetComponent<PickController>().checkHolding())) {
-        */
     }
 
-    private void showInventory() {
+    private void ShowInventory() {
         showingInventory = true;
         GetComponent<Canvas>().enabled = true;
         Cursor.lockState = CursorLockMode.None;
         camera.rotationLock = true;
     }
 
-    private void hideInventory() {
+    private void HideInventory() {
         showingInventory = false;
         canvas.enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         camera.rotationLock = false;
+        resetButtons();
     }
 
-    // TODO: Refactor onItemClick()
     public void onItemClick(Button button) {
-        // used when an item is clicked ( a button in the inventory is clicked)
-        if (!IsEmpty()) {
-            // get the number of the button to find it in the holding items array ( an array of items help in the poisiotn of the button
-            int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
-            // if that item is not null it will proceed
-            if (holdingItems[buttonClicked] != null) {
-                for (int i = 0; i < numButtons; i++) {
-                    // reset all equip and drop buttons to false
-                    buttonShowing[i] = false;
-                    GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
-                    GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
-                }
-                // they are different as button on is the button that has been clicked and is used in drop but button clicked is onlt for this method
-                buttonOn = buttonClicked;
-                // sets that that button is clicked which means its drop and equip buttons can be dhown
-                buttonShowing[buttonOn] = true;
-                if (holdingItems[buttonOn].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
-                    GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = true;
-                }
-                GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = true;
-            }
-        }
+        int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
+        if (holdingItems[buttonClicked] == null) return;
+        
+        resetButtons();
+        selectedIndex = buttonClicked;
+        enableButton(selectedIndex);
     }
 
-    // TODO: Refacter onDropClick()
     public void onDropClick(Button button) {
         // when the drop button is clicked it finds which button it belongs to
-        int clickedButton = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
-        // if that button is showing and active then it will drop the item
-        if (buttonShowing[clickedButton]) {
-            button.image.sprite = EmptyTexture;
-            holdingItems[buttonOn].transform.parent = null;
-            GameObject.Find("Drop" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
-            GameObject.Find("Equip" + Convert.ToString(buttonOn + 1)).GetComponent<Image>().enabled = false;
-            //this actually drops the item
-            dropItem(holdingItems[buttonOn].GetComponent<Item>());
-            // sets the item to be active again
-            holdingItems[buttonOn].SetActive(true);
-            // sets its collider back on
-            holdingItems[buttonOn].GetComponent<SphereCollider>().enabled = true;
-            holdingItems[buttonOn] = null;
-            buttonShowing[clickedButton] = false;
+        int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
+        disableButton(buttonClicked);
+        ChangeImageToEmpty(buttonClicked);
+
+        Item item = holdingItems[buttonClicked].GetComponent<Item>();
+        if (buttonClicked == equippedIndex) {
+            item.Dequip();
         }
+        item.Drop();
+        holdingItems[buttonClicked] = null;
+
+        selectedIndex = -1;
     }
     
-    // TODO: Refactor onEquipClick()
     public void onEquipClick(Button button) {
         // When an item is selected to equip
-        int clickedButton = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
+        int buttonClicked = Convert.ToInt32(button.name.Substring(button.name.Length - 1, 1)) - 1;
+        Item item = holdingItems[buttonClicked].GetComponent<Item>();
 
-        if (buttonShowing[clickedButton]) {
-            // get the item being equiped
-            Item item = holdingItems[buttonOn].GetComponent<Item>();
-            // get the pick controller of that item
-            PickController holdingPick = holdingItems[buttonOn].GetComponent<PickController>();
-            if (!holdingPick.checkHolding()) {
-                // if it is not already holding then set its transform to be held
-                item.setTransform(player.transform, false);
-                item.getItem().transform.parent = player.transform;
-                item.GetComponent<PickController>().addPlayer(item.transform.parent.gameObject);
-                item.GetComponent<SphereCollider>().enabled = false;
-                //  GameObject.Find("Equip" + Convert.ToString(clickedButton + 1)).GetComponent<Image>().enabled = false;
-                equippedIndex = clickedButton;
-            }
-            else {
-                // if it is already held, make it not held anymore
-                item.getItem().transform.parent = null;
-                item.gameObject.SetActive(false);
-                holdingPick.setHolding(false);
-                equippedIndex = -1;
-            }
+        if (item.isHolding) {
+            // Unequip
+            equippedIndex = -1;
+            item.Dequip();
         }
-    }
-
-    public void dropItem(Item item) {
-        // resets its transform, with the drop set to true
-        item.setTransform(player.transform, true);
-    }
-
-    /*
-    public void pickUpItem(GameObject gItem) {
-        // if the item is picked up add to the bag
-
-        //sets the transform in the item class
-        gItem.GetComponent<Item>().pickUp(transform.parent.gameObject);
-        for (int i = 0; i < numButtons; i++) {
-            // the first null item in holding items will be set to the item being picked up
-            if (holdingItems[i] == null) {
-                gItem.GetComponent<SphereCollider>().enabled = false;
-                holdingItems[i] = gItem;
-                if (gItem.GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
-                    // this is used to delete the item from the holding items when it is used to break a wall
-                    gItem.GetComponent<PickController>().setHoldingPosition(i);
-                }
-                else {
-                    // if it is a cog
-
-                    // increase the number of cogs collected per player
-                    int level = GameObject.Find("GameManager").GetComponent<GameManager>().getPlayerLevel(playerNumber);
-                    GameObject.Find("Level" + level.ToString()).GetComponent<levelHolder>().addCog();
-                    // update all players that are on that level
-                    GameObject.Find("GameManager").GetComponent<GameManager>().updateAllPlayers(playerNumber);
-                }
-
-                switch (i) {
-                    case 0:
-                        cog1.image.sprite = cogTexture;
-                        break;
-                    case 1:
-                        cog2.image.sprite = cogTexture;
-                        break;
-                    case 2:
-                        pick1.image.sprite = cogTexture;
-                        break;
-                }
-                //GameObject.Find("Slot" + Convert.ToString(i + 1));
-                //button.image.sprite = cogTexture;
-                break;
-            }
+        else {
+            // Equip
+            equippedIndex = buttonClicked;
+            item.Equip(player);
         }
-    }
-    */
-    
-
-
-    // TODO: Refactor getNextItem()
-    public GameObject getNextItem(bool isLeverCheck) {
-        // gets the next cog that can be added to the cog machine
-        for (int i = 0; i < numButtons; i++) {
-            // if there is an item in the holding position and that item a cog
-            if (holdingItems[i] != null && holdingItems[i].GetComponent<Item>().itemType != Item.ItemType.UTILITY) {
-                // get the item to add to the machine
-                if (!isLeverCheck && holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.LEVER) {
-                    continue;
-                }
-                GameObject temp = holdingItems[i];
-                holdingItems[i] = null;
-                temp.SetActive(true);
-                temp.transform.parent = null;
-                buttonShowing[i] = false;
-                ChangeImageToEmpty(i);
-
-                return temp;
-            }
-        }
-        // if no item in inventory then return null
-        return null;
+        
+        HideInventory();
     }
 
     public void DestroyItem(int position) {
         Destroy(holdingItems[position]);
         holdingItems[position] = null;
         ChangeImageToEmpty(position);
-        buttonShowing[position] = false;
     }
-
-    public GameObject checkHasPick() {
-        // gets the position of the first pick in the inventory or returns null
-        for (int i = 0; i < numButtons; i++) {
-            if (holdingItems[i] != null && holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.UTILITY &&
-                holdingItems[i].GetComponent<PickController>().checkHolding()) {
-                return holdingItems[i];
-            }
-        }
-        return null;
-    }
-
-    // TODO: And Jonathan begins refactoring
-
+    
     public bool IsEmpty() {
         foreach (GameObject gameObject in holdingItems) {
             if (gameObject != null) return false;
@@ -303,27 +165,34 @@ public class Inventory : MonoBehaviour {
         }
     } 
 
-    // TODO: Reset Buttons
-    private void resetButtons() { }
+    private void resetButtons() {
+        for (int i = 0; i < numButtons; i++) {
+            disableButton(i);
+        }
+    }
 
-    // TODO: Disable a button
+    private void disableButton(int position) {
+        // reset all equip and drop buttons to false
+        GameObject.Find("Drop" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = false;
+        GameObject.Find("Equip" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = false;
+    }
 
-    // TODO: Enable a button
+    private void enableButton(int position) {
+        if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
+            GameObject.Find("Equip" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = true;
+        }
+        GameObject.Find("Drop" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = true;
+    }
     
     public void AddItem(GameObject item) {
         int index = FirstEmptySlotIndex();
         if (index == -1) return;
 
         Item itemComponent = item.GetComponent<Item>();
-        itemComponent.pickUp(transform.parent.gameObject);
+        itemComponent.PickUp(transform.parent.gameObject);
         holdingItems[index] = item;
         
-        if (itemComponent.itemType == Item.ItemType.UTILITY) {
-            // TODO: Remove PickController, PlayerInventory should handle the functionality
-            // this is used to delete the item from the holding items when it is used to break a wall
-            item.GetComponent<PickController>().setHoldingPosition(index);
-        }
-        else {
+        if (itemComponent.itemType == Item.ItemType.COG) {
             // TODO: Check if this can be improved
             // if it is a cog
 
@@ -344,14 +213,13 @@ public class Inventory : MonoBehaviour {
         return -1;
     }
 
-    // TODO: Remove item from inventory
     public GameObject TakeItem(int position) {
         GameObject item = holdingItems[position];
 
         holdingItems[position] = null;
         item.SetActive(true);
         item.transform.parent = null;
-        buttonShowing[position] = false; // TODO: Call disable button method
+        disableButton(position);
         ChangeImageToEmpty(position);
 
         return item;
@@ -370,6 +238,8 @@ public class Inventory : MonoBehaviour {
 
         Destroy(wall);
         DestroyItem(equippedIndex);
+        disableButton(equippedIndex);
+        equippedIndex = -1;
     }
 
     public bool HasCog() {
@@ -388,6 +258,16 @@ public class Inventory : MonoBehaviour {
         for (int i = 0; i < holdingItems.Length; i++) {
             if (holdingItems[i] == null) continue;
             if (holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.COG) {
+                return TakeItem(i);
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetLeverIfAvailable() {
+        for (int i = 0; i < holdingItems.Length; i++) {
+            if (holdingItems[i] == null) continue;
+            if (holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.LEVER) {
                 return TakeItem(i);
             }
         }

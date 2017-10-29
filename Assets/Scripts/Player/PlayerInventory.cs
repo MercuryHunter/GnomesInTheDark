@@ -48,6 +48,11 @@ public class PlayerInventory : MonoBehaviour {
                 MachineManager machineManager = interactingObject.GetComponentInParent<MachineManager>();
                 machineManager.AddCogIntoSlot(inventory.GetCogIfAvailable(), interactingObject);
             }
+            else if (interactingObject.tag == "LeverSlot") {
+                MachineManager machineManager = interactingObject.GetComponentInParent<MachineManager>();
+                machineManager.addLever(inventory.GetLeverIfAvailable());
+                // TODO: Display message about not enough cogs or no lever here...
+            }
             else if (interactingObject.tag == "BreakableWall") {
                 inventory.UseEquippedPick(interactingObject);
             }

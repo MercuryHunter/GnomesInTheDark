@@ -34,13 +34,13 @@ public class MachineManager : MonoBehaviour {
         return collectedCogs;
     }
 
-    // TODO: Lever
-    public void addLever(GameObject lever) {
-        GameObject replacement = null; //player.GetComponentInChildren<Inventory>().getNextItem(true);
-        Vector3 cogPosition = lever.transform.position;
+    public bool addLever(GameObject lever) {
+        if (lever == null) return false;
+
+        if (!mainMachine.allCollected()) return false;
+        
         Destroy(lever);
-        replacement.transform.position = cogPosition;
-        replacement.GetComponent<BoxCollider>().enabled = true;
         GameObject.Find("EscapeDoor").transform.GetChild(0).gameObject.GetComponent<exitDoor>().activateDoor();
+        return true;
     }
 }

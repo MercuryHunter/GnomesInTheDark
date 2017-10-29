@@ -23,6 +23,7 @@ TagManager:
   - PlayerHead
   - Floor
   - CogSlot
+  - LeverSlot
   layers:
   - Default
   - TransparentFX

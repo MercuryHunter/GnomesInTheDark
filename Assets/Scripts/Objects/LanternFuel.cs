@@ -26,6 +26,8 @@ public class LanternFuel : MonoBehaviour {
 
     private BaseController controller;
 	private SphereCollider lightCollider;
+
+	private Inventory inventory;
 	
 	void Start () {
 		// Get child flameobject of lantern
@@ -51,6 +53,8 @@ public class LanternFuel : MonoBehaviour {
 		
 		controller = GetComponentInParent<BaseController>();
 		lightCollider = GetComponent<SphereCollider>();
+
+		inventory = transform.parent.GetComponentInChildren<Inventory>();
 	}
 	
 	void Update () {
@@ -74,15 +78,11 @@ public class LanternFuel : MonoBehaviour {
 				currentFuel = 0;
 				turnOff();
 			}
-			
+
+			if (controller.toggleLight()) turnOff();
+			if (inventory.showingInventory) return; // Seems hacky... it is, don't want dpad up, down if showing inv.
 			if (controller.increaseLight()) changeRange(rangeModifier);
 			if (controller.decreaseLight()) changeRange(-rangeModifier);
-			if (controller.toggleLight()) turnOff();
-			/*
-			if (Input.GetKeyDown(KeyCode.Equals)) changeRange(rangeModifier);
-			if (Input.GetKeyDown(KeyCode.Minus)) changeRange(-rangeModifier);
-			if (Input.GetKeyDown(KeyCode.F)) turnOff();
-			*/
 		}
 		else {
 			if (controller.toggleLight()) turnOn();

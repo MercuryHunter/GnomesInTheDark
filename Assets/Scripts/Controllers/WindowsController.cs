@@ -122,4 +122,25 @@ public class WindowsController : MonoBehaviour, BaseController {
 	public bool throwing() {
 		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 1));
 	}
+	
+	// D-Pad Up
+	public bool up() {
+		return Input.GetAxis(getJoystickAxisString(joystickNumber, 7)) > 0.2;
+	}
+
+	// D-Pad Down
+	public bool down() {
+		return Input.GetAxis(getJoystickAxisString(joystickNumber, 7)) < -0.2;
+	}
+
+	// TODO: Check these
+	// D-Pad Left
+	public bool left() {
+		return Input.GetAxis(getJoystickAxisString(joystickNumber, 6)) < -0.2;
+	}
+
+	// D-Pad Right
+	public bool right() {
+		return Input.GetAxis(getJoystickAxisString(joystickNumber, 6)) > 0.2;
+	}
 }

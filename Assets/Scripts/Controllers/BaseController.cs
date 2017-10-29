@@ -20,4 +20,9 @@ public interface BaseController {
 	bool interact();
 	bool inventory();
 	bool throwing();
+
+	bool up();
+	bool down();
+	bool left();
+	bool right();
 }

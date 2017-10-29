@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour {
     private GameObject player;
     int playerNumber;
 
-    private bool showingInventory;
+    public bool showingInventory;
     private PlayerCamera camera;
     private Canvas canvas;
 
@@ -263,8 +263,20 @@ public class Inventory : MonoBehaviour {
         }
         return null;
     }
+    
+    public bool HasLever() {
+        foreach (GameObject currentItem in holdingItems) {
+            if (currentItem == null) continue;
+            if (currentItem.GetComponent<Item>().itemType == Item.ItemType.LEVER) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public GameObject GetLeverIfAvailable() {
+        if (!HasLever()) return null;
+        
         for (int i = 0; i < holdingItems.Length; i++) {
             if (holdingItems[i] == null) continue;
             if (holdingItems[i].GetComponent<Item>().itemType == Item.ItemType.LEVER) {
@@ -273,4 +285,6 @@ public class Inventory : MonoBehaviour {
         }
         return null;
     }
+
+    
 }

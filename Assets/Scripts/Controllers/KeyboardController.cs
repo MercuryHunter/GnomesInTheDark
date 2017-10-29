@@ -52,4 +52,20 @@ public class KeyboardController : MonoBehaviour, BaseController {
 	public bool throwing() {
 		return Input.GetKeyDown(KeyCode.Q);
 	}
+
+	public bool up() {
+		return Input.GetKeyDown(KeyCode.UpArrow);
+	}
+
+	public bool down() {
+		return Input.GetKeyDown(KeyCode.DownArrow);
+	}
+
+	public bool left() {
+		return Input.GetKeyDown(KeyCode.LeftArrow);
+	}
+
+	public bool right() {
+		return Input.GetKeyDown(KeyCode.RightArrow);
+	}
 }

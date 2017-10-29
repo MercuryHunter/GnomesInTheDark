@@ -123,4 +123,24 @@ public class MacController : MonoBehaviour, BaseController {
 	public bool throwing() {
 		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 17));
 	}
+	
+	// D-Pad Up
+	public bool up() {
+		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 5));
+	}
+
+	// D-Pad Down
+	public bool down() {
+		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 6));
+	}
+
+	// D-Pad Left
+	public bool left() {
+		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 7));
+	}
+
+	// D-Pad Right
+	public bool right() {
+		return Input.GetKeyDown(getJoystickButtonString(joystickNumber, 8));
+	}
 }

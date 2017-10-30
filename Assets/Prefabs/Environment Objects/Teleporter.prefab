@@ -19,8 +19,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4997678418745694}
-  - component: {fileID: 135467436190329408}
-  m_Layer: 0
+  - component: {fileID: 65148119157021242}
+  m_Layer: 12
   m_Name: Location2
   m_TagString: Teleporter
   m_Icon: {fileID: 0}
@@ -35,7 +35,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4071266922866474}
-  - component: {fileID: 65028811182611654}
   m_Layer: 0
   m_Name: Ladder (1)
   m_TagString: Untagged
@@ -68,7 +67,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4349661070438594}
-  - component: {fileID: 65427404765685656}
   m_Layer: 0
   m_Name: Ladder
   m_TagString: Untagged
@@ -100,8 +98,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4639780114966314}
-  - component: {fileID: 135017551113376874}
-  m_Layer: 0
+  - component: {fileID: 65486373531662396}
+  m_Layer: 12
   m_Name: Location1
   m_TagString: Teleporter
   m_Icon: {fileID: 0}
@@ -131,14 +129,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1242030168317358}
-  m_LocalRotation: {x: 0, y: 0.14435618, z: 0, w: 0.98952585}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.11, y: 3.4, z: -1.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4722148358108866}
   m_Father: {fileID: 4997678418745694}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 16.6, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4349661070438594
 Transform:
   m_ObjectHideFlags: 1
@@ -160,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1400411005732650}
   m_LocalRotation: {x: 0, y: 0.4446351, z: 0, w: 0.8957118}
-  m_LocalPosition: {x: 418.78, y: 1.25, z: -5.92}
+  m_LocalPosition: {x: -4.7835617, y: 1.4244852, z: 0.728508}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4639780114966314}
@@ -298,30 +296,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1722346390324574}
   m_Mesh: {fileID: 4300000, guid: 51a25fcd4db71aa4789bb4ddaddbe471, type: 3}
---- !u!65 &65028811182611654
+--- !u!65 &65148119157021242
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1242030168317358}
+  m_GameObject: {fileID: 1105256288573770}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.89, y: 11.44, z: 1.03}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65427404765685656
+  m_Size: {x: 4.6507397, y: 11.949054, z: 0.8534684}
+  m_Center: {x: -0.036385994, y: 3.6573024, z: -1.0569658}
+--- !u!65 &65486373531662396
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1353407629418668}
+  m_GameObject: {fileID: 1657307465276246}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.89, y: 11.44, z: 1.03}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.5, y: 5.5, z: 0.6}
+  m_Center: {x: 0.2, y: 1.2, z: -1.4}
 --- !u!114 &114051031848885282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -333,29 +331,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc5a2aa5dfeb409dbeaeae20c7b8e54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleporter1: {fileID: 135017551113376874}
-  teleporter2: {fileID: 135467436190329408}
---- !u!135 &135017551113376874
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1657307465276246}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2.8
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &135467436190329408
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1105256288573770}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2.8
-  m_Center: {x: 0, y: 0, z: 0}
+  teleporter1: {fileID: 65486373531662396}
+  teleporter2: {fileID: 65148119157021242}

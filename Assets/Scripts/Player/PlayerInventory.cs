@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 using UnityEngine;
@@ -14,17 +15,23 @@ public class PlayerInventory : MonoBehaviour {
 
     private Inventory inventory;
     private BaseController controller;
+    private PlayerCamera playerCamera;
 
     private LanternFuel lanternFuel;
+
+    private int playerNum;
 
     public void Start() {
         inventory = gameObject.GetComponentInChildren<Inventory>();
         controller = GetComponent<BaseController>();
+        playerCamera = GetComponentInChildren<PlayerCamera>();
 
         interactibleMask = LayerMask.GetMask("Interactible");
 
         cam = GetComponentInChildren<Camera>();
         lanternFuel = GetComponentInChildren<LanternFuel>();
+        
+        playerNum = Convert.ToInt32(gameObject.name.Substring(6, 1));
     }
 
     public void Update() {
@@ -74,6 +81,22 @@ public class PlayerInventory : MonoBehaviour {
             }
             else if (interactingObject.tag == "TrapButton") {
                 interactingObject.GetComponent<TrapButton>().hitButton();
+            }
+            else if (interactingObject.tag == "Teleporter") {
+                int levelNumber = Convert.ToInt32(interactingObject.transform.parent.name.Substring(10,1));
+                if (interactingObject.name == "Location1")
+                    levelNumber++;
+
+                Transform newTransform =
+                    interactingObject.gameObject
+                        .GetComponentInParent<TeleporterManager>()
+                        .getOtherTeleporter(interactingObject.GetComponent<Collider>())
+                        .transform;
+
+                this.transform.position = newTransform.position;
+                this.transform.eulerAngles = newTransform.eulerAngles;
+                playerCamera.setBodyPointVector(newTransform);
+                GameObject.Find("GameManager").GetComponent<GameManager>().changeLevel(levelNumber, playerNum);
             }
         }
     }

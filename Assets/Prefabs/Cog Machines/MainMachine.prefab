@@ -246,10 +246,9 @@ GameObject:
   - component: {fileID: 33393166843806646}
   - component: {fileID: 65558528123426264}
   - component: {fileID: 23698707501166996}
-  - component: {fileID: 135859505753853802}
   m_Layer: 12
-  m_Name: CogMainSlot26
-  m_TagString: CogSlot
+  m_Name: LeverSlot
+  m_TagString: LeverSlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -563,7 +562,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1436514610590768}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.56000143, y: -0.17999998, z: 0.394}
+  m_LocalPosition: {x: 0.56000143, y: -0.092, z: 0.394}
   m_LocalScale: {x: 0.39, y: 0.12, z: 0.04}
   m_Children: []
   m_Father: {fileID: 4593109010059094}
@@ -589,7 +588,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1311602336069340}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.56, y: -0.257, z: -0.185}
+  m_LocalPosition: {x: 0.56, y: -0.188, z: -0.153}
   m_LocalScale: {x: 0.39, y: 0.12, z: 0.04}
   m_Children: []
   m_Father: {fileID: 4593109010059094}
@@ -629,7 +628,7 @@ Transform:
   m_GameObject: {fileID: 1583272067142132}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.48999998, y: 2.56, z: 7.2}
+  m_LocalScale: {x: 0.49, y: 2.56, z: 7.2}
   m_Children:
   - {fileID: 4959911688122592}
   - {fileID: 4522945102326204}
@@ -693,7 +692,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1112801958820798}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.56, y: -0.257, z: -0.087}
+  m_LocalPosition: {x: 0.56, y: -0.188, z: -0.055}
   m_LocalScale: {x: 0.39, y: 0.12, z: 0.04}
   m_Children: []
   m_Father: {fileID: 4593109010059094}
@@ -836,7 +835,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1204861470786662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.56, y: -0.257, z: -0.275}
+  m_LocalPosition: {x: 0.56, y: -0.188, z: -0.243}
   m_LocalScale: {x: 0.39, y: 0.12, z: 0.04}
   m_Children: []
   m_Father: {fileID: 4593109010059094}
@@ -1964,15 +1963,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db339d44f07acf4196e2a30c97d1edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &135859505753853802
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1436514610590768}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.83
-  m_Center: {x: 2.05, y: 0, z: -0.0000019073486}

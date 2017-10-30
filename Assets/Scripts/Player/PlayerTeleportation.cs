@@ -8,7 +8,6 @@ public class PlayerTeleportation : MonoBehaviour {
 	float teleportContactTimeRequired = 0.5f;
 	float teleportContactTimeCurrent = 0;
     int playerNum;
-    BaseController controller;
 
 	private PlayerCamera camera;
 	private BaseController controller;

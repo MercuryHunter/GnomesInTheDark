@@ -237,7 +237,7 @@ public class EnemyControllerBlue : MonoBehaviour {
     {
         capturedPlayer.transform.position = slimeBase.transform.position;
         state = State.GAURD;
-        capturedPlayer.GetComponent<PlayerMovement>().lockPlayerMovement();
+        capturedPlayer.GetComponent<PlayerMovement>().disallowMovement();
         capturedPlayer.transform.parent = null;
         PlayerDistances[currentTarget] = 100f;
         hasPlayer = false;
@@ -247,7 +247,7 @@ public class EnemyControllerBlue : MonoBehaviour {
 
     private void freePlayer()
     {
-        capturedPlayer.GetComponent<PlayerMovement>().lockPlayerMovement();
+        capturedPlayer.GetComponent<PlayerMovement>().disallowMovement();
         capturedPlayer.transform.FindChild("Lantern").gameObject.SetActive(true);
         capturedPlayer.transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z - 3);
         capturedPlayer.transform.parent = null;
@@ -281,7 +281,7 @@ public class EnemyControllerBlue : MonoBehaviour {
                 capturedPlayer = other.gameObject;
                 other.transform.parent = this.transform;
                 hasPlayer = true;
-                capturedPlayer.GetComponent<PlayerMovement>().lockPlayerMovement();
+                capturedPlayer.GetComponent<PlayerMovement>().disallowMovement();
                 capturedPlayer.transform.FindChild("Lantern").gameObject.SetActive(false);
                 capturedPlayer.transform.position = transform.position;
                 //capturedPlayers.GetComponentInChildren<BoxCollider>().enabled = false;

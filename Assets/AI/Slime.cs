@@ -38,7 +38,7 @@ public class Slime : MonoBehaviour {
                 capturedPlayers = other.gameObject;
                 other.transform.parent = this.transform;
                 hasPlayer = true;
-                capturedPlayers.GetComponent<PlayerMovement>().lockPlayerMovement();
+                capturedPlayers.GetComponent<PlayerMovement>().disallowMovement();
                 capturedPlayers.transform.FindChild("Lantern").gameObject.SetActive(false);
                 capturedPlayers.transform.position = transform.position;
                 //capturedPlayers.GetComponentInChildren<BoxCollider>().enabled = false;

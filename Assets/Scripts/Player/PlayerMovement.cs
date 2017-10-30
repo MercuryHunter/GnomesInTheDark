@@ -12,13 +12,12 @@ public class PlayerMovement : MonoBehaviour {
 	public float timeBetweenJumps = 1.3f;
 	private float timeToNextJump;
 	*/
-	private bool allowMovement;
+	private bool movementAllowed;
 	private bool canJump;
 
 	Rigidbody playerRigidbody;
 	private BaseController controller;
 	private Animation anim;
-    private bool movementLock;
 	
 	void Start () {
 		// TODO: Put cursor stuff in mouse controller script?
@@ -31,7 +30,7 @@ public class PlayerMovement : MonoBehaviour {
 		controller = GetComponent<BaseController>();
 		anim = GetComponentInChildren<Animation>();
 
-		allowMovement = true;
+		movementAllowed = true;
 		canJump = true;
 	}
 	
@@ -45,7 +44,7 @@ public class PlayerMovement : MonoBehaviour {
 		float moveHorizontal = controller.getXMovement();
 		float moveVertical = controller.getYMovement();
 
-		if (allowMovement) {
+		if (movementAllowed) {
 			Move(moveHorizontal, moveVertical);
 			// Rotation is done by the camera
 			Animate(moveHorizontal, moveVertical);
@@ -90,16 +89,24 @@ public class PlayerMovement : MonoBehaviour {
 	}
 
 	public void attached() {
-		allowMovement = false;
+		movementAllowed = false;
 		canJump = true;
 		Animate(0, 0);
 	}
 
 	public void detach() {
-		allowMovement = true;
+		allowMovement();
 	}
 
 	public void allowJump() {
 		canJump = true;
+	}
+
+	public void allowMovement() {
+		movementAllowed = true;
+	}
+
+	public void disallowMovement() {
+		movementAllowed = false;
 	}
 }

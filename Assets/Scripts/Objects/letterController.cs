@@ -59,7 +59,7 @@ public class letterController : MonoBehaviour, objectInteration
         transform.FindChild("Exclamation Mark").gameObject.SetActive(false);
         if (imagePosition == totalImages)
         {
-            player.GetComponent<PlayerMovement>().lockPlayerMovement();
+            player.GetComponent<PlayerMovement>().disallowMovement();
             imagePosition = 0; print(isHolding);
             isHolding = false;
             onImage.gameObject.GetComponent<Image>().enabled = false;
@@ -69,7 +69,7 @@ public class letterController : MonoBehaviour, objectInteration
             return;
         }if (imagePosition == 0)
         {
-            player.GetComponent<PlayerMovement>().lockPlayerMovement();
+            player.GetComponent<PlayerMovement>().allowMovement();
         }
         //   print("E pressed");
         // print(player.gameObject.name);

@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour {
     // used to store the different items that are collected by each player
-    private BaseController controller;
     // all the buttons and images that the images takes are set here
     public Button cog1;
     public Button cog2;

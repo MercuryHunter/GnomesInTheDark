@@ -20,10 +20,6 @@ public class PlayerInterations : MonoBehaviour {
             {
                 tempObject.interact(this.gameObject);
             }
-            if (controller.attack())
-            {
-                tempObject.interact(this.gameObject);
-            }
         }
     }
 

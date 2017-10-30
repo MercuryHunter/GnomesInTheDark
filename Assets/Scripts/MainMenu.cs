@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour {
         }
         else
         {
-            GameManager.playerCount = numberPlayers;
+            GameManager.numPlayersToInstatiate = numberPlayers;
             UnityEngine.SceneManagement.SceneManager.LoadScene("testlevel");
         }
     }

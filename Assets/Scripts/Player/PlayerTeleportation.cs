@@ -11,6 +11,7 @@ public class PlayerTeleportation : MonoBehaviour {
     BaseController controller;
 
 	private PlayerCamera camera;
+	private BaseController controller;
 
 	void Awake() {
 		camera = GetComponentInChildren<PlayerCamera>();
@@ -19,8 +20,7 @@ public class PlayerTeleportation : MonoBehaviour {
     private void Start()
     {
         playerNum = Convert.ToInt32(gameObject.name.Substring(6, 1));
-        //print(playerNum + gameObject.name);
-        controller = GetComponent<BaseController>();
+	    controller = GetComponent<BaseController>();
     }
 
     void Update() {
@@ -29,7 +29,7 @@ public class PlayerTeleportation : MonoBehaviour {
 
 	void OnTriggerStay(Collider other) {
 		// TODO: UI Text for player about this
-		if (other.tag.Equals("Teleporter") && controller.interact() && teleportContactTimeCurrent <= 0 ) {
+		if (controller.interact() && teleportContactTimeCurrent <= 0 && other.tag.Equals("Teleporter")) {
             int levelNumber = Convert.ToInt32(other.transform.parent.name.Substring(10,1));
             if (other.gameObject.name == "Location1")
             {

@@ -9,7 +9,9 @@ public class PlayerCamera : MonoBehaviour {
 
     public float Sensitivity = 2.5f;
     public float smoothing = 2.0f;
-    public bool rotationLock ;
+    
+    public bool rotationLock = false;
+
     public GameObject target;
 
     private BaseController controller;
@@ -44,6 +46,7 @@ public class PlayerCamera : MonoBehaviour {
         smoothV.y = 0;
         mouseLook.x = other.rotation.eulerAngles.y;
         mouseLook.y = 0;
+        Update();
     }
 
     public void setRotation()

@@ -1,105 +1,73 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class PlayerInventory : MonoBehaviour {
     /* Class is used for the player to interact with the items to add to the inventory or use 
      * to break walls or add to a cog machines */
 
+    public float interactionDistance;
+    private int interactibleMask;
+    private Camera cam;
+
+    private Inventory inventory;
     private BaseController controller;
-    private objectInteration tempObject;
-    private bool inTrigger;
 
-    private void Start()
-    {
-        controller = GetComponentInParent<BaseController>();
+    private LanternFuel lanternFuel;
+
+    public void Start() {
+        inventory = gameObject.GetComponentInChildren<Inventory>();
+        controller = GetComponent<BaseController>();
+
+        interactibleMask = LayerMask.GetMask("Interactible");
+
+        cam = GetComponentInChildren<Camera>();
+        lanternFuel = GetComponentInChildren<LanternFuel>();
     }
 
-    private void Update()
-    {
-        if (inTrigger)
-        {
-            if (controller.interact())
-            {
-                tempObject.interact(this.gameObject);
+    public void Update() {
+        if (inventory.showingInventory) return; // Don't do any interactions if in inventory please
+        
+        if (controller.interact()) {
+            GameObject interactingObject = null;
+
+            Ray camRay = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0)); // From the middle of the current camera
+            RaycastHit interactibleHit;
+            if (Physics.Raycast(camRay, out interactibleHit, interactionDistance, interactibleMask)) {
+                // Get game object to interact with
+                interactingObject = interactibleHit.transform.gameObject;
+                //if (interactingObject != null) Debug.Log("I am looking at: " + interactingObject.name);
             }
-            if (controller.attack())
-            {
-               // tempObject.interact(this.gameObject);
+
+            if (interactingObject == null) return;
+
+            if (interactingObject.tag == "Item") {
+                if (!inventory.IsFull()) inventory.AddItem(interactingObject);
             }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // On the item trigger with the player  
-        if (other.gameObject.tag == "Item")
-        {
-            // if it is part of the item class, interacts with the inventory
-
-            GetComponentInChildren<Inventory>().inItemTrigger = true;
-            GetComponentInChildren<Inventory>().item = other.gameObject;
-            
-        }
-        if (other.gameObject.tag == "CogMachine")
-        {
-            // if it is part of the cog machines class, interacts with the machine managern
-            other.gameObject.GetComponentInParent<MachineManager>().inCogMachineTrigger = true;
-            other.gameObject.GetComponentInParent<MachineManager>().cogPosition = other.gameObject;
-            other.gameObject.GetComponentInParent<MachineManager>().player = gameObject;
-        }
-        if (other.gameObject.tag== "BreakableWall")
-        {
-            // gets the pick which is used to break a wall, if there is one
-            GameObject tempPick = GetComponentInChildren<Inventory>().checkHasPick();
-            if (tempPick != null)
-            {
-                // if it is part of the breakable wall class, interacts with the pick controller
-                tempPick.GetComponent<PickController>().inWallTrigger = true;
-                tempPick.GetComponent<PickController>().wall = other.gameObject;
+            else if (interactingObject.tag == "CogSlot") {
+                MachineManager machineManager = interactingObject.GetComponentInParent<MachineManager>();
+                machineManager.AddCogIntoSlot(inventory.GetCogIfAvailable(), interactingObject);
             }
-        }
-        tempObject = other.gameObject.GetComponent<objectInteration>();
-       
-       
-        if (tempObject != null)
-        {
-            print(other.gameObject.name);
-            inTrigger = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Item")
-        {
-
-            GetComponentInChildren<Inventory>().inItemTrigger = false;
-            GetComponentInChildren<Inventory>().item = null;
-        }
-        if (other.gameObject.tag == "CogMachine")
-        {
-            other.gameObject.GetComponentInParent<MachineManager>().inCogMachineTrigger = false;
-            other.gameObject.GetComponentInParent<MachineManager>().cogPosition = null;
-        }
-        if (other.gameObject.tag == "BreakableWall")
-        {
-            if (other.gameObject.tag == "BreakableWall")
-            {
-                GameObject tempPick = GetComponentInChildren<Inventory>().checkHasPick();
-                if (tempPick != null)
-                {
-                    tempPick.GetComponent<PickController>().inWallTrigger = false;
-                    tempPick.GetComponent<PickController>().wall = null;
+            else if (interactingObject.tag == "LeverSlot") {
+                MachineManager machineManager = interactingObject.GetComponentInParent<MachineManager>();
+                bool succeeded = machineManager.addLever(inventory.GetLeverIfAvailable());
+                if (!succeeded) {
+                    if (inventory.HasLever()) {
+                        // TODO: Say not enough cogs
+                    }
+                    else {
+                        // TODO: Say this is lever slot, pls get lever
+                    }
                 }
             }
-        }
-        tempObject = other.gameObject.GetComponent<objectInteration>();
-      
-       
-        if (tempObject != null)
-        {
-            inTrigger = false;
+            else if (interactingObject.tag == "BreakableWall") {
+                inventory.UseEquippedPick(interactingObject);
+            }
+            else if (interactingObject.tag == "OilRig") {
+                lanternFuel.refillFuel();
+            }
         }
     }
 }

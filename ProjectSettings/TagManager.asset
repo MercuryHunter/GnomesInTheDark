@@ -20,6 +20,10 @@ TagManager:
   - TrapButton
   - Letters
   - ExitDoor
+  - PlayerHead
+  - Floor
+  - CogSlot
+  - LeverSlot
   layers:
   - Default
   - TransparentFX
@@ -33,7 +37,7 @@ TagManager:
   - Player2
   - Player3
   - Player4
-  - 
+  - Interactible
   - 
   - 
   - 

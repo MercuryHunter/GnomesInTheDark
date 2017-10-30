@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23046086661665164}
   - component: {fileID: 114685992710230400}
   - component: {fileID: 135637668746916496}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cog
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -107,7 +107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inInventory: 0
   itemType: 0
-  holdingPosition: {fileID: 0}
 --- !u!135 &135637668746916496
 SphereCollider:
   m_ObjectHideFlags: 1

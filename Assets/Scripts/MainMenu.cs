@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour {
         else
         {
             GameManager.numPlayersToInstatiate = numberPlayers;
-            UnityEngine.SceneManagement.SceneManager.LoadScene("testlevel");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TestLevel");
         }
     }
 

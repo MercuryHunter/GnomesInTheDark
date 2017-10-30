@@ -55,7 +55,6 @@ GameObject:
   - component: {fileID: 136305259306393152}
   - component: {fileID: 23761972335332654}
   - component: {fileID: 135632190054650396}
-  - component: {fileID: 114189734483008468}
   m_Layer: 0
   m_Name: Rig
   m_TagString: OilRig
@@ -71,7 +70,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4189745577145438}
-  m_Layer: 0
+  - component: {fileID: 136418767622844260}
+  m_Layer: 12
   m_Name: OilRig
   m_TagString: OilRig
   m_Icon: {fileID: 0}
@@ -209,17 +209,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1852420999869284}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114189734483008468
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1852420999869284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 719258ba051c6354e84ce06d2230021a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &135632190054650396
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -227,8 +216,8 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1852420999869284}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 2.46
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -245,3 +234,16 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &136418767622844260
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1896270036436662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: -0.1, y: 1.25, z: 0.1}

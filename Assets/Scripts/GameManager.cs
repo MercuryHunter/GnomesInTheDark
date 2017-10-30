@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
 	// This is for debugging using the editor
 	// Turn autoInstatiate off if this script must be called by another, like Main Menu
-	public bool autoInstantiate = false;
+	public bool autoInstantiate = true;
 	public static int numPlayersToInstatiate = 3;
 	
     public enum LEVELS { LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5, LEVEL6, LEVEL7, LEVEL8 };
@@ -89,14 +89,14 @@ public class GameManager : MonoBehaviour
 	
 
 	public void Start() {
-		if (autoInstantiate) {
+		//if (autoInstantiate) {
 			initialisePlayers(numPlayersToInstatiate);
 			playerLevels = new int[numberOfPlayers];
 			for (int i = 0; i < numberOfPlayers; i++)
 			{
 				playerLevels[i] = 1;
 			}
-		}
+		//}
 	}
 
 	public void initialisePlayers(int numberOfPlayers) {

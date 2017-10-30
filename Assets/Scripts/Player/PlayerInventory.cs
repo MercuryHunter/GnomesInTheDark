@@ -77,7 +77,7 @@ public class PlayerInventory : MonoBehaviour {
             }
             else if (interactingObject.tag == "Letters") {
                 // TODO: Ummm..
-                interactingObject.GetComponent<letterController>().interact(gameObject);
+                //interactingObject.GetComponent<letterController>().interact(gameObject);
             }
             else if (interactingObject.tag == "TrapButton") {
                 interactingObject.GetComponent<TrapButton>().hitButton();

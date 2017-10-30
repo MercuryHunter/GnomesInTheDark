@@ -63,16 +63,17 @@ public class Inventory : MonoBehaviour {
         }
         
         // This is kinda bad, but it'll have to do - not a general system, but fine for this specialised one.
-        // TODO: Highlighting of selection
         if (showingInventory) {
             if (controller.up()) {
                 if (left) {
                     selectedIndex = GetPreviousNonEmptySlot();
                     ResetButtons();
                     EnableButton(selectedIndex);
+                    if(selectedIndex != -1) GameObject.Find("Slot" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
                 }
                 else {
                     drop = true;
+                    if(selectedIndex != -1) GameObject.Find("Drop" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
                 }
             }
             if (controller.down()) {
@@ -80,22 +81,29 @@ public class Inventory : MonoBehaviour {
                     selectedIndex = GetNextNonEmptySlot();
                     ResetButtons();
                     EnableButton(selectedIndex);
+                    if(selectedIndex != -1) GameObject.Find("Slot" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
                 }
                 else {
-                    if (holdingItems[selectedIndex].GetComponent<Item>().itemType == Item.ItemType.UTILITY)
+                    if (selectedIndex == -1) return;
+                    if (holdingItems[selectedIndex].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
                         drop = false;
+                        GameObject.Find("Equip" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
+                    }
                 }
             }
             if (controller.left()) {
                 if (!left) {
                     left = true;
                     drop = true;
+                    if(selectedIndex != -1) GameObject.Find("Slot" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
                 }
             }
             if (controller.right()) {
                 if (left) {
+                    if (selectedIndex == -1) return;
                     left = false;
                     drop = true;
+                    GameObject.Find("Drop" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
                 }
             }
             if (controller.interact()) {
@@ -246,6 +254,7 @@ public class Inventory : MonoBehaviour {
     }
 
     private void EnableButton(int position) {
+        if (position == -1) return;
         if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
             GameObject.Find("Equip" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = true;
         }

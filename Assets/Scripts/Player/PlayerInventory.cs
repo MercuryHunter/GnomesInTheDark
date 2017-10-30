@@ -38,7 +38,7 @@ public class PlayerInventory : MonoBehaviour {
             if (Physics.Raycast(camRay, out interactibleHit, interactionDistance, interactibleMask)) {
                 // Get game object to interact with
                 interactingObject = interactibleHit.transform.gameObject;
-                //if (interactingObject != null) Debug.Log("I am looking at: " + interactingObject.name);
+                if (interactingObject != null) Debug.Log("I am looking at: " + interactingObject.name);
             }
 
             if (interactingObject == null) return;
@@ -67,6 +67,13 @@ public class PlayerInventory : MonoBehaviour {
             }
             else if (interactingObject.tag == "OilRig") {
                 lanternFuel.refillFuel();
+            }
+            else if (interactingObject.tag == "Letters") {
+                // TODO: Ummm..
+                interactingObject.GetComponent<letterController>().interact(gameObject);
+            }
+            else if (interactingObject.tag == "TrapButton") {
+                interactingObject.GetComponent<TrapButton>().hitButton();
             }
         }
     }

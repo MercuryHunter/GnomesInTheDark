@@ -28,7 +28,7 @@ public class PlayerTeleportation : MonoBehaviour {
 
 	void OnTriggerStay(Collider other) {
 		// TODO: UI Text for player about this
-		if (controller.interact() && teleportContactTimeCurrent <= 0 && other.tag.Equals("Teleporter")) {
+		if (other.tag.Equals("Teleporter") && controller.interact() && teleportContactTimeCurrent <= 0) {
             int levelNumber = Convert.ToInt32(other.transform.parent.name.Substring(10,1));
             if (other.gameObject.name == "Location1")
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemyControllerBlue : MonoBehaviour {
+public class EnemyControllerBlue : MonoBehaviour, EnemyScript {
 
     enum State { GAURD, Chase, Return, Dead, RUN }
     enum ChaseState { SCARED, BRAVER, IMMUNE }
@@ -52,7 +52,7 @@ public class EnemyControllerBlue : MonoBehaviour {
     }
 
 
-    void GetAgents()
+    public void GetAgents()
     {
         Players = GameObject.FindGameObjectsWithTag("Player");
     }
@@ -67,14 +67,14 @@ public class EnemyControllerBlue : MonoBehaviour {
         //Loop thorugh players lenght to see which is closest
         if (state != State.RUN)
         {
-            float MinDistToPlayer = 100.0f;
+            float MinDistToPlayer = 30.0f;
             float distToLantern;
             for (int a = 0; a < Players.Length; a++)
             {
                 if (playerChase[a])
                 {
                     PlayerDistances[a] = Vector3.Distance(Players[a].transform.position, transform.position);//Distance to player
-                    if (PlayerDistances[a] < MinDistToPlayer)
+                    if ((PlayerDistances[a] < MinDistToPlayer) && (Players[a].GetComponentInChildren<Light>() != null))
                     {
                         MinDistToPlayer = PlayerDistances[a];//Assign new closest distance
                         currentTarget = a;//Set Current Player Target
@@ -149,12 +149,15 @@ public class EnemyControllerBlue : MonoBehaviour {
                     }
                 case State.RUN:
                     {
+                        
                         switch (chaseState)
                         {
                             case ChaseState.SCARED:
                                 {
                                     print("got into scared");
-                                    agent.SetDestination(new Vector3(transform.position.x + 100, transform.position.y, transform.position.z - 3));
+                                    Vector3 tempDirection = transform.position - Players[currentTarget].transform.position;
+                                    Vector3 runToLocation = new Vector3(transform.position.x + tempDirection.x, transform.position.y + tempDirection.y, transform.position.z + tempDirection.z);
+                                    agent.SetDestination(runToLocation);
                                     chaseState = ChaseState.BRAVER;
                                     runAwayTime = 10;
                                     break;
@@ -163,7 +166,10 @@ public class EnemyControllerBlue : MonoBehaviour {
                                 {
                                     print("got into Brave");
                                     //agent.SetDestination(new Vector3((Players[currentTarget].transform.position.x - 3), Players[currentTarget].transform.position.y, Players[currentTarget].transform.position.z - 3));
-                                    agent.SetDestination(new Vector3(transform.position.x + 100, transform.position.y, transform.position.z - 3));
+                                    Vector3 tempDirection = transform.position - Players[currentTarget].transform.position;
+                                    Vector3 runToLocation = new Vector3(transform.position.x + tempDirection.x, transform.position.y + tempDirection.y, transform.position.z + tempDirection.z);
+                                    agent.SetDestination(runToLocation);
+
                                     stateDistance = 6;
                                     chaseState = ChaseState.IMMUNE;
                                     runAwayTime = 5;
@@ -184,6 +190,9 @@ public class EnemyControllerBlue : MonoBehaviour {
         }
         if (hasPlayer && capturedPlayer != null)
         {
+           // Vector3 tempDirection = transform.position - Players[currentTarget].transform.position;
+            //Vector3 runToLocation = new Vector3(transform.position.x + tempDirection.x, transform.position.y + tempDirection.y, transform.position.z + tempDirection.z);
+           // agent.SetDestination(runToLocation);
             hurtTimer -= Time.deltaTime;
             if (hurtTimer < 0)
             {
@@ -196,7 +205,12 @@ public class EnemyControllerBlue : MonoBehaviour {
         if (state == State.RUN)
         {
             runTimer += Time.deltaTime;
-
+            if (ChaseState.IMMUNE != chaseState)
+            {
+                Vector3 tempDirection = transform.position - Players[currentTarget].transform.position;
+                Vector3 runToLocation = new Vector3(transform.position.x + tempDirection.x, transform.position.y + tempDirection.y, transform.position.z + tempDirection.z);
+                agent.SetDestination(runToLocation);
+            }
             if (runTimer > runAwayTime)
             {
                 runTimer = 0;
@@ -233,7 +247,7 @@ public class EnemyControllerBlue : MonoBehaviour {
         }//End switch
     }
 
-    private void releasePlayer()
+    public void releasePlayer()
     {
         capturedPlayer.transform.position = slimeBase.transform.position;
         state = State.GAURD;
@@ -242,10 +256,11 @@ public class EnemyControllerBlue : MonoBehaviour {
         PlayerDistances[currentTarget] = 100f;
         hasPlayer = false;
         // agent.SetDestination(transform.position);
-        // capturedPlayer = null; 
+        slimeBase.GetComponent<SlimeBaseController>().addPlayer(capturedPlayer, capturedPlayerNum, gameObject);
+        capturedPlayer = null; 
     }
 
-    private void freePlayer()
+    public void freePlayer()
     {
         capturedPlayer.GetComponent<PlayerMovement>().disallowMovement();
         capturedPlayer.transform.FindChild("Lantern").gameObject.SetActive(true);
@@ -314,5 +329,9 @@ public class EnemyControllerBlue : MonoBehaviour {
             inSafeZone = false;
             //state = State.RUN;
         }
+    }
+    public void releasePlayerNum(int playerNumberRelease)
+    {
+        playerChase[playerNumberRelease] = true;
     }
 }

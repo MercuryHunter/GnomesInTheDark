@@ -97,6 +97,12 @@ public class PlayerInventory : MonoBehaviour {
                 this.transform.eulerAngles = newTransform.eulerAngles;
                 playerCamera.setBodyPointVector(newTransform);
                 GameObject.Find("GameManager").GetComponent<GameManager>().changeLevel(levelNumber, playerNum);
+            }else if (interactingObject.tag == "SlimeBase")
+            {
+                //Transform newTransform = interactingObject.transform;
+                // this.transform.position = newTransform.position;
+                //this.transform.eulerAngles = newTransform.eulerAngles;
+                interactingObject.gameObject.GetComponent<SlimeBaseController>().releasePlayer();
             }
         }
     }

@@ -11456,6 +11456,11 @@ Prefab:
       propertyPath: trap
       value: 
       objectReference: {fileID: 1523552343}
+    - target: {fileID: 114734258349012354, guid: 58e5a18b2e9c1f2488dd8f689158503f,
+        type: 2}
+      propertyPath: linkedTrap
+      value: 
+      objectReference: {fileID: 1523552343}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 58e5a18b2e9c1f2488dd8f689158503f, type: 2}
   m_IsPrefabParent: 0
@@ -13542,6 +13547,11 @@ Prefab:
       propertyPath: m_Name
       value: Button1
       objectReference: {fileID: 0}
+    - target: {fileID: 114734258349012354, guid: 58e5a18b2e9c1f2488dd8f689158503f,
+        type: 2}
+      propertyPath: linkedTrap
+      value: 
+      objectReference: {fileID: 1114732249}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 58e5a18b2e9c1f2488dd8f689158503f, type: 2}
   m_IsPrefabParent: 0
@@ -15778,6 +15788,11 @@ Prefab:
     - target: {fileID: 114734258349012354, guid: 58e5a18b2e9c1f2488dd8f689158503f,
         type: 2}
       propertyPath: trap
+      value: 
+      objectReference: {fileID: 259984232}
+    - target: {fileID: 114734258349012354, guid: 58e5a18b2e9c1f2488dd8f689158503f,
+        type: 2}
+      propertyPath: linkedTrap
       value: 
       objectReference: {fileID: 259984232}
     m_RemovedComponents: []
@@ -27816,6 +27831,11 @@ Prefab:
     - target: {fileID: 114734258349012354, guid: 58e5a18b2e9c1f2488dd8f689158503f,
         type: 2}
       propertyPath: trap
+      value: 
+      objectReference: {fileID: 1778324907}
+    - target: {fileID: 114734258349012354, guid: 58e5a18b2e9c1f2488dd8f689158503f,
+        type: 2}
+      propertyPath: linkedTrap
       value: 
       objectReference: {fileID: 1778324907}
     m_RemovedComponents: []

@@ -8,10 +8,9 @@ public class PlayerMovement : MonoBehaviour {
 	public float walkspeed = 5.0f;
 	public float runspeed = 9.0f;
 
-	/*
-	public float timeBetweenJumps = 1.3f;
+	public float minTimeToNextJump = 1.15f;
 	private float timeToNextJump;
-	*/
+	
 	private bool movementAllowed;
 	private bool canJump;
 
@@ -24,8 +23,7 @@ public class PlayerMovement : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 		
 		playerRigidbody = GetComponent<Rigidbody> ();
-		// TODO: Think about jump timing - check if on floor instead of timing?
-		//timeToNextJump = 0;
+		timeToNextJump = 0;
 		
 		controller = GetComponent<BaseController>();
 		anim = GetComponentInChildren<Animation>();
@@ -51,8 +49,8 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		
         //Jumping(Space bar)
-		//timeToNextJump -= Time.deltaTime;
-        if (canJump && controller.isJumpingPressed()) { //timeToNextJump <= 0) {
+		timeToNextJump -= Time.deltaTime;
+        if (canJump && controller.isJumpingPressed() && timeToNextJump <= 0) { //timeToNextJump <= 0) {
             Jump();
         }
 	}
@@ -69,7 +67,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Jump() {
         // TODO: animation change here
-	    //timeToNextJump = timeBetweenJumps;
+	    timeToNextJump = minTimeToNextJump;
 	    canJump = false;
 	    GetComponent<Rigidbody>().detectCollisions = true;
         playerRigidbody.AddForce(Vector3.up * 20, ForceMode.Impulse);

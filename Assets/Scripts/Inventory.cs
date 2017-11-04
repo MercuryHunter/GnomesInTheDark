@@ -15,6 +15,9 @@ public class Inventory : MonoBehaviour {
     public Sprite cogTexture;
     public Sprite EmptyTexture;
     public EventSystem EventSystem;
+    // TODO: Swtich over to this
+    public Button[] dropButtons;
+    public Button[] equipButtons;
 
     // number of buttons on each inventory system, so it can be change
     private int numButtons = 3;

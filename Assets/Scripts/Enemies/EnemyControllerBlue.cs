@@ -31,7 +31,7 @@ public class EnemyControllerBlue : MonoBehaviour, EnemyScript {
     private float runTimer;
     private float runAwayTime;
     bool inSafeZone = false;
-
+    public Sprite slimeCover;
 
     void Start()
     {
@@ -272,6 +272,8 @@ public class EnemyControllerBlue : MonoBehaviour, EnemyScript {
         {
             if (images[i].gameObject.name == "SlimeCover")
             {
+                
+                images[i].gameObject.GetComponent<Image>().sprite = slimeCover;
                 images[i].gameObject.GetComponent<Image>().enabled = true;
 
             }
@@ -307,6 +309,7 @@ public class EnemyControllerBlue : MonoBehaviour, EnemyScript {
                 {
                     if (images[i].gameObject.name == "SlimeCover")
                     {
+                        images[i].gameObject.GetComponent<Image>().sprite = slimeCover;
                         images[i].gameObject.GetComponent<Image>().enabled = true;
 
                     }

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/*Eliminates padding, centers the thumbnail */
+ul.Menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    width: 100%;
+}
+
+li.MenuItem {
+    float: left;
+}
+
+li.MenuItem a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li.MenuItem a:hover {
+    background-color: #111;
+}
+
+img.screenshots{
+  width: 100%;
+  height: 40%;
+
+}
+body, html {
+padding: 0;
+margin: 0;
+background-color: black;
+color: white;
+font-family: Papyrus, fantasy;
+font-size: 18px;
+}
+
+/* Styles the thumbnail */
+
+a.lightbox img {
+height: 40%;
+width: 80%;
+border: 3px solid white;
+box-shadow: 0px 0px 8px rgba(0,0,0,.3);
+margin: 94px 20px 20px 20px;
+}
+
+/* Styles the lightbox, removes it from sight and adds the fade-in transition */
+
+.lightbox-target {
+position: fixed;
+top: -100%;
+width: 100%;
+background: rgba(0,0,0,.7);
+width: 100%;
+opacity: 0;
+-webkit-transition: opacity .5s ease-in-out;
+-moz-transition: opacity .5s ease-in-out;
+-o-transition: opacity .5s ease-in-out;
+transition: opacity .5s ease-in-out;
+overflow: hidden;
+}
+
+/* Styles the lightbox image, centers it vertically and horizontally, adds the zoom-in transition and makes it responsive using a combination of margin and absolute positioning */
+
+.lightbox-target img {
+margin: auto;
+position: absolute;
+top: 0;
+left:0;
+right:0;
+bottom: 0;
+max-height: 0%;
+max-width: 0%;
+border: 3px solid white;
+box-shadow: 0px 0px 8px rgba(0,0,0,.3);
+box-sizing: border-box;
+-webkit-transition: .5s ease-in-out;
+-moz-transition: .5s ease-in-out;
+-o-transition: .5s ease-in-out;
+transition: .5s ease-in-out;
+}
+
+/* Styles the close link, adds the slide down transition */
+
+a.lightbox-close {
+display: block;
+width:50px;
+height:50px;
+box-sizing: border-box;
+background: white;
+color: black;
+text-decoration: none;
+position: absolute;
+top: -80px;
+right: 0;
+-webkit-transition: .5s ease-in-out;
+-moz-transition: .5s ease-in-out;
+-o-transition: .5s ease-in-out;
+transition: .5s ease-in-out;
+}
+
+/* Provides part of the "X" to eliminate an image from the close link */
+
+a.lightbox-close:before {
+content: "";
+display: block;
+height: 30px;
+width: 1px;
+background: black;
+position: absolute;
+left: 26px;
+top:10px;
+-webkit-transform:rotate(45deg);
+-moz-transform:rotate(45deg);
+-o-transform:rotate(45deg);
+transform:rotate(45deg);
+}
+
+/* Provides part of the "X" to eliminate an image from the close link */
+
+a.lightbox-close:after {
+content: "";
+display: block;
+height: 30px;
+width: 1px;
+background: black;
+position: absolute;
+left: 26px;
+top:10px;
+-webkit-transform:rotate(-45deg);
+-moz-transform:rotate(-45deg);
+-o-transform:rotate(-45deg);
+transform:rotate(-45deg);
+}
+
+/* Uses the :target pseudo-class to perform the animations upon clicking the .lightbox-target anchor */
+
+.lightbox-target:target {
+opacity: 1;
+top: 0;
+bottom: 0;
+}
+
+.lightbox-target:target img {
+max-height: 100%;
+max-width: 100%;
+}
+
+.lightbox-target:target a.lightbox-close {
+top: 0px;
+}
+.lightbox:hover {opacity: 0.7;}
+.main {
+    margin-top: 10px;
+    padding:10px;
+    text-decoration-color: white;
+}
+
+ul{
+  list-style-type: none;
+}
+
+img.controls{
+  width: 80%;
+  height: 30%;
+}
+#banner {
+    margin-top: 60px;
+    background:  url(Screen10.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffffff;
+    padding: 16em 0em 14em;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+
+
+<ul class="Menu">
+  <li class="MenuItem"><a href="#About">About</a></li>
+  <li class="MenuItem"><a href="#Media">Media</a></li>
+  <li class="MenuItem"><a href="#Features">Features</a></li>
+  <li class="MenuItem"><a href="#Controls">Controls</a></li>
+  <li class="MenuItem"><a href="#Developers">Developers</a></li>
+</ul>
+<div id="banner"></div>
+<div class="main">
+  <div>
+  <h3 id="About">About</h3>
+    Gnomes in the dark is a co-op horror/survival game where players have to navigate their way around a cave to find cogs to escape. Cogs are scattered accross a map which os filled with hidden dangers that will hunt the player down and kill them if they are not careful. Once all the cogs are collected the player is freed from the cave and the game is over
+  </div>
+  <div>
+    <h3 id="Media">Media</h3>
+    Add all media and screenshots here
+    <table>
+      <tr>
+        <td>Screenshots</td>
+      </tr>
+      <tr>
+        <td ><a class="lightbox" href="#screen1"><img src="screen1.png"/></a> </td>
+        <td ><a class="lightbox" href="#screen2"><img src="screen2.png"/></a> </td>
+    </tr>
+    <tr>
+        <td ><a class="lightbox" href="#screen3"><img src="screen3.png"/></a> </td>
+        <td ><a class="lightbox" href="#screen4"><img src="screen4.png"/></a> </td>
+    </tr>
+    </table>
+    </table>
+  </div>
+  <div>
+    <h3 id ="Features"> Features </h3>
+    <ul>
+      <li>Co-op 1-4 players</li>
+      <li>Interactive objects</li>
+      <li>Exploration</li>
+      <li>Light management</li>
+      <li>Difficulty and progression</li>
+    </ul>
+  </div>
+  <div>
+  <h3 id="Controls">Controls</h3>
+    <table>
+      <tr>
+        <td><img class="controls" src="allcontrols.png"></td>
+        <td><img class="controls" src="keyboardAllControlls.png"></td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <h3 id ="Developers">Developers</h3>
+    <table>
+      <tr>
+        <td>
+        <ul>
+          <li>Dylan Sims</li>
+          <li>SMSDYL001</li>
+        </ul></td>
+        <td>
+        <ul>
+          <li>Jonathan Alp</li>
+          <li>SMSDYL001</li>
+        </ul></td>
+        <td>
+        <ul>
+          <li>Sebast...</li>
+          <li>SMSDYL001</li>
+        </ul></td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <div class="lightbox-target" id="screen1">
+        <img src="screen1.png"/>
+        <a class="lightbox-close" href="#"></a>
+    </div>
+    <div class="lightbox-target" id="screen2">
+        <img src="screen2.png"/>
+        <a class="lightbox-close" href="#"></a>
+    </div>
+    <div class="lightbox-target" id="screen3">
+        <img src="screen3.png"/>
+        <a class="lightbox-close" href="#"></a>
+    </div>
+    <div class="lightbox-target" id="screen4">
+        <img src="screen4.png"/>
+        <a class="lightbox-close" href="#"></a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

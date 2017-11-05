@@ -30,6 +30,7 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
     private float runTimer;
     private float runAwayTime;
     bool inSafeZone = false;
+    public Sprite slimeCover;
 
     void Start () {
         state = State.Idle;
@@ -70,7 +71,7 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
                     if ((PlayerDistances[a] < MinDistToPlayer) && (Players[a].GetComponentInChildren<Light>() != null))
                     {
                         MinDistToPlayer = PlayerDistances[a];//Assign new closest distance
-                        print(a);
+                       // print(a);
                         currentTarget = a;//Set Current Player Target
                         float lanternToPlayer = Players[a].GetComponentInChildren<Light>().range;
                        // print("Lantern "+lanternToPlayer);
@@ -242,7 +243,7 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
         capturedPlayer.transform.position = new Vector3(transform.position.x - 3, transform.position.y, transform.position.z - 3);
         capturedPlayer.transform.parent = null;
         Image[] images = capturedPlayer.GetComponentsInChildren<Image>();
-        // print(images.Length);
+        
         for (int i = 0; i < images.Length; i++)
         {
             if (images[i].gameObject.name == "SlimeCover")
@@ -277,11 +278,14 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
                 //capturedPlayers.GetComponentInChildren<BoxCollider>().enabled = false;
                 //other.transform.FindChild("slimeCover").gameObject.GetComponent<Image>().enabled = true;
                 Image[] images = capturedPlayer.GetComponentsInChildren<Image>();
-                // print(images.Length);
+                 print(images.Length + " is the images ");
                 for (int i = 0; i < images.Length; i++)
                 {
+                    print(images[i].gameObject.name);
                     if (images[i].gameObject.name == "SlimeCover")
                     {
+                        print("got in here");
+                        images[i].gameObject.GetComponent<Image>().sprite = slimeCover;
                         images[i].gameObject.GetComponent<Image>().enabled = true;
 
                     }

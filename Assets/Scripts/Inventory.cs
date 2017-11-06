@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour {
     public Button cog2;
     public Button pick1;
     public Sprite cogTexture;
+    public Sprite pickTexture;
     public Sprite EmptyTexture;
     public EventSystem EventSystem;
     public Button[] slotButtons;
@@ -216,32 +217,14 @@ public class Inventory : MonoBehaviour {
     }
     
     private void ChangeImageToEmpty(int position) {
-        // changed the item of the postion i to the image of no cog
-        switch (position) {
-            case 0:
-                cog1.image.sprite = EmptyTexture;
-                break;
-            case 1:
-                cog2.image.sprite = EmptyTexture;
-                break;
-            case 2:
-                pick1.image.sprite = EmptyTexture;
-                break;
-        }
+        slotButtons[position].image.sprite = EmptyTexture;
     }
 
     private void ChangeImageToFull(int position) {
-        switch (position) {
-            case 0:
-                cog1.image.sprite = cogTexture;
-                break;
-            case 1:
-                cog2.image.sprite = cogTexture;
-                break;
-            case 2:
-                pick1.image.sprite = cogTexture;
-                break;
-        }
+        if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY)
+            slotButtons[position].image.sprite = pickTexture;
+        else
+            slotButtons[position].image.sprite = cogTexture;
     } 
 
     private void ResetButtons() {

@@ -25,6 +25,7 @@ TagManager:
   - CogSlot
   - LeverSlot
   - SlimeBase
+  - Lever
   layers:
   - Default
   - TransparentFX

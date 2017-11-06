@@ -13,6 +13,8 @@ public class Inventory : MonoBehaviour {
     public Button cog2;
     public Button pick1;
     public Sprite cogTexture;
+    public Sprite pickTexture;
+    public Sprite leverTexture;
     public Sprite EmptyTexture;
     public EventSystem EventSystem;
 
@@ -227,19 +229,36 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    private void ChangeImageToFull(int position) {
+    private void ChangeImageToFull(int position, Item.ItemType itemType) {
+        Sprite itemSprite = getItemSprite(itemType);
         switch (position) {
             case 0:
-                cog1.image.sprite = cogTexture;
+                cog1.image.sprite = itemSprite;
                 break;
             case 1:
-                cog2.image.sprite = cogTexture;
+                cog2.image.sprite = itemSprite;
                 break;
             case 2:
-                pick1.image.sprite = cogTexture;
+                pick1.image.sprite = itemSprite;
                 break;
         }
     } 
+
+    private Sprite getItemSprite(Item.ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case Item.ItemType.COG:
+                return cogTexture;
+              
+            case Item.ItemType.UTILITY:
+                return pickTexture;
+            case Item.ItemType.LEVER:
+                return leverTexture;
+           
+        }
+        return cogTexture;
+    }
 
     private void ResetButtons() {
         for (int i = 0; i < numButtons; i++) {
@@ -280,7 +299,7 @@ public class Inventory : MonoBehaviour {
             GameObject.Find("GameManager").GetComponent<GameManager>().updateAllPlayers(playerNumber);
         }
         
-        ChangeImageToFull(index);
+        ChangeImageToFull(index, itemComponent.itemType);
     }
 
     private int GetPreviousNonEmptySlot() {

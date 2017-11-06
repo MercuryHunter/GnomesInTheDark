@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
 			if (UITexts[i].gameObject.name == "cogNumber")
 			{
 				print("Chaning the text to the next level");
-				UITexts[i].text = collectedCogs.ToString() + "/" + numCogsPerLevel[newLevel-1].ToString();
+				UITexts[i].text ="Cogs - " + collectedCogs.ToString() + "/" + numCogsPerLevel[newLevel-1].ToString();
 			}
 		}
 	}

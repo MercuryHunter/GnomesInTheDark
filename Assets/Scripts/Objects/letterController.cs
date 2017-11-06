@@ -12,6 +12,7 @@ public class letterController : MonoBehaviour, objectInteration {
     public Sprite[] replacedImage;
     private BaseController controller;
     int imagePosition;
+    Text interactText;
 
     private void Start() {
         inLetterTrigger = false;
@@ -35,6 +36,7 @@ public class letterController : MonoBehaviour, objectInteration {
         }
         if (imagePosition == 0) {
             player.GetComponent<PlayerMovement>().disallowMovement();
+            interactText.enabled = false;
         }
         //   print("E pressed");
         // print(player.gameObject.name);
@@ -53,5 +55,33 @@ public class letterController : MonoBehaviour, objectInteration {
             }
         }
         imagePosition++;
+
     }
-}
+    private void OnTriggerEnter(Collider other)
+    {
+        print("activated");
+        Text[] allText = other.GetComponentsInChildren<Text>();
+        for (int i = 0; i < allText.Length; i++)
+        {
+            if (allText[i].name == "InteractText")
+            {
+                BaseController controllerType = other.GetComponent<BaseController>();
+                if (controllerType is KeyboardController)
+                {
+                    allText[i].text = "Click 'e' to interact";
+                }
+                else
+                {
+                    allText[i].text = "Click 'x' to interact";
+                }
+                allText[i].enabled = true;
+                interactText = allText[i];
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        interactText.enabled = false;
+    }
+ }

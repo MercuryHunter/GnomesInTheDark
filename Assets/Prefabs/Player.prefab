@@ -1639,7 +1639,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845348533809100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3311923, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4482546700849398}
@@ -3156,6 +3156,18 @@ MonoBehaviour:
   cogTexture: {fileID: 21300000, guid: 1b03714f377f17040b3ad30c53fe8516, type: 3}
   EmptyTexture: {fileID: 21300000, guid: c134e3e5b77e4634082919f84df411a4, type: 3}
   EventSystem: {fileID: 114202747117540974}
+  slotButtons:
+  - {fileID: 114877154917537398}
+  - {fileID: 114702027270964970}
+  - {fileID: 114143535666778582}
+  dropButtons:
+  - {fileID: 114046925325665972}
+  - {fileID: 114847317368179910}
+  - {fileID: 114996997631805804}
+  equipButtons:
+  - {fileID: 114059477759027558}
+  - {fileID: 114750755738498270}
+  - {fileID: 114083556932579220}
   showingInventory: 0
 --- !u!114 &114116225304931136
 MonoBehaviour:

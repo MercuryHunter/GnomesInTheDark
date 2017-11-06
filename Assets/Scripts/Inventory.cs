@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour {
     public Sprite cogTexture;
     public Sprite EmptyTexture;
     public EventSystem EventSystem;
-    // TODO: Swtich over to this
+    public Button[] slotButtons;
     public Button[] dropButtons;
     public Button[] equipButtons;
 
@@ -72,11 +72,11 @@ public class Inventory : MonoBehaviour {
                     selectedIndex = GetPreviousNonEmptySlot();
                     ResetButtons();
                     EnableButton(selectedIndex);
-                    if(selectedIndex != -1) GameObject.Find("Slot" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
+                    if(selectedIndex != -1) slotButtons[selectedIndex].Select();
                 }
                 else {
                     drop = true;
-                    if(selectedIndex != -1) GameObject.Find("Drop" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
+                    if (selectedIndex != -1) dropButtons[selectedIndex].Select();
                 }
             }
             if (controller.down()) {
@@ -84,13 +84,13 @@ public class Inventory : MonoBehaviour {
                     selectedIndex = GetNextNonEmptySlot();
                     ResetButtons();
                     EnableButton(selectedIndex);
-                    if(selectedIndex != -1) GameObject.Find("Slot" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
+                    if(selectedIndex != -1) slotButtons[selectedIndex].Select();
                 }
                 else {
                     if (selectedIndex == -1) return;
                     if (holdingItems[selectedIndex].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
                         drop = false;
-                        GameObject.Find("Equip" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
+                        equipButtons[selectedIndex].Select();
                     }
                 }
             }
@@ -98,7 +98,7 @@ public class Inventory : MonoBehaviour {
                 if (!left) {
                     left = true;
                     drop = true;
-                    if(selectedIndex != -1) GameObject.Find("Slot" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
+                    if(selectedIndex != -1) slotButtons[selectedIndex].Select();
                 }
             }
             if (controller.right()) {
@@ -106,7 +106,7 @@ public class Inventory : MonoBehaviour {
                     if (selectedIndex == -1) return;
                     left = false;
                     drop = true;
-                    GameObject.Find("Drop" + Convert.ToString(selectedIndex + 1)).GetComponent<Button>().Select();
+                    dropButtons[selectedIndex].Select();
                 }
             }
             if (controller.interact()) {
@@ -252,16 +252,16 @@ public class Inventory : MonoBehaviour {
 
     private void DisableButton(int position) {
         // reset all equip and drop buttons to false
-        GameObject.Find("Drop" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = false;
-        GameObject.Find("Equip" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = false;
+        dropButtons[selectedIndex].GetComponent<Image>().enabled = false;
+        equipButtons[selectedIndex].GetComponent<Image>().enabled = false;
     }
 
     private void EnableButton(int position) {
         if (position == -1) return;
         if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
-            GameObject.Find("Equip" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = true;
+            equipButtons[selectedIndex].GetComponent<Image>().enabled = true;
         }
-        GameObject.Find("Drop" + Convert.ToString(position + 1)).GetComponent<Image>().enabled = true;
+        dropButtons[selectedIndex].GetComponent<Image>().enabled = true;
     }
     
     public void AddItem(GameObject item) {

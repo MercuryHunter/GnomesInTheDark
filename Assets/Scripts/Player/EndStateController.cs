@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EndStateController : MonoBehaviour {
 	
 	public Sprite deathImage;
+	public Sprite escapedImage;
 
 	public Image endStateOverlay;
 
@@ -25,5 +26,11 @@ public class EndStateController : MonoBehaviour {
 		changingTo = deathImage;
 		startTime = Time.time;
 		endStateOverlay.sprite = deathImage;
+	}
+
+	public void Escape() {
+		changingTo = escapedImage;
+		startTime = Time.time;
+		endStateOverlay.sprite = escapedImage;
 	}
 }

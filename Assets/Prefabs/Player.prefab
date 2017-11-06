@@ -2123,7 +2123,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688575305171136}
-  m_LocalRotation: {x: -0.31758574, y: 0.63177586, z: 0.6317741, w: 0.31758496}
+  m_LocalRotation: {x: -0.3175857, y: 0.6317758, z: 0.63177407, w: 0.31758493}
   m_LocalPosition: {x: -0.040354345, y: 0.0000006733832, z: 0.24000004}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_Children: []
@@ -3924,6 +3924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathImage: {fileID: 21300000, guid: 779c8dfd914234c5cb355825c8f2bc95, type: 3}
+  escapedImage: {fileID: 21300000, guid: 6c33892fb62914493a5d67e63dc8a135, type: 3}
   endStateOverlay: {fileID: 114594875556426296}
   duration: 5
 --- !u!114 &114629748274915508

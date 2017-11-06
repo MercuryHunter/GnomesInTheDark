@@ -22280,7 +22280,7 @@ GameObject:
   - component: {fileID: 1483709544}
   - component: {fileID: 1483709543}
   - component: {fileID: 1483709542}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Lever
   m_TagString: Item
   m_Icon: {fileID: 0}

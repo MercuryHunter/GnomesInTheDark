@@ -252,16 +252,16 @@ public class Inventory : MonoBehaviour {
 
     private void DisableButton(int position) {
         // reset all equip and drop buttons to false
-        dropButtons[selectedIndex].GetComponent<Image>().enabled = false;
-        equipButtons[selectedIndex].GetComponent<Image>().enabled = false;
+        dropButtons[position].GetComponent<Image>().enabled = false;
+        equipButtons[position].GetComponent<Image>().enabled = false;
     }
 
     private void EnableButton(int position) {
         if (position == -1) return;
         if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
-            equipButtons[selectedIndex].GetComponent<Image>().enabled = true;
+            equipButtons[position].GetComponent<Image>().enabled = true;
         }
-        dropButtons[selectedIndex].GetComponent<Image>().enabled = true;
+        dropButtons[position].GetComponent<Image>().enabled = true;
     }
     
     public void AddItem(GameObject item) {

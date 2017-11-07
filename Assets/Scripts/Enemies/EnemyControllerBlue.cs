@@ -32,6 +32,11 @@ public class EnemyControllerBlue : MonoBehaviour, EnemyScript {
     private float runAwayTime;
     bool inSafeZone = false;
     public Sprite slimeCover;
+    
+    // Sound
+    private SoundsController soundController;
+    private float cooldownToNextSoundPlay;
+    private float maxCooldownTime = 10.0f;
 
     void Start()
     {
@@ -104,6 +109,10 @@ public class EnemyControllerBlue : MonoBehaviour, EnemyScript {
                 if (MinDistToPlayer < 10.0f)
                 {
                     state = State.Chase;
+                    if (cooldownToNextSoundPlay <= 0) {
+                        soundController.playMonsterSound();
+                        cooldownToNextSoundPlay = maxCooldownTime;
+                    }
                 }
                 else {
                     agent.SetDestination(guardPoint[gaurdLocation].transform.position);

@@ -261,7 +261,7 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
         {
             if (images[i].gameObject.name == "SlimeCover")
             {
-                images[i].gameObject.GetComponent<Image>().enabled = true;
+                images[i].gameObject.GetComponent<Image>().enabled = false;
 
             }
         }

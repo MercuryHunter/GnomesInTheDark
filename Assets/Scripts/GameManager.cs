@@ -115,7 +115,8 @@ public class GameManager : MonoBehaviour
 		
 		// Spawn
 		int controllerNumber = 1;
-		bool keyboard = Input.GetJoystickNames().Length < numberOfPlayers;
+		// Always keyboard first
+		bool keyboard = true; //Input.GetJoystickNames().Length < numberOfPlayers;
 		for (int i = 0; i < numberOfPlayers; i++) {
 			// Create a player
 			GameObject currentPlayer = Instantiate(playerPrefabs[i % playerPrefabs.Length], spawnPoints[i % spawnPoints.Length].position, spawnPoints[i % spawnPoints.Length].rotation);

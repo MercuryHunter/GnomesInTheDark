@@ -53,7 +53,7 @@ public class EnemyControllerBlue : MonoBehaviour, EnemyScript {
         runAwayTime = 10;
         gaurdLocation = 1;
         agent.SetDestination(guardPoint[gaurdLocation].transform.position);
-        chaseState = ChaseState.IMMUNE;
+        chaseState = ChaseState.SCARED;
     }
 
 

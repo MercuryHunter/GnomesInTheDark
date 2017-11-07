@@ -35,6 +35,8 @@ public class WindowsController : MonoBehaviour, BaseController {
 	D-Pad Right:					8		12
 	Xbox Button:					15	
 	*/
+
+	private float DEADZONE = 0.5f;
 	
 	string getJoystickAxisString(int joystickNumber, int axis) {
 		return "joystick " + joystickNumber + " axis " + axis;
@@ -85,12 +87,16 @@ public class WindowsController : MonoBehaviour, BaseController {
 
 	// Right Stick
 	public float getXLook() {
-		return Input.GetAxis(getJoystickAxisString(joystickNumber, 4));
+		float amount = Input.GetAxis(getJoystickAxisString(joystickNumber, 4));
+		if (amount > DEADZONE) return amount;
+		return 0;
 	}
 
 	// Right Stick
 	public float getYLook() {
-		return - Input.GetAxis(getJoystickAxisString(joystickNumber, 5));
+		float amount = - Input.GetAxis(getJoystickAxisString(joystickNumber, 5));
+		if (amount > DEADZONE) return amount;
+		return 0;
 	}
 	
 	// Right Bumper

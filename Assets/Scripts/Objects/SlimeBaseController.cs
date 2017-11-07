@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlimeBaseController : MonoBehaviour {
 
@@ -28,10 +29,24 @@ public class SlimeBaseController : MonoBehaviour {
         holdingPlayer.transform.eulerAngles = this.transform.eulerAngles;
         holdingPlayer.GetComponent<PlayerMovement>().allowMovement();
         holdingPlayer.transform.FindChild("Lantern").gameObject.SetActive(true);
-        holdingPlayer = null;
+        
         currentMonster.GetComponent<EnemyScript>().releasePlayerNum(playerNumber);
         currentMonster = null;
         print("the player has been released");
+
+
+        Image[] images = holdingPlayer.GetComponentsInChildren<Image>();
+
+        for (int i = 0; i < images.Length; i++)
+        {
+            if (images[i].gameObject.name == "SlimeCover")
+            {
+                images[i].gameObject.GetComponent<Image>().enabled = false;
+
+            }
+        }
+
+        holdingPlayer = null;
         //playerCamera.setBodyPointVector(newTransform);
         //holdingPlayer.transform.forward;
     }

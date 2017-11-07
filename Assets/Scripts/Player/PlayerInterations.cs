@@ -32,6 +32,8 @@ public class PlayerInterations : MonoBehaviour {
 
     public void enableUpdates() {
         update = true;
+        tempObject = null;
+        gameObjectInteracting = null;
     }
 
     private void OnTriggerEnter(Collider other) {

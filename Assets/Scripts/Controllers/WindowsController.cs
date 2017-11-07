@@ -88,14 +88,14 @@ public class WindowsController : MonoBehaviour, BaseController {
 	// Right Stick
 	public float getXLook() {
 		float amount = Input.GetAxis(getJoystickAxisString(joystickNumber, 4));
-		if (amount > DEADZONE) return amount;
+		if (Mathf.Abs(amount) > DEADZONE) return amount;
 		return 0;
 	}
 
 	// Right Stick
 	public float getYLook() {
 		float amount = - Input.GetAxis(getJoystickAxisString(joystickNumber, 5));
-		if (amount > DEADZONE) return amount;
+		if (Mathf.Abs(amount) > DEADZONE) return amount;
 		return 0;
 	}
 	

@@ -31,6 +31,11 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
     private float runAwayTime;
     bool inSafeZone = false;
     public Sprite slimeCover;
+    
+    // Sound
+    private SoundsController soundController;
+    private float cooldownToNextSoundPlay;
+    private float maxCooldownTime = 10.0f;
 
     void Start () {
         state = State.Idle;
@@ -45,6 +50,9 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
         runTimer = 0;
         runAwayTime = 10;
         chaseState = ChaseState.SCARED;
+
+        soundController = GameObject.Find("SoundListener").GetComponent<SoundsController>();
+        cooldownToNextSoundPlay = 0;
     }
 
 
@@ -54,6 +62,7 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
 
 	// Update is called once per frame
 	void Update () {
+	    cooldownToNextSoundPlay -= Time.deltaTime;
 
         if (InitCount > 0) { GetAgents();  InitCount--; }
 
@@ -99,6 +108,10 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
                 if (MinDistToPlayer < 10.0f)
                 {
                     state = State.Chase;
+                    if (cooldownToNextSoundPlay <= 0) {
+                        soundController.playMonsterSound();
+                        cooldownToNextSoundPlay = maxCooldownTime;
+                    }
                 }
                 else { state = State.Idle; }
             }

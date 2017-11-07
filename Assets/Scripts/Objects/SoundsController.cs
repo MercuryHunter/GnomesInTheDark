@@ -25,4 +25,8 @@ public class SoundsController : MonoBehaviour {
             allSources[selectedSource].Play();
         }
     }
+
+    public void playMonsterSound() {
+        allSources[0].Play();
+    }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour {
     /* Class is used for the player to interact with the items to add to the inventory or use 
@@ -21,6 +22,10 @@ public class PlayerInventory : MonoBehaviour {
 
     private int playerNum;
 
+    public Text interactText;
+    private float timeToPopDown;
+    private float normalPopDownTime = 2;
+
     public void Start() {
         inventory = gameObject.GetComponentInChildren<Inventory>();
         controller = GetComponent<BaseController>();
@@ -32,9 +37,14 @@ public class PlayerInventory : MonoBehaviour {
         lanternFuel = GetComponentInChildren<LanternFuel>();
         
         playerNum = Convert.ToInt32(gameObject.name.Substring(6, 1));
+
+        timeToPopDown = normalPopDownTime;
     }
 
     public void Update() {
+        timeToPopDown -= Time.deltaTime;
+        if (timeToPopDown <= 0) interactText.enabled = false;
+        
         if (inventory.showingInventory) return; // Don't do any interactions if in inventory please
         
         if (controller.interact()) {
@@ -62,10 +72,14 @@ public class PlayerInventory : MonoBehaviour {
                 bool succeeded = machineManager.addLever(inventory.GetLeverIfAvailable());
                 if (!succeeded) {
                     if (inventory.HasLever()) {
-                        // TODO: Say not enough cogs
+                        interactText.text = "Collect all the cogs before inserting the key";
+                        interactText.enabled = true;
+                        timeToPopDown = normalPopDownTime;
                     }
                     else {
-                        // TODO: Say this is lever slot, pls get lever
+                        interactText.text = "This slot is for the key";
+                        interactText.enabled = true;
+                        timeToPopDown = normalPopDownTime;
                     }
                 }
             }

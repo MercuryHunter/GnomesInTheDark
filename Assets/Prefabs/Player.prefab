@@ -1674,7 +1674,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845348533809100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -8.77203, y: 1.531415, z: -5.5300865}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4482546700849398}
@@ -3671,6 +3671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 1.5
+  interactText: {fileID: 114311173459468990}
 --- !u!114 &114401995515605186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4613,11 +4614,11 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1865788188470266}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 10
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.24
+  m_Center: {x: 0, y: -0.4, z: 0}
 --- !u!135 &135717614763473674
 SphereCollider:
   m_ObjectHideFlags: 1

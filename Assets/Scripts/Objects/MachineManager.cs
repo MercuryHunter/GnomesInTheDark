@@ -35,6 +35,10 @@ public class MachineManager : MonoBehaviour {
         return collectedCogs;
     }
 
+    public bool canAddLever() {
+        return mainMachine.allCollected();
+    }
+
     public bool addLever(GameObject lever) {
         if (lever == null) return false;
 

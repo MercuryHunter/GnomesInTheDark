@@ -69,15 +69,17 @@ public class PlayerInventory : MonoBehaviour {
             }
             else if (interactingObject.tag == "LeverSlot") {
                 MachineManager machineManager = interactingObject.GetComponentInParent<MachineManager>();
-                bool succeeded = machineManager.addLever(inventory.GetLeverIfAvailable());
-                if (!succeeded) {
-                    if (inventory.HasLever()) {
-                        interactText.text = "Collect all the cogs before inserting the key";
-                        interactText.enabled = true;
-                        timeToPopDown = normalPopDownTime;
+                if (!inventory.HasLever()) {
+                    interactText.text = "This slot is for the key";
+                    interactText.enabled = true;
+                    timeToPopDown = normalPopDownTime;   
+                }
+                else {
+                    if (machineManager.canAddLever()) {
+                        machineManager.addLever(inventory.GetLeverIfAvailable());
                     }
                     else {
-                        interactText.text = "This slot is for the key";
+                        interactText.text = "Collect all the cogs before inserting the key";
                         interactText.enabled = true;
                         timeToPopDown = normalPopDownTime;
                     }

@@ -100,6 +100,10 @@ public class PlayerMovement : MonoBehaviour {
 		canJump = true;
 	}
 
+	public void disallowJump() {
+		canJump = false;
+	}
+
 	public void allowMovement() {
 		movementAllowed = true;
 	}

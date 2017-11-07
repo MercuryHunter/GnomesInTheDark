@@ -17,8 +17,10 @@ public class PlayerHealth : MonoBehaviour {
 	private float timeToNextCaptureDamage;
 	private int currentCaptureCounter;
 	private bool dead;
+
+	private EndStateController endStateController;
+	private PlayerMovement playerMovement;
 	
-	// Use this for initialization
 	void Start () {
 		currentHealth = startingHealth;
 		healthSlider.maxValue = startingHealth;
@@ -26,9 +28,11 @@ public class PlayerHealth : MonoBehaviour {
 		timeToNextCaptureDamage = 5;
 		currentCaptureCounter = 0;
 		timeBetweenCaptureDamage = secondsToDeathFromFullHealth / (startingHealth / captureDamage);
+
+		endStateController = GetComponent<EndStateController>();
+		playerMovement = GetComponent<PlayerMovement>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if (dead) return;
 		
@@ -53,12 +57,16 @@ public class PlayerHealth : MonoBehaviour {
 		currentHealth -= amount;
 		healthSlider.value = currentHealth;
 		
-		if (currentHealth <= 0) Die();
+		if (currentHealth <= 0 && !dead) Die();
 	}
 
 	private void Die() {
 		currentHealth = 0;
 		dead = true;
+		endStateController.Die();
+		playerMovement.disallowMovement();
+		playerMovement.disallowJump();
+		// TODO: Animation
 	}
 
 	public void Capture() {

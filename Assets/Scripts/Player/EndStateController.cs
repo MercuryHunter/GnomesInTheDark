@@ -4,16 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class EndStateController : MonoBehaviour {
+	
+	public Sprite deathImage;
+	public Sprite escapedImage;
 
 	public Image endStateOverlay;
 
-	// Use this for initialization
-	void Start () {
+	public float duration = 5.0f;
+
+	private float startTime;
+	private Sprite changingTo;
+	
+	public void Update() {
+		if (changingTo == null) return;
 		
+		float t = (Time.time - startTime) / duration;
+		endStateOverlay.color = new Color(1f,1f,1f,Mathf.SmoothStep(0f, 1f, t));
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
+	public void Die() {
+		changingTo = deathImage;
+		startTime = Time.time;
+		endStateOverlay.sprite = deathImage;
+	}
+
+	public void Escape() {
+		changingTo = escapedImage;
+		startTime = Time.time;
+		endStateOverlay.sprite = escapedImage;
 	}
 }

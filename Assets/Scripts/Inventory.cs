@@ -14,7 +14,6 @@ public class Inventory : MonoBehaviour {
     public Button pick1;
     public Sprite cogTexture;
     public Sprite pickTexture;
-    public Sprite leverTexture;
     public Sprite EmptyTexture;
     public EventSystem EventSystem;
     public Button[] slotButtons;
@@ -218,50 +217,15 @@ public class Inventory : MonoBehaviour {
     }
     
     private void ChangeImageToEmpty(int position) {
-        // changed the item of the postion i to the image of no cog
-        switch (position) {
-            case 0:
-                cog1.image.sprite = EmptyTexture;
-                break;
-            case 1:
-                cog2.image.sprite = EmptyTexture;
-                break;
-            case 2:
-                pick1.image.sprite = EmptyTexture;
-                break;
-        }
+        slotButtons[position].image.sprite = EmptyTexture;
     }
 
-    private void ChangeImageToFull(int position, Item.ItemType itemType) {
-        Sprite itemSprite = getItemSprite(itemType);
-        switch (position) {
-            case 0:
-                cog1.image.sprite = itemSprite;
-                break;
-            case 1:
-                cog2.image.sprite = itemSprite;
-                break;
-            case 2:
-                pick1.image.sprite = itemSprite;
-                break;
-        }
+    private void ChangeImageToFull(int position) {
+        if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY)
+            slotButtons[position].image.sprite = pickTexture;
+        else
+            slotButtons[position].image.sprite = cogTexture;
     } 
-
-    private Sprite getItemSprite(Item.ItemType itemType)
-    {
-        switch (itemType)
-        {
-            case Item.ItemType.COG:
-                return cogTexture;
-              
-            case Item.ItemType.UTILITY:
-                return pickTexture;
-            case Item.ItemType.LEVER:
-                return leverTexture;
-           
-        }
-        return cogTexture;
-    }
 
     private void ResetButtons() {
         for (int i = 0; i < numButtons; i++) {
@@ -271,16 +235,16 @@ public class Inventory : MonoBehaviour {
 
     private void DisableButton(int position) {
         // reset all equip and drop buttons to false
-        dropButtons[selectedIndex].GetComponent<Image>().enabled = false;
-        equipButtons[selectedIndex].GetComponent<Image>().enabled = false;
+        dropButtons[position].GetComponent<Image>().enabled = false;
+        equipButtons[position].GetComponent<Image>().enabled = false;
     }
 
     private void EnableButton(int position) {
         if (position == -1) return;
         if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY) {
-            equipButtons[selectedIndex].GetComponent<Image>().enabled = true;
+            equipButtons[position].GetComponent<Image>().enabled = true;
         }
-        dropButtons[selectedIndex].GetComponent<Image>().enabled = true;
+        dropButtons[position].GetComponent<Image>().enabled = true;
     }
     
     public void AddItem(GameObject item) {
@@ -302,7 +266,7 @@ public class Inventory : MonoBehaviour {
             GameObject.Find("GameManager").GetComponent<GameManager>().updateAllPlayers(playerNumber);
         }
         
-        ChangeImageToFull(index, itemComponent.itemType);
+        ChangeImageToFull(index);
     }
 
     private int GetPreviousNonEmptySlot() {

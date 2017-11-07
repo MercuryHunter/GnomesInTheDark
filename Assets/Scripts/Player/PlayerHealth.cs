@@ -22,8 +22,10 @@ public class PlayerHealth : MonoBehaviour {
     private Transform Wizard;
     private Animation anim;
 
+	// Ending Stuff
 	private EndStateController endStateController;
 	private PlayerMovement playerMovement;
+	private PlayerCamera playerCamera;
 	
 	void Start () {
 		currentHealth = startingHealth;
@@ -39,6 +41,7 @@ public class PlayerHealth : MonoBehaviour {
 
 		endStateController = GetComponent<EndStateController>();
 		playerMovement = GetComponent<PlayerMovement>();
+		playerCamera = GetComponentInChildren<PlayerCamera>();
 	}
 	
 	void Update () {
@@ -74,7 +77,7 @@ public class PlayerHealth : MonoBehaviour {
 		endStateController.Die();
 		playerMovement.disallowMovement();
 		playerMovement.disallowJump();
-        // TODO: Animation
+		playerCamera.rotationLock = true;
         anim.CrossFade("Wizard_Death");
 	}
 

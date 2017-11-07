@@ -22,6 +22,7 @@ public class MachineManager : MonoBehaviour {
         mainMachine.incrementNumberOfCogs();
         
         cog.transform.position = slot.transform.position;
+        cog.GetComponent<SphereCollider>().enabled = false;
         Destroy(slot);
         if (!slot.name.Contains("CogMainSlot")) {
             // Add to the main machine as well if this isn't it

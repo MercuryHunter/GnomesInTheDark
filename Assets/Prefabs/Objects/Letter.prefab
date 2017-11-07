@@ -354,9 +354,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf92a4709cf04e4cb8601698a1fcb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalImages: 0
+  totalImages: 3
   replacedImage:
-  - {fileID: 21300000, guid: 7350e58434d470447b0d6d3e812ab076, type: 3}
+  - {fileID: 21300000, guid: c12c44177f271c949be14154226c05b6, type: 3}
+  - {fileID: 21300000, guid: ecc80cf0578d889489fdacdb25824cad, type: 3}
+  - {fileID: 21300000, guid: 602e8352f649a8341b9e1f898b852e18, type: 3}
 --- !u!135 &135928575207753126
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -367,5 +369,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.59
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1.62
+  m_Center: {x: 0, y: 11.13, z: 0}

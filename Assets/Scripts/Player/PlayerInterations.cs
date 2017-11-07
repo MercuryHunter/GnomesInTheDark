@@ -18,7 +18,9 @@ public class PlayerInterations : MonoBehaviour {
         {
             if (controller.interact())
             {
-                tempObject.interact(this.gameObject);
+                if (tempObject != null) {
+                    tempObject.interact(this.gameObject);
+                }
             }
         }
     }
@@ -30,17 +32,14 @@ public class PlayerInterations : MonoBehaviour {
         tempObject = other.gameObject.GetComponent<objectInteration>();
         if (tempObject != null)
         {
-            print(other.gameObject.name);
+//            print(other.gameObject.name);
             inTrigger = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        tempObject = other.gameObject.GetComponent<objectInteration>();
-        if (tempObject != null)
-        {
-            inTrigger = false;
-        }
+        inTrigger = false;
+        
     }
 }

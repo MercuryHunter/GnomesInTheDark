@@ -261,7 +261,7 @@ public class EnemyControllerRED : MonoBehaviour, EnemyScript {
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
+//        print(other.gameObject.name);
         if (other.gameObject.tag == "Player")
         {
             if (!hasPlayer)

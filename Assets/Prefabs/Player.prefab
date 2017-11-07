@@ -2157,7 +2157,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1688575305171136}
-  m_LocalRotation: {x: -0.3175857, y: 0.6317758, z: 0.63177407, w: 0.31758493}
+  m_LocalRotation: {x: -0.31758574, y: 0.63177586, z: 0.6317741, w: 0.31758496}
   m_LocalPosition: {x: -0.040354345, y: 0.0000006733832, z: 0.24000004}
   m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_Children: []
@@ -3205,9 +3205,10 @@ MonoBehaviour:
   cog1: {fileID: 114877154917537398}
   cog2: {fileID: 114702027270964970}
   pick1: {fileID: 114143535666778582}
+  keyTexture: {fileID: 21300000, guid: aba8d924fd4b845e3beb572d79bd391a, type: 3}
   cogTexture: {fileID: 21300000, guid: bc864207a4139764d9e9a976f36794f2, type: 3}
   pickTexture: {fileID: 21300000, guid: f943ee902963a4746bae2b1778a2b242, type: 3}
-  EmptyTexture: {fileID: 21300000, guid: c134e3e5b77e4634082919f84df411a4, type: 3}
+  EmptyTexture: {fileID: 21300000, guid: caea07b2d8d2f4d97b7e685810f5efaa, type: 3}
   EventSystem: {fileID: 114202747117540974}
   slotButtons:
   - {fileID: 114877154917537398}
@@ -3870,7 +3871,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c134e3e5b77e4634082919f84df411a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: caea07b2d8d2f4d97b7e685810f5efaa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3935,7 +3936,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c134e3e5b77e4634082919f84df411a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: caea07b2d8d2f4d97b7e685810f5efaa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4206,7 +4207,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c134e3e5b77e4634082919f84df411a4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: caea07b2d8d2f4d97b7e685810f5efaa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

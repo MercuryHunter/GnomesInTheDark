@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour {
     public Button cog1;
     public Button cog2;
     public Button pick1;
+    public Sprite keyTexture;
     public Sprite cogTexture;
     public Sprite pickTexture;
     public Sprite EmptyTexture;
@@ -223,6 +224,8 @@ public class Inventory : MonoBehaviour {
     private void ChangeImageToFull(int position) {
         if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.UTILITY)
             slotButtons[position].image.sprite = pickTexture;
+        else if (holdingItems[position].GetComponent<Item>().itemType == Item.ItemType.LEVER) 
+            slotButtons[position].image.sprite = keyTexture;
         else
             slotButtons[position].image.sprite = cogTexture;
     } 

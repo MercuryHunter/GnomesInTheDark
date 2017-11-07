@@ -79,6 +79,7 @@ public class PlayerHealth : MonoBehaviour {
 		playerMovement.disallowJump();
 		playerCamera.rotationLock = true;
         anim.CrossFade("Wizard_Death");
+		GameObject.Find("GameManager").GetComponent<GameManager>().someoneDied();
 	}
 
 	public void Capture() {

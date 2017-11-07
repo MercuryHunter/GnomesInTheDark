@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 	public Transform[] spawnPoints;
 	public GameObject[] playerPrefabs;
 
+	private int numDead;
+
 	// X, Y, W, H
 	
 	private Rect[,] cameraDetailsVertical = new Rect[4, 4] {
@@ -90,12 +92,13 @@ public class GameManager : MonoBehaviour
 
 	public void Start() {
 		//if (autoInstantiate) {
-			initialisePlayers(numPlayersToInstatiate);
-			playerLevels = new int[numberOfPlayers];
-			for (int i = 0; i < numberOfPlayers; i++)
-			{
-				playerLevels[i] = 1;
-			}
+		initialisePlayers(numPlayersToInstatiate);
+		playerLevels = new int[numberOfPlayers];
+		for (int i = 0; i < numberOfPlayers; i++)
+		{
+			playerLevels[i] = 1;
+		}
+		numDead = 0;
 		//}
 	}
 
@@ -166,6 +169,13 @@ public class GameManager : MonoBehaviour
 	{
         // gets the level of a player from the playerLevels
 		return playerLevels[playerNum - 1];
+	}
+
+	public void someoneDied() {
+		numDead += 1;
+		if (numDead >= numberOfPlayers) {
+			UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+		}
 	}
 
 	public void changeLevel(int newLevel, int playerNum)

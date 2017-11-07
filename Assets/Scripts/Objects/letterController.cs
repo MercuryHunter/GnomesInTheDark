@@ -33,6 +33,7 @@ public class letterController : MonoBehaviour, objectInteration {
             // gameObject.SetActive(true);
             gameObject.GetComponent<MeshRenderer>().enabled = true;
             gameObject.GetComponent<SphereCollider>().enabled = true;
+            player.GetComponent<PlayerInterations>().enableUpdates();
             return;
         }
         if (imagePosition == 0) {

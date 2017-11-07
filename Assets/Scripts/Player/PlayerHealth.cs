@@ -18,6 +18,10 @@ public class PlayerHealth : MonoBehaviour {
 	private int currentCaptureCounter;
 	private bool dead;
 
+    private Transform model;
+    private Transform Wizard;
+    private Animation anim;
+
 	private EndStateController endStateController;
 	private PlayerMovement playerMovement;
 	
@@ -28,6 +32,10 @@ public class PlayerHealth : MonoBehaviour {
 		timeToNextCaptureDamage = 5;
 		currentCaptureCounter = 0;
 		timeBetweenCaptureDamage = secondsToDeathFromFullHealth / (startingHealth / captureDamage);
+
+        model = this.transform.FindChild("Model");
+        Wizard = model.FindChild("Wizard");
+        anim = Wizard.GetComponent<Animation>();
 
 		endStateController = GetComponent<EndStateController>();
 		playerMovement = GetComponent<PlayerMovement>();
@@ -66,7 +74,8 @@ public class PlayerHealth : MonoBehaviour {
 		endStateController.Die();
 		playerMovement.disallowMovement();
 		playerMovement.disallowJump();
-		// TODO: Animation
+        // TODO: Animation
+        anim.CrossFade("Wizard_Death");
 	}
 
 	public void Capture() {

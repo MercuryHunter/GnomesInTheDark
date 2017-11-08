@@ -20,7 +20,10 @@ public class PlayerInterations : MonoBehaviour {
             if (controller.interact()) {
                 if (tempObject != null) {
                     tempObject.interact(this.gameObject);
-                    if(gameObjectInteracting.GetComponent<letterController>() != null) disableUpdates();
+                    if (gameObjectInteracting != null)
+                    {
+                        if (gameObjectInteracting.GetComponent<letterController>() != null) disableUpdates();
+                    }
                 }
             }
         }

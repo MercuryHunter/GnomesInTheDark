@@ -62,12 +62,14 @@ public class letterController : MonoBehaviour, objectInteration {
     }
     private void OnTriggerEnter(Collider other)
     {
-       // print("activated");
+        print("activated");
+        print(other.name);
         Text[] allText = other.GetComponentsInChildren<Text>();
         for (int i = 0; i < allText.Length; i++)
         {
             if (allText[i].name == "InteractText")
             {
+                print("in here and not printing");
                 BaseController controllerType = other.GetComponent<BaseController>();
                 if (controllerType is KeyboardController)
                 {

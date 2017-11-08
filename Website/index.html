@@ -165,17 +165,22 @@ top: 0px;
     padding:10px;
     text-decoration-color: white;
 }
+table{
+  padding-left: 50px;
+  text-align: center;
+  width: 90%;
+}
 
 ul{
   list-style-type: none;
 }
 
-img.controls{
+img.playcontrols{
   width: 80%;
   height: 30%;
 }
 #banner {
-    margin-top: 60px;
+    margin-top : 60px; ; margin-right: 60px;
     background:  url(Screen10.png);
     background-position: center;
     background-repeat: no-repeat;
@@ -183,6 +188,9 @@ img.controls{
     color: #ffffff;
     padding: 16em 0em 14em;
     text-align: center;
+}
+h3{
+  text-align: center;
 }
 </style>
 </head>
@@ -194,21 +202,32 @@ img.controls{
   <li class="MenuItem"><a href="#About">About</a></li>
   <li class="MenuItem"><a href="#Media">Media</a></li>
   <li class="MenuItem"><a href="#Features">Features</a></li>
-  <li class="MenuItem"><a href="#Controls">Controls</a></li>
+  <li class="MenuItem"><a href="#PlayerControls">Controls</a></li>
+  <li class="MenuItem"><a href="#ExtraInfo">Extra info</a></li>
   <li class="MenuItem"><a href="#Developers">Developers</a></li>
+  
 </ul>
 <div id="banner"></div>
 <div class="main">
   <div>
   <h3 id="About">About</h3>
-    Gnomes in the dark is a co-op horror/survival game where players have to navigate their way around a cave to find cogs to escape. Cogs are scattered accross a map which os filled with hidden dangers that will hunt the player down and kill them if they are not careful. Once all the cogs are collected the player is freed from the cave and the game is over
+    Players play as a group of gnomes who have entered a mysterious mine-dungeon in search of treasure.
+Unfortunately, the big entrance door to the mine closed behind them and now they are trapped. The door
+is operated by a strange mechanism the gnomes have never seen before and seems to be missing some parts.
+The gnomes decide in order escape they will venture further into the mine to find a way of opening the door.
+There must be some spare parts and instructions on how to operate this strange door somewhere deeper in
+the mine. The room with the door to the surface seems safe and well lit. It is the highest floor in the mine
+and has a very large barrel of oil that can server as lantern fuel. The gnomes must explore with limited oil in
+their lanterns, occasionally returning to the safe-room to refuel and drop off items. They must use any tools
+they find to progress further down into the darkness of the mines. Uncovering any treasure and mysteries it
+might hold to escape this place. Perhaps they could leave slightly wealthier or be fortunate to just escape
+with their lives.
   </div>
   <div>
     <h3 id="Media">Media</h3>
+    <h3>Screenshots</h3>
     <table>
-      <tr>
-        <td><h3>Screenshots</h3></td>
-      </tr>
+      
       <tr>
         <td ><a class="lightbox" href="#screen1"><img src="screen1.png"/></a> </td>
         <td ><a class="lightbox" href="#screen2"><img src="screen2.png"/></a> </td>
@@ -218,7 +237,13 @@ img.controls{
         <td ><a class="lightbox" href="#screen4"><img src="screen4.png"/></a> </td>
     </tr>
     </table>
-    </table>
+    <h3>Gameplay</h3>
+   
+    <video width="80%" id="vid1" loop class="embed-responsive-item" controls volume>
+      <source src="Gnomesvideo.mp4" type="video/mp4">
+  
+      Your browser does not support HTML5 video.
+    </video>
   </div>
   <div>
     <h3 id ="Features"> Features </h3>
@@ -228,17 +253,45 @@ img.controls{
       <li>Exploration</li>
       <li>Light management</li>
       <li>Difficulty and progression</li>
+      <li>Controller gameplay</li>
+      <li>Inventory system</li>
     </ul>
   </div>
   <div>
-  <h3 id="Controls">Controls</h3>
+  <h3 id="PlayerControls">Controls</h3>
     <table>
       <tr>
-        <td><img class="controls" src="allcontrols.png"></td>
-        <td><img class="controls" src="keyboardAllControlls.png"></td>
+        <td><img class="playcontrols" src="allcontrols.png"></td>
+        <td><img class="playcontrols" src="keyboardAllControlls.png"></td>
       </tr>
     </table>
   </div>
+  </div>
+    <h3 id ="ExtraInfo">Extra information</h3>
+    <table>
+      <tr>
+        <td>
+          <ul>
+            <li><h4>Genre</h4></li>
+            <li>Horror/survival</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li><h4>Compatible OS</h4></li>
+            <li>Windows</li>
+            <li>Mac OS</li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li><h4>Game Style</h4></li>
+            <li>Multiplayer</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  <div>
   <div>
     <h3 id ="Developers">Developers</h3>
     <table>
@@ -250,13 +303,13 @@ img.controls{
         </ul></td>
         <td>
         <ul>
-          <li>Jonathan Alp</li>
-          <li>SMSDYL001</li>
+          <li>U. Jonathan Alp</li>
+          <li>ALPURA001</li>
         </ul></td>
         <td>
         <ul>
-          <li>Sebast...</li>
-          <li>SMSDYL001</li>
+          <li>Sebastian Herbig</li>
+          <li>HRBSEB001</li>
         </ul></td>
       </tr>
     </table>
@@ -279,6 +332,8 @@ img.controls{
         <img src="screen4.png"/>
         <a class="lightbox-close" href="#"></a>
     </div>
+  
+    
   </div>
 </div>
 </body>

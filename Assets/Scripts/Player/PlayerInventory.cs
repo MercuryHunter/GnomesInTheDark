@@ -25,6 +25,7 @@ public class PlayerInventory : MonoBehaviour {
     public Text interactText;
     private float timeToPopDown;
     private float normalPopDownTime = 2;
+    private bool showInteractText;
 
     public void Start() {
         inventory = gameObject.GetComponentInChildren<Inventory>();
@@ -38,12 +39,21 @@ public class PlayerInventory : MonoBehaviour {
         
         playerNum = Convert.ToInt32(gameObject.name.Substring(6, 1));
 
-        timeToPopDown = normalPopDownTime;
+        timeToPopDown = 0;
+        showInteractText = false;
     }
 
     public void Update() {
-        timeToPopDown -= Time.deltaTime;
-        if (timeToPopDown <= 0) interactText.enabled = false;
+        if (showInteractText)
+        {
+            timeToPopDown += Time.deltaTime;
+            if (timeToPopDown >= normalPopDownTime)
+            {
+                interactText.enabled = false;
+                timeToPopDown = 0;
+                showInteractText = false;
+            }
+        }
         
         if (inventory.showingInventory) return; // Don't do any interactions if in inventory please
         
@@ -72,7 +82,8 @@ public class PlayerInventory : MonoBehaviour {
                 if (!inventory.HasLever()) {
                     interactText.text = "This slot is for the key";
                     interactText.enabled = true;
-                    timeToPopDown = normalPopDownTime;   
+                    timeToPopDown = 0;
+                    showInteractText = true;
                 }
                 else {
                     if (machineManager.canAddLever()) {
@@ -81,7 +92,8 @@ public class PlayerInventory : MonoBehaviour {
                     else {
                         interactText.text = "Collect all the cogs before inserting the key";
                         interactText.enabled = true;
-                        timeToPopDown = normalPopDownTime;
+                        timeToPopDown = 0;
+                        showInteractText = true;
                     }
                 }
             }

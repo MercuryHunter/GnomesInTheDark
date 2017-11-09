@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 114392612420127018}
   m_Layer: 12
   m_Name: Pick
-  m_TagString: Pick
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
